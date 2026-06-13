@@ -70,3 +70,13 @@ if value is None:
 ## What to take into Lesson 2
 
 You need comfortable reading of `if`, assignment, and `print`. Lesson 2 introduces the four collection types that replace most of `java.util` for everyday scripts.
+---
+
+## On GitHub
+
+Runnable examples and exercises in the public curriculum repository:
+
+- **Example:** [lesson_01/01_syntax.py](https://github.com/qgambit2/python-for-java-devs-curriculum/blob/main/lesson_01/01_syntax.py)
+- **Example:** [lesson_01/02_variables.py](https://github.com/qgambit2/python-for-java-devs-curriculum/blob/main/lesson_01/02_variables.py)
+- **Practice:** [lesson_01/practice/01_practice.py](https://github.com/qgambit2/python-for-java-devs-curriculum/blob/main/lesson_01/practice/01_practice.py)
+- **Repository:** [https://github.com/qgambit2/python-for-java-devs-curriculum](https://github.com/qgambit2/python-for-java-devs-curriculum)

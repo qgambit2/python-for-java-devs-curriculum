@@ -95,3 +95,16 @@ uv run python lesson_05/practice/01_builtins.py
 uv run python lesson_05/practice/02_builtins.py
 uv run python lesson_05/practice/03_comprehensions.py
 ```
+---
+
+## On GitHub
+
+Runnable examples and exercises in the public curriculum repository:
+
+- **Example:** [lesson_05/01_builtins.py](https://github.com/qgambit2/python-for-java-devs-curriculum/blob/main/lesson_05/01_builtins.py)
+- **Example:** [lesson_05/02_comprehensions.py](https://github.com/qgambit2/python-for-java-devs-curriculum/blob/main/lesson_05/02_comprehensions.py)
+- **Example:** [lesson_05/03_functional_style.py](https://github.com/qgambit2/python-for-java-devs-curriculum/blob/main/lesson_05/03_functional_style.py)
+- **Practice:** [lesson_05/practice/01_builtins.py](https://github.com/qgambit2/python-for-java-devs-curriculum/blob/main/lesson_05/practice/01_builtins.py)
+- **Practice:** [lesson_05/practice/02_builtins.py](https://github.com/qgambit2/python-for-java-devs-curriculum/blob/main/lesson_05/practice/02_builtins.py)
+- **Practice:** [lesson_05/practice/03_comprehensions.py](https://github.com/qgambit2/python-for-java-devs-curriculum/blob/main/lesson_05/practice/03_comprehensions.py)
+- **Repository:** [https://github.com/qgambit2/python-for-java-devs-curriculum](https://github.com/qgambit2/python-for-java-devs-curriculum)

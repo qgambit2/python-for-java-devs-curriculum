@@ -110,3 +110,13 @@ def add_item(item, bucket=None):   # NOT bucket=[]
 Default `[]` is created **once** at function definition time and shared across calls.
 
 > **Key idea:** Copy before mutate; `None` for optional mutable defaults.
+---
+
+## On GitHub
+
+Runnable examples and exercises in the public curriculum repository:
+
+- **Example:** [lesson_04/01_loops.py](https://github.com/qgambit2/python-for-java-devs-curriculum/blob/main/lesson_04/01_loops.py)
+- **Example:** [lesson_04/02_truthiness.py](https://github.com/qgambit2/python-for-java-devs-curriculum/blob/main/lesson_04/02_truthiness.py)
+- **Example:** [lesson_04/03_functions.py](https://github.com/qgambit2/python-for-java-devs-curriculum/blob/main/lesson_04/03_functions.py)
+- **Repository:** [https://github.com/qgambit2/python-for-java-devs-curriculum](https://github.com/qgambit2/python-for-java-devs-curriculum)

@@ -77,3 +77,15 @@ Lookup walks the MRO (method resolution order) — like Java superclass chain. U
 Full formatting (`__format__`, f-string hooks) — `lesson_08/03_str_repr_and_formatting.py` and practice `lesson_08/practice/03_string_formatting.py`.
 
 > **Key idea:** No `new`, no overloading, explicit `self`. Start with plain classes; reach for `@dataclass` when data dominates behavior (next chapter).
+---
+
+## On GitHub
+
+Runnable examples and exercises in the public curriculum repository:
+
+- **Example:** [lesson_08/01_class_basics.py](https://github.com/qgambit2/python-for-java-devs-curriculum/blob/main/lesson_08/01_class_basics.py)
+- **Example:** [lesson_08/02_self_explained.py](https://github.com/qgambit2/python-for-java-devs-curriculum/blob/main/lesson_08/02_self_explained.py)
+- **Example:** [lesson_08/04_inheritance.py](https://github.com/qgambit2/python-for-java-devs-curriculum/blob/main/lesson_08/04_inheritance.py)
+- **Example:** [lesson_08/05_class_vs_instance.py](https://github.com/qgambit2/python-for-java-devs-curriculum/blob/main/lesson_08/05_class_vs_instance.py)
+- **Practice:** [lesson_08/practice/01_classes.py](https://github.com/qgambit2/python-for-java-devs-curriculum/blob/main/lesson_08/practice/01_classes.py)
+- **Repository:** [https://github.com/qgambit2/python-for-java-devs-curriculum](https://github.com/qgambit2/python-for-java-devs-curriculum)

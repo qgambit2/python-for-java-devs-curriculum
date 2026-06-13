@@ -85,3 +85,13 @@ Lesson 7's cheat sheet file is a **lookup**, not a second read. Use it when you 
 - `is` vs `==`
 
 > **Key idea:** Python rewards reading code aloud. If a loop feels like indexed Java, there is usually a shorter form.
+---
+
+## On GitHub
+
+Runnable examples and exercises in the public curriculum repository:
+
+- **Example:** [lesson_07/01_java_gotchas.py](https://github.com/qgambit2/python-for-java-devs-curriculum/blob/main/lesson_07/01_java_gotchas.py)
+- **Example:** [lesson_07/02_pythonic_compactness.py](https://github.com/qgambit2/python-for-java-devs-curriculum/blob/main/lesson_07/02_pythonic_compactness.py)
+- **Example:** [lesson_07/03_cheat_sheet.py](https://github.com/qgambit2/python-for-java-devs-curriculum/blob/main/lesson_07/03_cheat_sheet.py)
+- **Repository:** [https://github.com/qgambit2/python-for-java-devs-curriculum](https://github.com/qgambit2/python-for-java-devs-curriculum)

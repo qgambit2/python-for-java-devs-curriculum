@@ -31,3 +31,12 @@ uv run python book/generate_book.py
 Output: `book/output/python-for-java-devs-preview.pdf`
 
 When lesson content changes, edit the matching file under `book/content/` — then regenerate.
+---
+
+## On GitHub
+
+Runnable examples and exercises in the public curriculum repository:
+
+- **Example:** [00_curriculum.py](https://github.com/qgambit2/python-for-java-devs-curriculum/blob/main/00_curriculum.py)
+- **Practice:** [lesson_02/practice/01_collections.py](https://github.com/qgambit2/python-for-java-devs-curriculum/blob/main/lesson_02/practice/01_collections.py)
+- **Repository:** [https://github.com/qgambit2/python-for-java-devs-curriculum](https://github.com/qgambit2/python-for-java-devs-curriculum)

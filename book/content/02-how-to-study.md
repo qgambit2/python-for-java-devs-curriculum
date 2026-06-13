@@ -73,3 +73,14 @@ uv run python lesson_02/practice/02_collections.py
 3. Compare tables in `java-equivalents.md`
 
 > **Key idea:** If you find yourself writing Java with Python punctuation, pause. There is usually a shorter, more idiomatic form — and we will collect those as you go.
+---
+
+## On GitHub
+
+Runnable examples and exercises in the public curriculum repository:
+
+- **Example:** [lesson_00/03_verify_environment.py](https://github.com/qgambit2/python-for-java-devs-curriculum/blob/main/lesson_00/03_verify_environment.py)
+- **Example:** [lesson_02/basics.py](https://github.com/qgambit2/python-for-java-devs-curriculum/blob/main/lesson_02/basics.py)
+- **Practice:** [lesson_02/practice/01_collections.py](https://github.com/qgambit2/python-for-java-devs-curriculum/blob/main/lesson_02/practice/01_collections.py)
+- **Practice:** [lesson_02/practice/02_collections.py](https://github.com/qgambit2/python-for-java-devs-curriculum/blob/main/lesson_02/practice/02_collections.py)
+- **Repository:** [https://github.com/qgambit2/python-for-java-devs-curriculum](https://github.com/qgambit2/python-for-java-devs-curriculum)

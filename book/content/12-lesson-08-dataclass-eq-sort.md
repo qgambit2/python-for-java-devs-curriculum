@@ -81,3 +81,15 @@ uv run python lesson_08/practice/03_string_formatting.py
 ```
 
 > **Key idea:** `@dataclass` for data carriers; `key=` for sorting; understand eq/hash before putting objects in sets and dict keys.
+---
+
+## On GitHub
+
+Runnable examples and exercises in the public curriculum repository:
+
+- **Example:** [lesson_08/06_dataclass.py](https://github.com/qgambit2/python-for-java-devs-curriculum/blob/main/lesson_08/06_dataclass.py)
+- **Example:** [lesson_08/07_eq_and_hash.py](https://github.com/qgambit2/python-for-java-devs-curriculum/blob/main/lesson_08/07_eq_and_hash.py)
+- **Example:** [lesson_08/08_collections_and_sorting.py](https://github.com/qgambit2/python-for-java-devs-curriculum/blob/main/lesson_08/08_collections_and_sorting.py)
+- **Practice:** [lesson_08/practice/02_eq_hash.py](https://github.com/qgambit2/python-for-java-devs-curriculum/blob/main/lesson_08/practice/02_eq_hash.py)
+- **Practice:** [lesson_08/practice/03_string_formatting.py](https://github.com/qgambit2/python-for-java-devs-curriculum/blob/main/lesson_08/practice/03_string_formatting.py)
+- **Repository:** [https://github.com/qgambit2/python-for-java-devs-curriculum](https://github.com/qgambit2/python-for-java-devs-curriculum)

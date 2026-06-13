@@ -78,3 +78,14 @@ CPython default recursion limit ≈ **1000** frames — `RecursionError`, not `S
 Deep recursion → iterative version or explicit stack.
 
 > **Key idea:** Types are checked by tools, not the interpreter. `datetime` and `Decimal` fill gaps plain `float` cannot.
+---
+
+## On GitHub
+
+Runnable examples and exercises in the public curriculum repository:
+
+- **Example:** [lesson_06/01_types_and_datatypes.py](https://github.com/qgambit2/python-for-java-devs-curriculum/blob/main/lesson_06/01_types_and_datatypes.py)
+- **Example:** [lesson_06/02_math_and_numbers.py](https://github.com/qgambit2/python-for-java-devs-curriculum/blob/main/lesson_06/02_math_and_numbers.py)
+- **Example:** [lesson_06/03_datetime.py](https://github.com/qgambit2/python-for-java-devs-curriculum/blob/main/lesson_06/03_datetime.py)
+- **Example:** [lesson_06/04_recursion.py](https://github.com/qgambit2/python-for-java-devs-curriculum/blob/main/lesson_06/04_recursion.py)
+- **Repository:** [https://github.com/qgambit2/python-for-java-devs-curriculum](https://github.com/qgambit2/python-for-java-devs-curriculum)

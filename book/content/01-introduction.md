@@ -33,3 +33,12 @@ This PDF is a **preview edition** covering **Lessons 1–8** (syntax through OOP
 The runnable source of truth remains the `lesson_NN/` files in the repository — run them, change them, break them, fix them.
 
 > **Java:** Think of each lesson file as a executable tutorial — like a JShell script you run from the terminal, not a slide deck.
+---
+
+## On GitHub
+
+Runnable examples and exercises in the public curriculum repository:
+
+- **Example:** [00_curriculum.py](https://github.com/qgambit2/python-for-java-devs-curriculum/blob/main/00_curriculum.py)
+- **Example:** [lesson_00/03_verify_environment.py](https://github.com/qgambit2/python-for-java-devs-curriculum/blob/main/lesson_00/03_verify_environment.py)
+- **Repository:** [https://github.com/qgambit2/python-for-java-devs-curriculum](https://github.com/qgambit2/python-for-java-devs-curriculum)

@@ -252,3 +252,14 @@ uv run python lesson_02/practice/02_collections.py
 ```
 
 If a line surprises you, find it in `lesson_02/01_collections.py` and change it. Prediction before execution is how you build Python reflexes.
+---
+
+## On GitHub
+
+Runnable examples and exercises in the public curriculum repository:
+
+- **Example:** [lesson_02/01_collections.py](https://github.com/qgambit2/python-for-java-devs-curriculum/blob/main/lesson_02/01_collections.py)
+- **Example:** [lesson_02/basics.py](https://github.com/qgambit2/python-for-java-devs-curriculum/blob/main/lesson_02/basics.py)
+- **Practice:** [lesson_02/practice/01_collections.py](https://github.com/qgambit2/python-for-java-devs-curriculum/blob/main/lesson_02/practice/01_collections.py)
+- **Practice:** [lesson_02/practice/02_collections.py](https://github.com/qgambit2/python-for-java-devs-curriculum/blob/main/lesson_02/practice/02_collections.py)
+- **Repository:** [https://github.com/qgambit2/python-for-java-devs-curriculum](https://github.com/qgambit2/python-for-java-devs-curriculum)
