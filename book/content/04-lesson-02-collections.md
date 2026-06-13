@@ -84,6 +84,33 @@ original.copy()          # method form — often clearest
 
 > **Java:** `new HashMap<>(original)` for each form above. `{**d}` is like building a new map and `putAll`.
 
+### Iterating a dict — what `list(d)` actually does
+
+`list()` is not a special dict constructor. It accepts **any iterable** and collects what that iterable yields. When you iterate a dict, you get **keys only** — values are ignored:
+
+```python
+order = {"c": 3, "a": 1, "b": 2}
+list(order)           # ["c", "a", "b"] — keys, insertion order
+list(order.keys())    # same keys; .keys() is explicit
+list(order.values())  # [3, 1, 2]
+list(order.items())   # [("c", 3), ("a", 1), ("b", 2)]
+```
+
+> **Java:** `new ArrayList<>(map.keySet())` — but key order only if the map is `LinkedHashMap`. Python `dict` keeps insertion order (3.7+).
+
+**Ordered dedupe** — a compact idiom once you know the above:
+
+```python
+items = ["b", "a", "b", "c", "a"]
+list(dict.fromkeys(items))   # ["b", "a", "c"]
+```
+
+`dict.fromkeys(items)` builds `{"b": None, "a": None, "c": None}`. Dict keys must be unique, so later duplicates are dropped while **first-seen order** is kept. The `None` values are placeholders — we only want the key sequence, so `list(...)` extracts them.
+
+> **Key idea:** `for k in d` and `list(d)` see keys. Need values? `d.values()`. Need pairs? `d.items()`.
+
+For the same O(n) behavior with clearer steps, a `set` for “already seen” plus a result list is fine while you are learning (`lesson_02/practice/02_collections.py`, `dedupe_ordered`).
+
 ### Spread / merge
 
 `**` inside `{...}` unpacks key-value pairs:
@@ -221,6 +248,7 @@ You have seen a lot of syntax in one lesson. Before slicing, run the file once e
 
 ```bash
 uv run python lesson_02/practice/01_collections.py
+uv run python lesson_02/practice/02_collections.py
 ```
 
 If a line surprises you, find it in `lesson_02/01_collections.py` and change it. Prediction before execution is how you build Python reflexes.
