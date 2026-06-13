@@ -3,5 +3,12 @@
 03-lesson-01-syntax.md
 04-lesson-02-collections.md
 05-lesson-02-slicing.md
+06-lesson-03-strings.md
+07-lesson-04-loops-truthiness-functions.md
+08-lesson-05-builtins-comprehensions.md
+09-lesson-06-types-datetime-recursion.md
+10-lesson-07-gotchas-pythonic.md
+11-lesson-08-oop-basics.md
+12-lesson-08-dataclass-eq-sort.md
 90-future-chapters.md
 99-appendix.md

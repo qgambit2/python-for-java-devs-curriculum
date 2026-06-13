@@ -1,29 +1,20 @@
-# Roadmap — upcoming chapters
+# Roadmap — lessons 9–15
 
-The following lessons exist as runnable code in the repository. Full book chapters are in progress.
+Lessons **1–8** are in this preview edition. The following lessons exist as runnable code; book chapters are planned.
 
-| Lesson | Topic | Status |
-|--------|-------|--------|
-| 3 | Strings and formatting | code ready |
-| 4 | Loops, truthiness, functions | code ready |
-| 5 | Builtins, comprehensions, Streams-like style | code ready |
-| 6 | Types, math, datetime, recursion | code ready |
-| 7 | Java gotchas and cheat sheet | code ready |
-| 8 | OOP and dataclasses | partial |
+| Lesson | Topic | Code status |
+|--------|-------|-------------|
 | 9 | Modules and dotenv | planned |
-| 10 | JSON and HTTP | planned |
+| 10 | JSON and HTTP client | planned |
 | 11 | Flask REST | partial |
-| 12 | File I/O | planned |
+| 12 | File I/O and XML | planned |
 | 13 | Concurrency and asyncio | planned |
 | 14 | Agents course code | planned |
 | 15 | AWS Lambda | planned |
 
-List everything:
-
 ```bash
 uv run python 00_curriculum.py
+uv run python lesson_11/basics.py --list
 ```
 
-Each future chapter will follow the same shape as Lessons 1–2: prose explanation, Java parallels, runnable examples, then practice with `_check()`.
-
-> **Key idea:** The curriculum is a book being written in public. Lesson files ship first; PDF chapters catch up.
+> **Key idea:** Lesson files ship first; PDF chapters follow as you complete each lesson.
