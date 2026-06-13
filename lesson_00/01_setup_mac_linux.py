@@ -106,7 +106,7 @@ Quick reference
 |-------------------|---------|
 | Install deps      | `uv sync` |
 | Run a script      | `uv run python path/to/file.py` |
-| List Lesson 2 files | `uv run python lesson_02_basics.py --list` |
+| List Lesson 2 files | `uv run python lesson_02/basics.py --list` |
 | Full curriculum   | `uv run python 00_curriculum.py` |
 
 Tutor docs: `.cursor/skills/python-for-java-devs/` (SKILL.md, faq.md)

@@ -249,7 +249,7 @@ Lesson: `lesson_02/01_collections.py` · FAQ: § `(42)` vs `(42,)`
 
 ## Strings
 
-Lesson: `lesson_03/01_strings.py` · Practice: `lesson_03_strings_practice.py` · FAQ: § String formatting
+Lesson: `lesson_03/01_strings.py` · Practice: `lesson_03/practice/01_strings.py` · FAQ: § String formatting
 
 ### Repeat & build
 
@@ -320,7 +320,7 @@ Python **can** escape backslashes like Java (`\\`) **or** use raw strings (`r"..
 | `String.format` in method | `return f"{self.name}: ${self.balance:.2f}"` | `Alice: $1234.50` |
 | (no direct equivalent) | `__format__(self, spec)` for `f"{m:.2f}"` | custom per-type formatting |
 
-Lesson: `lesson_08/03_str_repr_and_formatting.py` · Practice: `lesson_08_string_formatting_practice.py` · Basics: `lesson_03/01_strings.py`
+Lesson: `lesson_08/03_str_repr_and_formatting.py` · Practice: `lesson_08/practice/03_string_formatting.py` · Basics: `lesson_03/01_strings.py`
 
 ## Methods & functions
 
@@ -571,7 +571,7 @@ class Point:
 
 `hash((1, 2))` hashes each element, mixes with a built-in combinator — not `hash(1) + hash(2)`. Lists/dicts inside tuples fail (`TypeError`).
 
-FAQ: § `__eq__` and `__hash__` · Lesson: `lesson_08/07_eq_and_hash.py` · Practice: `lesson_08_eq_hash_practice.py`
+FAQ: § `__eq__` and `__hash__` · Lesson: `lesson_08/07_eq_and_hash.py` · Practice: `lesson_08/practice/02_eq_hash.py`
 
 ### `__init__` — initializer (≈ constructor)
 

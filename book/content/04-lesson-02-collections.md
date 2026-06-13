@@ -220,7 +220,7 @@ Lists use `+` for concatenation (duplicates stay). Sets use `|` for union (dedup
 You have seen a lot of syntax in one lesson. Before slicing, run the file once end-to-end, then open practice:
 
 ```bash
-uv run python lesson_02_collections_practice.py
+uv run python lesson_02/practice/01_collections.py
 ```
 
 If a line surprises you, find it in `lesson_02/01_collections.py` and change it. Prediction before execution is how you build Python reflexes.

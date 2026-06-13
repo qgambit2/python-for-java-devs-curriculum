@@ -2,8 +2,18 @@
 Lesson 1 — comprehensions & tuples practice.
 
 Run:
-    uv run python lesson_05_comprehensions_practice.py
+    uv run python lesson_05/practice/03_comprehensions.py
 """
+
+import sys
+from pathlib import Path
+
+_p = Path(__file__).resolve().parent
+while not (_p / "_lesson_runner.py").is_file():
+    _p = _p.parent
+if str(_p) not in sys.path:
+    sys.path.insert(0, str(_p))
+
 
 
 # Exercise 1: Squares of even numbers only

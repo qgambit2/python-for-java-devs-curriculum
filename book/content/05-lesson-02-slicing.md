@@ -77,5 +77,5 @@ Slicing shows up in `rotate_right`, `chunk`, and `every_other` exercises. When y
 Next practice file:
 
 ```bash
-uv run python lesson_02_collections_practice_2.py
+uv run python lesson_02/practice/02_collections.py
 ```

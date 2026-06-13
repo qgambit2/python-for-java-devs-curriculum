@@ -13,7 +13,7 @@ Run:
     uv run python lesson_08/07_eq_and_hash.py
 
 Practice:
-    uv run python lesson_08_eq_hash_practice.py
+    uv run python lesson_08/practice/02_eq_hash.py
 """
 
 from dataclasses import dataclass

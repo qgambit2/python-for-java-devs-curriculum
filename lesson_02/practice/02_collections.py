@@ -5,10 +5,20 @@ New scenarios, same patterns: zip, comprehensions, sorted key=, setdefault,
 {**merge}, .copy(), | on keys, zip(*matrix), tuple sort keys.
 
 Fill in each function, then run:
-    uv run python lesson_02_collections_practice_2.py
+    uv run python lesson_02/practice/02_collections.py
 
 Built-ins + list/dict methods only. No imports.
 """
+
+import sys
+from pathlib import Path
+
+_p = Path(__file__).resolve().parent
+while not (_p / "_lesson_runner.py").is_file():
+    _p = _p.parent
+if str(_p) not in sys.path:
+    sys.path.insert(0, str(_p))
+
 
 
 # Exercise 1: Remove duplicates, keep first-seen order

@@ -3,12 +3,13 @@ Python for Java Developers — full curriculum
 ==========================================
 
 One folder per lesson. Files numbered 01_, 02_, … in teaching order.
+Each lesson folder may also contain basics.py (index runner) and practice/ exercises.
 
 Status: ✅ done  ·  🔶 partial  ·  📋 planned
 
     uv run python 00_curriculum.py
-    uv run python lesson_00_basics.py --list
-    uv run python lesson_02_basics.py --list
+    uv run python lesson_00/basics.py --list
+    uv run python lesson_02/basics.py --list
 
 Tutor docs: .cursor/skills/python-for-java-devs/
 
@@ -29,7 +30,7 @@ LESSON 1 — Syntax & variables                                              ✅
 ================================================================================
     lesson_01/01_syntax.py
     lesson_01/02_variables.py
-    Practice: lesson_01_practice.py
+    Practice: lesson_01/practice/01_practice.py
 
 
 ================================================================================
@@ -37,14 +38,14 @@ LESSON 2 — Collections (list, dict, tuple, set) & slicing                    �
 ================================================================================
     lesson_02/01_collections.py
     lesson_02/02_slicing.py
-    Practice: lesson_02_collections_practice.py, lesson_02_collections_practice_2.py
+    Practice: lesson_02/practice/01_collections.py, lesson_02/practice/02_collections.py
 
 
 ================================================================================
 LESSON 3 — Strings & formatting                                            ✅
 ================================================================================
     lesson_03/01_strings.py
-    Practice: lesson_03_strings_practice.py
+    Practice: lesson_03/practice/01_strings.py
 
 
 ================================================================================
@@ -61,8 +62,8 @@ LESSON 5 — Builtins, comprehensions, functional style                      ✅
     lesson_05/01_builtins.py
     lesson_05/02_comprehensions.py
     lesson_05/03_functional_style.py
-    Practice: lesson_05_builtins_practice.py, lesson_05_builtins_practice_2.py
-               lesson_05_comprehensions_practice.py
+    Practice: lesson_05/practice/01_builtins.py, lesson_05/practice/02_builtins.py
+               lesson_05/practice/03_comprehensions.py
 
 
 ================================================================================
@@ -72,7 +73,7 @@ LESSON 6 — Types, math, datetime, recursion                                ✅
     lesson_06/02_math_and_numbers.py
     lesson_06/03_datetime.py
     lesson_06/04_recursion.py
-    Practice: lesson_06_types_math_datetime_practice.py   📋 planned
+    Practice: lesson_06/practice/ (planned)   📋 planned
 
 
 ================================================================================
@@ -94,8 +95,8 @@ LESSON 8 — Classes, OOP & dataclasses                                      �
     lesson_08/06_dataclass.py
     lesson_08/07_eq_and_hash.py
     lesson_08/08_collections_and_sorting.py
-    Practice: lesson_08_practice.py, lesson_08_eq_hash_practice.py,
-              lesson_08_string_formatting_practice.py
+    Practice: lesson_08/practice/01_classes.py, lesson_08/practice/02_eq_hash.py,
+              lesson_08/practice/03_string_formatting.py
 
 
 ================================================================================
@@ -112,7 +113,7 @@ LESSON 10 — JSON + blocking HTTP client                                    �
 LESSON 11 — Flask REST API server                                          🔶
 ================================================================================
     lesson_11/01_hello_flask.py … 06_crud_rest_service.py
-    Practice: lesson_11_practice.py
+    Practice: lesson_11/practice/01_rest.py
 
 
 ================================================================================

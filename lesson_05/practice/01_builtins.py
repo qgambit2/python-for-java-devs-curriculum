@@ -2,8 +2,18 @@
 Lesson 1 built-ins practice.
 
 Fill in each function, then run:
-    uv run python lesson_05_builtins_practice.py
+    uv run python lesson_05/practice/01_builtins.py
 """
+
+import sys
+from pathlib import Path
+
+_p = Path(__file__).resolve().parent
+while not (_p / "_lesson_runner.py").is_file():
+    _p = _p.parent
+if str(_p) not in sys.path:
+    sys.path.insert(0, str(_p))
+
 
 
 # Exercise 1: Return a list of even numbers from 0 up to (but not including) n

@@ -6,7 +6,7 @@ Run:
     uv run python lesson_03/01_strings.py
 
 Practice:
-    uv run python lesson_03_strings_practice.py
+    uv run python lesson_03/practice/01_strings.py
 """
 
 

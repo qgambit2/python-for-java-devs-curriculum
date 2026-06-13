@@ -2,10 +2,20 @@
 Lesson 1 practice — YOUR turn.
 
 Fill in each function below, then run:
-    uv run python lesson_01_practice.py
+    uv run python lesson_01/practice/01_practice.py
 
 We'll review your answers together in chat.
 """
+
+import sys
+from pathlib import Path
+
+_p = Path(__file__).resolve().parent
+while not (_p / "_lesson_runner.py").is_file():
+    _p = _p.parent
+if str(_p) not in sys.path:
+    sys.path.insert(0, str(_p))
+
 
 # Exercise 1: Return a sentence like "My name is Alex and my favorite number is 7"
 def introduce(name: str, favorite_number: int) -> str:

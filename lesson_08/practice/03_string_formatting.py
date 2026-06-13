@@ -6,8 +6,18 @@ Read:
     lesson_03/01_strings.py  (basics)
 
 Fill in each TODO, then run:
-    uv run python lesson_08_string_formatting_practice.py
+    uv run python lesson_08/practice/03_string_formatting.py
 """
+
+import sys
+from pathlib import Path
+
+_p = Path(__file__).resolve().parent
+while not (_p / "_lesson_runner.py").is_file():
+    _p = _p.parent
+if str(_p) not in sys.path:
+    sys.path.insert(0, str(_p))
+
 
 from dataclasses import dataclass
 

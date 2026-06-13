@@ -9,8 +9,18 @@ Read:
     lesson_08/07_eq_and_hash.py
 
 Fill in each TODO, then run:
-    uv run python lesson_08_eq_hash_practice.py
+    uv run python lesson_08/practice/02_eq_hash.py
 """
+
+import sys
+from pathlib import Path
+
+_p = Path(__file__).resolve().parent
+while not (_p / "_lesson_runner.py").is_file():
+    _p = _p.parent
+if str(_p) not in sys.path:
+    sys.path.insert(0, str(_p))
+
 
 from dataclasses import dataclass
 

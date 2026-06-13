@@ -9,7 +9,7 @@ Run:
     uv run python lesson_08/03_str_repr_and_formatting.py
 
 Practice:
-    uv run python lesson_08_string_formatting_practice.py
+    uv run python lesson_08/practice/03_string_formatting.py
 """
 
 from dataclasses import dataclass

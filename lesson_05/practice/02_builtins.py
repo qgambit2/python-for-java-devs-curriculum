@@ -2,10 +2,20 @@
 Lesson 1 built-ins — extra practice (larger set).
 
 Fill in each function, then run:
-    uv run python lesson_05_builtins_practice_2.py
+    uv run python lesson_05/practice/02_builtins.py
 
 Uses built-ins only — no imports required.
 """
+
+import sys
+from pathlib import Path
+
+_p = Path(__file__).resolve().parent
+while not (_p / "_lesson_runner.py").is_file():
+    _p = _p.parent
+if str(_p) not in sys.path:
+    sys.path.insert(0, str(_p))
+
 
 
 # Exercise 1: Return the n largest values, highest first

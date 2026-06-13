@@ -2,10 +2,20 @@
 Lesson 1 — lists & dicts challenge practice.
 
 Fill in each function, then run:
-    uv run python lesson_02_collections_practice.py
+    uv run python lesson_02/practice/01_collections.py
 
 Built-ins + list/dict methods only. No imports.
 """
+
+import sys
+from pathlib import Path
+
+_p = Path(__file__).resolve().parent
+while not (_p / "_lesson_runner.py").is_file():
+    _p = _p.parent
+if str(_p) not in sys.path:
+    sys.path.insert(0, str(_p))
+
 
 
 # Exercise 1: Flatten one level — [[1, 2], [3]] -> [1, 2, 3]

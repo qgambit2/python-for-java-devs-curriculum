@@ -2,8 +2,18 @@
 Lesson 2 practice — classes & self.
 
 Fill in each class below, then run:
-    uv run python lesson_08_practice.py
+    uv run python lesson_08/practice/01_classes.py
 """
+
+import sys
+from pathlib import Path
+
+_p = Path(__file__).resolve().parent
+while not (_p / "_lesson_runner.py").is_file():
+    _p = _p.parent
+if str(_p) not in sys.path:
+    sys.path.insert(0, str(_p))
+
 
 from dataclasses import dataclass
 

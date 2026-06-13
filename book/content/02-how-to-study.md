@@ -28,7 +28,7 @@ Save files before running. The editor buffer and the file on disk can differ.
 After the lesson files, open the practice modules:
 
 ```bash
-uv run python lesson_02_collections_practice.py
+uv run python lesson_02/practice/01_collections.py
 ```
 
 They use a `_check()` helper that prints a checkmark when an assertion passes. Fix one exercise at a time.

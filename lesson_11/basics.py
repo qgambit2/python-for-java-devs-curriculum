@@ -1,5 +1,17 @@
 """Lesson 11 index — Flask REST API server."""
 
+import sys
+from pathlib import Path
+
+_p = Path(__file__).resolve().parent
+while not (_p / "_lesson_runner.py").is_file():
+    _p = _p.parent
+if str(_p) not in sys.path:
+    sys.path.insert(0, str(_p))
+
+
+from pathlib import Path
+
 from _lesson_runner import run_lesson_index
 
 LESSONS = [
@@ -12,4 +24,4 @@ LESSONS = [
 ]
 
 if __name__ == "__main__":
-    run_lesson_index(11, LESSONS)
+    run_lesson_index(LESSONS, lesson_dir=Path(__file__).parent)

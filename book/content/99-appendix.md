@@ -4,8 +4,8 @@
 
 | Path | Purpose |
 |------|---------|
-| `lesson_NN/` | Runnable lesson files |
-| `lesson_NN_*_practice.py` | Exercises with asserts |
+| `lesson_NN/` | Demos, `basics.py` index, `practice/` exercises |
+| `lesson_NN/practice/` | Exercises with asserts |
 | `00_curriculum.py` | Full roadmap |
 | `.cursor/skills/python-for-java-devs/` | Tutor FAQ and Java tables |
 | `book/content/` | This book's source markdown |
