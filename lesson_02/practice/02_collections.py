@@ -24,7 +24,14 @@ if str(_p) not in sys.path:
 # Exercise 1: Remove duplicates, keep first-seen order
 # dedupe_ordered(["b", "a", "b", "c", "a"]) -> ["b", "a", "c"]
 def dedupe_ordered(items: list[str]) -> list[str]:
-    pass
+    new_items = []
+    existing_items = set()
+    for item in items:
+        if item not in existing_items:
+            existing_items.add(item)
+            new_items.append(item)
+    return new_items
+
 
 
 # Exercise 2: Parallel lists to dict (you've done this before — make it automatic)

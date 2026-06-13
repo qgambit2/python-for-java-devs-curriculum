@@ -818,6 +818,9 @@ Runnable demos: `lesson_08/06_dataclass.py` § Exception handling.
 | sort map entries | `sorted(d.items())` — list of `(key, value)` tuples |
 | sort string chars | `sorted("cba")` → `['a','b','c']` |
 | `map.keySet()` view | `d.keys()` — `dict_keys` view, iterable not list |
+| `new ArrayList<>(map.keySet())` | `list(d)` or `list(d.keys())` — **keys only**, insertion order (3.7+) |
+| ordered unique keys from sequence | `list(dict.fromkeys(items))` — dedupe, first-seen order; no Java one-liner |
+| `dict.fromkeys(keys, default)` | map each key → same value (default `None`); values often discarded |
 | reverse copy | `x[::-1]` or `reversed(x)` |
 | enumerate index | `enumerate(x)` |
 | zip parallel lists | `zip(a, b)` → iterator of tuples |

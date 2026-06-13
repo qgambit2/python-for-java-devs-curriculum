@@ -61,6 +61,11 @@ order["a"] = 99                 # put — overwrites existing key, order unchang
 print(list(order.keys()))       # still c, a, b
 print({"b": 2, "a": 1} == {"a": 1, "b": 2})
 
+# list(dict) — list() iterates any iterable; iterating a dict yields KEYS only (not values)
+#   list(order) == list(order.keys())  —  Java: new ArrayList<>(linkedHashMap.keySet())
+# Ordered dedupe: list(dict.fromkeys(["b", "a", "b", "c"]))  →  ["b", "a", "c"]
+#   fromkeys: {key: None, ...} — None is placeholder; we only want the key sequence
+
 # Shallow copy — three equivalent ways (new dict; original unchanged when copy is mutated)
 #
 #   WRONG:  c = original          same object — c["bob"]=99 changes original too
