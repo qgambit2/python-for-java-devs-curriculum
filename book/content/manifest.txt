@@ -1,0 +1,7 @@
+01-introduction.md
+02-how-to-study.md
+03-lesson-01-syntax.md
+04-lesson-02-collections.md
+05-lesson-02-slicing.md
+90-future-chapters.md
+99-appendix.md
