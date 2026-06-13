@@ -28,6 +28,8 @@ Three shifts hit Java developers early:
 
 ## Preview edition
 
-This PDF is an early **preview**. Chapters 1–2 are written as teaching prose. Later lessons appear as a roadmap. The runnable source of truth remains the `lesson_NN/` files in the repository — run them, change them, break them, fix them.
+This PDF is an early **preview** (~20 pages). **Full chapters:** Lessons 1–2 only (syntax, collections, slicing). Lessons 3–15 are a **one-page roadmap** — runnable code exists in the repo, but book prose is not written yet. A complete edition is estimated at **~80–120 pages** once every lesson has a chapter like Lesson 2.
+
+The runnable source of truth remains the `lesson_NN/` files in the repository — run them, change them, break them, fix them.
 
 > **Java:** Think of each lesson file as a executable tutorial — like a JShell script you run from the terminal, not a slide deck.
