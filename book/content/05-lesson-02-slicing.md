@@ -79,6 +79,7 @@ Next practice file:
 ```bash
 uv run python lesson_02/practice/02_collections.py
 ```
+
 ---
 
 ## On GitHub

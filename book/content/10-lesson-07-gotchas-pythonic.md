@@ -85,6 +85,7 @@ Lesson 7's cheat sheet file is a **lookup**, not a second read. Use it when you 
 - `is` vs `==`
 
 > **Key idea:** Python rewards reading code aloud. If a loop feels like indexed Java, there is usually a shorter form.
+
 ---
 
 ## On GitHub

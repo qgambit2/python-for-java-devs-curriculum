@@ -77,6 +77,7 @@ Lookup walks the MRO (method resolution order) — like Java superclass chain. U
 Full formatting (`__format__`, f-string hooks) — `lesson_08/03_str_repr_and_formatting.py` and practice `lesson_08/practice/03_string_formatting.py`.
 
 > **Key idea:** No `new`, no overloading, explicit `self`. Start with plain classes; reach for `@dataclass` when data dominates behavior (next chapter).
+
 ---
 
 ## On GitHub

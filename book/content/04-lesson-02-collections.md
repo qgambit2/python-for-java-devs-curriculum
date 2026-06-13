@@ -252,6 +252,7 @@ uv run python lesson_02/practice/02_collections.py
 ```
 
 If a line surprises you, find it in `lesson_02/01_collections.py` and change it. Prediction before execution is how you build Python reflexes.
+
 ---
 
 ## On GitHub

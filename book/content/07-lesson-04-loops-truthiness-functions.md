@@ -110,6 +110,7 @@ def add_item(item, bucket=None):   # NOT bucket=[]
 Default `[]` is created **once** at function definition time and shared across calls.
 
 > **Key idea:** Copy before mutate; `None` for optional mutable defaults.
+
 ---
 
 ## On GitHub

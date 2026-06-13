@@ -18,6 +18,7 @@ uv run python lesson_11/basics.py --list
 ```
 
 > **Key idea:** Lesson files ship first; PDF chapters follow as you complete each lesson.
+
 ---
 
 ## On GitHub

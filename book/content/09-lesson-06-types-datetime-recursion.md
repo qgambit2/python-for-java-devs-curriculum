@@ -78,6 +78,7 @@ CPython default recursion limit ≈ **1000** frames — `RecursionError`, not `S
 Deep recursion → iterative version or explicit stack.
 
 > **Key idea:** Types are checked by tools, not the interpreter. `datetime` and `Decimal` fill gaps plain `float` cannot.
+
 ---
 
 ## On GitHub

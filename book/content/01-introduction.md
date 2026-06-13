@@ -33,6 +33,7 @@ This PDF is a **preview edition** covering **Lessons 1–8** (syntax through OOP
 The runnable source of truth remains the `lesson_NN/` files in the repository — run them, change them, break them, fix them.
 
 > **Java:** Think of each lesson file as a executable tutorial — like a JShell script you run from the terminal, not a slide deck.
+
 ---
 
 ## On GitHub

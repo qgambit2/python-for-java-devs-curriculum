@@ -31,6 +31,7 @@ uv run python book/generate_book.py
 Output: `book/output/python-for-java-devs-preview.pdf`
 
 When lesson content changes, edit the matching file under `book/content/` — then regenerate.
+
 ---
 
 ## On GitHub

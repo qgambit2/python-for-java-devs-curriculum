@@ -73,6 +73,7 @@ uv run python lesson_02/practice/02_collections.py
 3. Compare tables in `java-equivalents.md`
 
 > **Key idea:** If you find yourself writing Java with Python punctuation, pause. There is usually a shorter, more idiomatic form — and we will collect those as you go.
+
 ---
 
 ## On GitHub

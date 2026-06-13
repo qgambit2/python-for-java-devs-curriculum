@@ -81,6 +81,7 @@ uv run python lesson_08/practice/03_string_formatting.py
 ```
 
 > **Key idea:** `@dataclass` for data carriers; `key=` for sorting; understand eq/hash before putting objects in sets and dict keys.
+
 ---
 
 ## On GitHub

@@ -95,6 +95,7 @@ uv run python lesson_05/practice/01_builtins.py
 uv run python lesson_05/practice/02_builtins.py
 uv run python lesson_05/practice/03_comprehensions.py
 ```
+
 ---
 
 ## On GitHub

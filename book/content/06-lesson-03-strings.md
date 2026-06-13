@@ -117,6 +117,7 @@ uv run python lesson_03/practice/01_strings.py
 ```
 
 OOP string hooks (`__str__`, `__repr__`, `__format__`) come in **Lesson 8**.
+
 ---
 
 ## On GitHub

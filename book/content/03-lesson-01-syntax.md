@@ -70,6 +70,7 @@ if value is None:
 ## What to take into Lesson 2
 
 You need comfortable reading of `if`, assignment, and `print`. Lesson 2 introduces the four collection types that replace most of `java.util` for everyday scripts.
+
 ---
 
 ## On GitHub
