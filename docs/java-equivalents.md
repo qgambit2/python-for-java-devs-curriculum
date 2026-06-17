@@ -41,14 +41,26 @@ Lesson: `lesson_06/01_types_and_datatypes.py`
 
 | Java | Python |
 |------|--------|
+| `if (cond) { }` | `if cond:` |
+| `else if` | `elif` |
 | `for (int i = 0; i < n; i++)` | `for i in range(n):` |
+| `IntStream.range(0, n)` (Java 8+) | `range(n)` — end exclusive, lazy |
+| `IntStream.rangeClosed(a, b)` | `range(a, b + 1)` — Java end is **inclusive** |
+| `for (int i = 0; i < 10; i += 2)` | `range(0, 10, 2)` |
 | `for (String s : list)` | `for s in list:` |
 | `while (cond)` | `while cond:` |
+| `do { } while (cond);` | `while True:` + `break`, or body once then `while` |
+| `switch (x) { case A: }` | `match x: case A:` (3.10+); `_` = default |
+| `case 500, 502` (Java) | `case 500 \| 502 \| 503:` |
+| switch fall-through + `break` | **no fall-through** in `match` |
+| switch expression | assign inside `case` blocks, or use `if/elif` / dict |
+| guarded case (Java 21+) | `case x if x > 0:` |
+| simple switch | `if/elif` or `{code: label}.get(x, default)` |
 | `break` / `continue` | `break` / `continue` |
 | labeled break | no labels — refactor or flag |
 | `for (...) { } else` (rare) | `for ... else:` — runs if no `break` |
 
-Lesson: `lesson_04/01_loops.py`
+Lesson: `lesson_01/03_control_flow.py` §6 · reinforcement: `lesson_04/01_loops.py`
 
 ## Math & numbers
 
@@ -306,6 +318,19 @@ Python **can** escape backslashes like Java (`\\`) **or** use raw strings (`r"..
 | `"a".equals("b")` | `a == b` |
 | `s.length()` | `len(s)` |
 | `s.substring(1, 4)` | `s[1:4]` |
+| `s.contains("x")` | `"x" in s` |
+| `s.startsWith("pre")` | `s.startswith("pre")` |
+| `s.endsWith(".csv")` | `s.endswith(".csv")` |
+| `s.indexOf("x")` | `s.find("x")` — `-1` if missing; `s.index("x")` raises |
+| `s.trim()` | `s.strip()` — also `lstrip` / `rstrip` |
+| `s.split(",")` | `s.split(",")` — returns `list[str]` |
+| `s.replace("a", "b")` | `s.replace("a", "b")` — all occurrences |
+| loop `indexOf` for count | `s.count("x")` — non-overlapping |
+| `s.toUpperCase()` | `s.upper()` |
+| `s.toLowerCase()` | `s.lower()` |
+| `Pattern.compile(p)` / `Matcher` | `re.compile(p)` / `re.search`, `re.findall`, `re.sub` |
+| `matcher.matches()` | `re.fullmatch(p, s)` |
+| `matcher.replaceAll(rep)` | `re.sub(p, rep, s)` |
 | sort chars of string | `sorted(s)` → list; `"".join(sorted(s))` → str |
 | anagram signature key | `"".join(sorted(word))` |
 
@@ -805,6 +830,7 @@ Runnable demos: `lesson_08/06_dataclass.py` § Exception handling.
 | `Comparator.comparing(Foo::getX)` | `key=lambda x: x.x` |
 | `.thenComparing(Foo::getY)` | `key=lambda x: (x.x, x.y)` |
 | `collect(toList())` | `[...]` comprehension |
+| filter + sort (one pass) | `sorted(x for x in xs if p(x))` — **no `[]`** unless you need the list twice |
 | `collect(toMap())` | `{...}` comprehension or `dict(zip(...))` |
 
 ## Built-ins (no import)
@@ -813,6 +839,7 @@ Runnable demos: `lesson_08/06_dataclass.py` § Exception handling.
 |---------------|--------|
 | `.size()` | `len(x)` |
 | sort copy | `sorted(x)` — **always returns new `list`** |
+| filter then sort (no extra list) | `sorted(x for x in xs if p(x))` — prefer over `sorted([...])` |
 | sort in place | `x.sort()` — lists only; returns `None` |
 | sort `keySet()` | `sorted(d)` or `sorted(d.keys())` — list of keys |
 | sort map entries | `sorted(d.items())` — list of `(key, value)` tuples |
@@ -822,6 +849,9 @@ Runnable demos: `lesson_08/06_dataclass.py` § Exception handling.
 | ordered unique keys from sequence | `list(dict.fromkeys(items))` — dedupe, first-seen order; no Java one-liner |
 | `dict.fromkeys(keys, default)` | map each key → same value (default `None`); values often discarded |
 | reverse copy | `x[::-1]` or `reversed(x)` |
+| top-k smallest / largest (full sort OK) | `sorted(xs, key=...)[:k]` or `sorted(xs, reverse=True)[:k]` |
+| top-k on huge n, small k | `import heapq` → `heapq.nsmallest(k, xs, key=...)` / `nlargest` |
+| `PriorityQueue` / `poll` / `offer` | `heapq.heapify(list)` + `heappush` / `heappop` on that list |
 | enumerate index | `enumerate(x)` |
 | zip parallel lists | `zip(a, b)` → iterator of tuples |
 | `list(zip(a,b))` | list of tuples — `[("a", 1), ("b", 2)]` |
@@ -853,11 +883,58 @@ Runnable demos: `lesson_08/06_dataclass.py` § Exception handling.
 | Maven `pom.xml` | `pyproject.toml` + `uv` |
 | `mvn run` | `uv run python script.py` |
 | `.env` + properties | `python-dotenv` + `os.environ` |
-| JUnit | `assert` / pytest / `unittest` |
+| `mvn test` | `uv run pytest` |
 
-## JSON (Lesson 4)
+## Unit testing (Lesson 16) — JUnit 5 primary
 
-| Jackson | Python `json` |
+**Default:** pytest ≈ JUnit 5. Legacy: unittest ≈ JUnit 4 (`04_unittest_legacy.py`).
+
+| Java (JUnit 5) | Python (pytest) |
+|----------------|-----------------|
+| `@Test void add()` | `def test_add():` |
+| `assertEquals(5, add(2,3))` | `assert add(2, 3) == 5` |
+| `assertThrows(Ex.class, () -> f())` | `with pytest.raises(Ex): f()` |
+| `assertAll(() -> …, () -> …)` | multiple `assert` in one test |
+| `@BeforeEach void setUp()` | `@pytest.fixture` |
+| `@BeforeAll` | `@pytest.fixture(scope="module")` |
+| `@ParameterizedTest` + `@CsvSource` | `@pytest.mark.parametrize(...)` |
+| `@Disabled` | `@pytest.mark.skip` |
+| `@ExtendWith(MockitoExtension.class)` | `MagicMock()` passed into constructor |
+
+| Java (Mockito) | Python (`unittest.mock`) |
+|----------------|--------------------------|
+| `mock(Foo.class)` | `MagicMock()` |
+| `when(m.f()).thenReturn(x)` | `m.f.return_value = x` |
+| `when(m.f()).thenThrow(ex)` | `m.f.side_effect = ex` |
+| `verify(m).f()` | `m.f.assert_called_once()` |
+| `@Mock` / `@InjectMocks` | manual `Greeter(mock)` or `@patch` |
+
+Run: `uv sync --group dev` then `uv run pytest lesson_16/ -v`
+
+### Flask REST — Spring Boot Test / MockMvc?
+
+**Lesson 16:** `05_flask_testing.py` · **Lesson 11:** Flask routes · Practice: `02_flask_api.py`
+
+| Spring Boot Test | Flask + pytest |
+|------------------|----------------|
+| `@WebMvcTest` + `MockMvc` | `app.test_client()` |
+| `mockMvc.perform(get("/books"))` | `client.get("/books")` |
+| `.andExpect(status().isOk())` | `assert response.status_code == 200` |
+| `.andExpect(jsonPath("$.title").value("x"))` | `assert response.get_json()["title"] == "x"` |
+| `@SpringBootTest` + `create_app` | `@pytest.fixture def app(): return create_app(testing=True)` |
+| `@MockBean` | `@patch("myapp.module.service_fn")` — not Flask's `request` proxy |
+
+```python
+@pytest.fixture
+def client(app):
+    return app.test_client()
+
+def test_create_book(client):
+    r = client.post("/books", json={"title": "Dune"})
+    assert r.status_code == 201
+```
+
+## JSON (Lesson 10)
 |---------|---------------|
 | `readValue(s, Map.class)` | `json.loads(s)` |
 | `writeValueAsString(obj)` | `json.dumps(obj)` |

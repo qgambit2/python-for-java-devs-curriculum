@@ -4,50 +4,28 @@ Lesson 1 built-ins practice.
 Fill in each function, then run:
     uv run python lesson_05/practice/01_builtins.py
 """
-
 import sys
 from pathlib import Path
-
 _p = Path(__file__).resolve().parent
-while not (_p / "_lesson_runner.py").is_file():
+while not (_p / '_lesson_runner.py').is_file():
     _p = _p.parent
 if str(_p) not in sys.path:
     sys.path.insert(0, str(_p))
 
-
-
-# Exercise 1: Return a list of even numbers from 0 up to (but not including) n
-# Example: evens_up_to(6) -> [0, 2, 4]
 def evens_up_to(n: int) -> list[int]:
-    return list(range(0, n, 2))
+    pass
 
-
-# Exercise 2: Return the index of the highest score, or -1 if list is empty
-# Example: index_of_max([40, 90, 55]) -> 1
 def index_of_max(scores: list[int]) -> int:
-    if not scores:
-        return -1
-    return scores.index(max(scores))
+    pass
 
-
-# Exercise 3: Return a dict pairing each name with its score using zip
-# Example: pair_names_scores(["a", "b"], [1, 2]) -> {"a": 1, "b": 2}
 def pair_names_scores(names: list[str], scores: list[int]) -> dict[str, int]:
-    return dict(zip(names, scores))
+    pass
 
-
-# Exercise 4: Return True if ALL strings have length >= min_length
-# Example: all_long_enough(["hi", "hey"], 2) -> True
 def all_long_enough(words: list[str], min_length: int) -> bool:
-    return all(len(word) >= min_length for word in words)
+    pass
 
-
-# Exercise 5: Return a list of "index:value" strings using enumerate
-# Example: with_indexes(["a", "b"]) -> ["0:a", "1:b"]
 def with_indexes(items: list[str]) -> list[str]:
-    return [f"{index}:{value}" for index, value in enumerate(items)]
-
-
+    pass
 # ---------------------------------------------------------------------------
 # Tests — don't edit below
 # ---------------------------------------------------------------------------

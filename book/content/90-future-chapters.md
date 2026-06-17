@@ -1,6 +1,6 @@
 # Roadmap — lessons 9–15
 
-Lessons **1–8** are in this preview edition. The following lessons exist as runnable code; book chapters are planned.
+Lessons **1–8** and **16 (unit testing)** are in this preview edition. Lessons 9–15 exist as runnable code or plans; book chapters follow as those lessons land.
 
 | Lesson | Topic | Code status |
 |--------|-------|-------------|
@@ -11,6 +11,7 @@ Lessons **1–8** are in this preview edition. The following lessons exist as ru
 | 13 | Concurrency and asyncio | planned |
 | 14 | Agents course code | planned |
 | 15 | AWS Lambda | planned |
+| **16** | **Unit testing (JUnit 5 / pytest, Mockito)** | **done** — capstone after L8+ |
 
 ```bash
 uv run python 00_curriculum.py

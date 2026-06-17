@@ -26,7 +26,7 @@ def greet(name: str, excited: bool = False) -> str:
     ...
 ```
 
-Only one `__init__` on a class — same rule.
+Only one `__init__` method on a class — same rule.
 
 ---
 

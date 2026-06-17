@@ -28,7 +28,9 @@ class Person:
             raise ValueError("age must be non-negative")
 ```
 
-Generates `__init__`, `__repr__`, `__eq__` for you.
+`__post_init__` is a hook method — runs after the generated `__init__` method (like a post-constructor check).
+
+Generates `__init__`, `__repr__`, and `__eq__` methods for you.
 
 ```python
 @dataclass(frozen=True)
@@ -45,12 +47,12 @@ Fields with defaults must come **after** required fields.
 
 ---
 
-## __eq__ and __hash__
+## `__eq__` and `__hash__` methods
 
 Same contract as Java: **equal objects must have equal hash codes** if used in `set` / `dict` keys.
 
-- `@dataclass` generates `__eq__` by default
-- `frozen=True` enables `__hash__`
+- `@dataclass` generates an `__eq__` method by default
+- `frozen=True` enables an `__hash__` method
 - If you customize `__eq__` without `__hash__`, instances become unhashable (`__hash__ = None`)
 
 Mutable objects should not be dict keys — Python may block with `TypeError`.
@@ -59,9 +61,9 @@ Mutable objects should not be dict keys — Python may block with `TypeError`.
 
 ## Sorting with custom types
 
-**Preferred:** `sorted(items, key=lambda p: (p.age, p.name))` — like `Comparator.comparing`.
+**Preferred:** `sorted(items, key=lambda p: (p.age, p.name))` — tuple key: compare `age` first, `name` on ties (≈ `Comparator.comparing(...).thenComparing(...)`).
 
-**Alternative:** define `__lt__` for `@total_ordering` — ≈ `Comparable`.
+**Alternative:** define an `__lt__` method with `@total_ordering` — ≈ `Comparable`.
 
 ```python
 people = [{"name": "bob", "score": 87}, {"name": "alice", "score": 95}]

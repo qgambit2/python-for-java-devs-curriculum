@@ -1,6 +1,6 @@
 # Lesson 4 — Loops, truthiness, and functions
 
-Control flow and functions look familiar from Java — with a few Python-only surprises.
+Builds on **Lesson 1 control flow** (`lesson_01/03_control_flow.py`). Here: truthiness in `if`, `is` vs `==`, and `def` functions.
 
 **Run:**
 

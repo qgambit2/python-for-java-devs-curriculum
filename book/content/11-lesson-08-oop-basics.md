@@ -28,7 +28,7 @@ rex = Dog("Rex", 3)    # no `new`
 print(rex.bark())
 ```
 
-- `__init__` is the initializer — called automatically on `Dog(...)`
+- The `__init__` method is the initializer — called automatically on `Dog(...)`
 - `self` is explicit first parameter — ≈ `this`, but you must write it
 - Fields are public by convention (no `private` keyword)
 
@@ -72,9 +72,14 @@ Lookup walks the MRO (method resolution order) — like Java superclass chain. U
 
 ## String representation (preview)
 
-`__str__` for human-readable; `__repr__` for developer/debug (ideally valid-ish Python).
+Classes can define special **methods** whose names start and end with double underscores:
 
-Full formatting (`__format__`, f-string hooks) — `lesson_08/03_str_repr_and_formatting.py` and practice `lesson_08/practice/03_string_formatting.py`.
+- `__str__` method — human-readable string, like Java `toString()`
+- `__repr__` method — developer/debug string (ideally valid-ish Python for the REPL)
+
+The `__format__` method powers custom f-string formatting — see `lesson_08/03_str_repr_and_formatting.py` and practice `lesson_08/practice/03_string_formatting.py`.
+
+> **Java:** one `toString()`; Python splits display vs debug across two methods (`__str__` and `__repr__`).
 
 > **Key idea:** No `new`, no overloading, explicit `self`. Start with plain classes; reach for `@dataclass` when data dominates behavior (next chapter).
 

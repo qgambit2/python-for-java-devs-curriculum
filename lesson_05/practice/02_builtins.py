@@ -6,91 +6,43 @@ Fill in each function, then run:
 
 Uses built-ins only — no imports required.
 """
-
 import sys
 from pathlib import Path
-
 _p = Path(__file__).resolve().parent
-while not (_p / "_lesson_runner.py").is_file():
+while not (_p / '_lesson_runner.py').is_file():
     _p = _p.parent
 if str(_p) not in sys.path:
     sys.path.insert(0, str(_p))
 
-
-
-# Exercise 1: Return the n largest values, highest first
-# Example: top_n([3, 1, 4, 1, 5], 3) -> [5, 4, 3]
 def top_n(values: list[int], n: int) -> list[int]:
-    return sorted(values, reverse=True)[:n]
+    pass
 
-
-# Exercise 2: Return list of (index, value) tuples for each item
-# Example: indexed_pairs(["a", "b"]) -> [(0, "a"), (1, "b")]
 def indexed_pairs(items: list[str]) -> list[tuple[int, str]]:
-    return list(enumerate(items))
+    pass
 
-
-# Exercise 3: Return running totals — each element is sum so far
-# Example: running_totals([1, 2, 3, 4]) -> [1, 3, 6, 10]
 def running_totals(numbers: list[int]) -> list[int]:
-    # TODO: loop with accumulator, or clever sum/slicing
-    list_of_totals = []
-    total = 0
-    for i in range(len(numbers)):
-        total += numbers[i]
-        list_of_totals.append(total)
-    return list_of_totals
+    pass
 
-# Exercise 4: Return True if ANY score is >= threshold (use any())
-# Example: has_passing([40, 55, 90], 60) -> True
 def has_passing(scores: list[int], threshold: int) -> bool:
-    return any(score >= threshold for score in scores)
+    pass
 
-
-# Exercise 5: Return how many scores are >= threshold
-# Example: count_passing([40, 55, 90], 60) -> 1
 def count_passing(scores: list[int], threshold: int) -> int:
-    return sum(1 for score in scores if score >= threshold)
+    pass
 
-
-# Exercise 6: Return items at even indexes only (0, 2, 4, ...)
-# Example: every_other(["a", "b", "c", "d", "e"]) -> ["a", "c", "e"]
 def every_other(items: list[str]) -> list[str]:
-    return items[::2]
+    pass
 
-
-# Exercise 7: Merge parallel lists into one dict (names -> scores)
-# If lengths differ, zip uses the shorter length
-# Example: merge_parallel(["a", "b"], [1, 2]) -> {"a": 1, "b": 2}
 def merge_parallel(keys: list[str], values: list[int]) -> dict[str, int]:
-    return dict(zip(keys, values))
+    pass
 
-
-# Exercise 8: Return unique words sorted alphabetically (case-sensitive)
-# Example: unique_sorted(["banana", "Apple", "apple", "banana"]) -> ["Apple", "apple", "banana"]
 def unique_sorted(words: list[str]) -> list[str]:
-    # TODO: hint — sorted(set(words))
-    return sorted(list(set(words)))
+    pass
 
-
-# Exercise 9: Return the second-largest distinct value, or None if impossible
-# Example: second_largest([5, 1, 5, 3]) -> 3
-# Example: second_largest([7, 7, 7]) -> None
-# Example: second_largest([42]) -> None
 def second_largest(numbers: list[int]) -> int | None:
-    sorted_numbers = sorted(list(set(numbers)), reverse=True)
-    if (len(sorted_numbers) < 2):
-        return None
-    return sorted_numbers[1]
+    pass
 
-
-# Exercise 10: Sort people dicts by age ascending, then by name ascending for ties
-# Example: sort_people([{"name": "Bob", "age": 30}, {"name": "Alice", "age": 30}])
-#          -> [{"name": "Alice", "age": 30}, {"name": "Bob", "age": 30}]
 def sort_people(people: list[dict[str, object]]) -> list[dict[str, object]]:
-    return sorted(people, key=lambda p: (p["age"], p["name"]))
-
-
+    pass
 # ---------------------------------------------------------------------------
 # Tests — don't edit below
 # ---------------------------------------------------------------------------

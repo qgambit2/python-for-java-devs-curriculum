@@ -4,71 +4,52 @@ Lesson 2 practice — classes & self.
 Fill in each class below, then run:
     uv run python lesson_08/practice/01_classes.py
 """
-
 import sys
 from pathlib import Path
-
 _p = Path(__file__).resolve().parent
-while not (_p / "_lesson_runner.py").is_file():
+while not (_p / '_lesson_runner.py').is_file():
     _p = _p.parent
 if str(_p) not in sys.path:
     sys.path.insert(0, str(_p))
-
-
 from dataclasses import dataclass
 
-
-# Exercise 1: A Rectangle with width/height, area() and perimeter() methods
 class Rectangle:
+
     def __init__(self, width: float, height: float) -> None:
-        # TODO
         pass
 
     def area(self) -> float:
-        # TODO
         pass
 
     def perimeter(self) -> float:
-        # TODO
         pass
 
-
-# Exercise 2: BankAccount with deposit/withdraw; no negative balance allowed
 class BankAccount:
-    def __init__(self, owner: str, balance: float = 0.0) -> None:
-        # TODO
+
+    def __init__(self, owner: str, balance: float=0.0) -> None:
         pass
 
     def deposit(self, amount: float) -> None:
-        # TODO
         pass
 
     def withdraw(self, amount: float) -> bool:
-        # TODO: return True if successful, False if insufficient funds
         pass
 
     def get_balance(self) -> float:
-        # TODO
         pass
 
-
-# Exercise 3: Employee extends Person (dataclass); add salary and a describe() method
 @dataclass
 class Person:
     name: str
     age: int
 
-
 class Employee(Person):
+
     def __init__(self, name: str, age: int, salary: float) -> None:
-        # TODO: call parent __init__
         pass
 
     def describe(self) -> str:
-        # TODO: return "Alice, age 30, salary $95000"
         pass
-
-
 # ---------------------------------------------------------------------------
 # Tests — don't edit below
 # ---------------------------------------------------------------------------

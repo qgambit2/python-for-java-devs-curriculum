@@ -30,7 +30,9 @@ LESSON 1 — Syntax & variables                                              ✅
 ================================================================================
     lesson_01/01_syntax.py
     lesson_01/02_variables.py
+    lesson_01/03_control_flow.py   — if/for/while/match (Java control flow)
     Practice: lesson_01/practice/01_practice.py
+               lesson_01/practice/02_control_flow.py
 
 
 ================================================================================
@@ -42,10 +44,11 @@ LESSON 2 — Collections (list, dict, tuple, set) & slicing                    �
 
 
 ================================================================================
-LESSON 3 — Strings & formatting                                            ✅
+LESSON 3 — Strings: operations & formatting                                ✅
 ================================================================================
     lesson_03/01_strings.py
     Practice: lesson_03/practice/01_strings.py
+               lesson_03/practice/02_string_ops.py  (incl. re ex 11–12)
 
 
 ================================================================================
@@ -137,12 +140,28 @@ LESSON 15 — AWS Lambda & boto3 (optional)                                  �
 
 
 ================================================================================
+LESSON 16 — Unit testing (JUnit 5 / pytest, Mockito)                       ✅
+================================================================================
+    lesson_16/01_pytest_junit5.py           — @Test, assert, assertThrows
+    lesson_16/02_fixtures_and_parametrize.py — @BeforeEach, @ParameterizedTest
+    lesson_16/03_mocking.py                 — Mockito / unittest.mock
+    lesson_16/04_unittest_legacy.py         — JUnit 4 / unittest (legacy only)
+    lesson_16/05_flask_testing.py           — Flask test_client ≈ MockMvc
+    Practice: lesson_16/practice/01_write_tests.py
+               lesson_16/practice/02_flask_api.py
+
+    Install: uv sync --group dev
+    Run:     uv run pytest lesson_16/ -v
+
+
+================================================================================
 CROSS-CUTTING INDEX
 ================================================================================
     Collections          → L2    Strings (basics)     → L3
     Strings (OOP)        → L8:03 Java Streams        → L5:02, 01, 03
     equals/hashCode      → L8:07 Sorting             → L5:01; L8:08
     File / async I/O     → L12 / L13 (planned)
+    Unit testing         → L16   (JUnit 5 / pytest / Mockito)
 """
 
 if __name__ == "__main__":

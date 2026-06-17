@@ -21,6 +21,8 @@ sorted(nums)                    # new list — original unchanged
 sorted(scores, key=lambda n: scores[n])
 ```
 
+> **Java:** `list.size()` → `len(list)`; `Collections.min/max` → `min`/`max` builtins. No `.size()` on Python lists — `len()` is the single length function for lists, strings, dicts, and sets.
+
 | Call | Mutates? | Returns |
 |------|----------|---------|
 | `sorted(x)` | no | new `list` |
@@ -36,6 +38,69 @@ all(pred(x) for x in xs)
 ```
 
 > **Java:** `.stream().anyMatch()`, `IntStream.range`, `Comparator.comparing` via `key=`.
+
+### `sorted(..., key=...)` — one field or many
+
+**Single field** — sort dict keys by their value in another map:
+
+```python
+sorted(scores, key=lambda name: scores[name])
+```
+
+**Multiple fields (tie-breakers)** — return a **tuple** from `key`. Python compares element by element (like `thenComparing`):
+
+```python
+# rarest words first: lowest count, then alphabetical (lesson_02/practice/02_collections.py)
+sorted(word_counts.keys(), key=lambda w: (word_counts[w], w))
+
+# people: age first, name for ties
+sorted(people, key=lambda p: (p["age"], p["name"]))
+```
+
+| Python | Java |
+|--------|------|
+| `key=lambda w: (word_counts[w], w)` | `Comparator.comparingInt(w -> counts.get(w)).thenComparing(w -> w)` |
+| `key=lambda p: (p["age"], p["name"])` | `Comparator.comparing(Person::getAge).thenComparing(Person::getName)` |
+
+Use `reverse=True` when you want descending order on the whole sort key.
+
+### `heapq` — top-k without sorting everything
+
+For **small k, large n**, sorting the whole collection is wasteful. The **`heapq`** module (stdlib — `import heapq`) implements a **min-heap** — the same idea as Java’s **`PriorityQueue`**.
+
+```python
+import heapq
+
+nums = [5, 1, 9, 2, 7, 1]
+
+heapq.nsmallest(3, nums)                    # [1, 1, 2] — three smallest
+heapq.nlargest(2, nums)                     # [9, 7]    — two largest
+
+# Same key= as sorted — rare_words-style (lesson_02/practice/02_collections.py)
+word_counts = {"aa": 1, "bb": 2, "cc": 2}
+heapq.nsmallest(2, word_counts.keys(), key=lambda w: (word_counts[w], w))
+# ['aa', 'bb']
+```
+
+| Approach | When | Rough cost |
+|----------|------|------------|
+| `sorted(xs, key=...)[:k]` | Small data, clarity, no import | O(n log n) |
+| `heapq.nsmallest(k, xs, key=...)` | Large **n**, small **k** | O(n log k) |
+
+**Manual heap** (like using `PriorityQueue` directly):
+
+```python
+import heapq
+
+h = [5, 1, 9, 2]
+heapq.heapify(h)          # rearrange list in-place into a min-heap
+heapq.heappush(h, 0)      # offer(0)
+heapq.heappop(h)          # poll() → 0 (smallest)
+```
+
+> **Java:** `PriorityQueue` (min-heap by default; pass `Comparator` for custom order). `heapq.nsmallest(k, xs)` ≈ stream sort + `limit(k)` for small exercises; for huge data ≈ maintaining a size-k priority queue or Guava `Ordering.leastOf(k, iterable)`. Python’s heap is **in a list** you pass to `heapq` functions — there is no separate `PriorityQueue` class in the stdlib.
+
+**Lesson 2 practice** allows dict builtins only (no `heapq`). Use `sorted(...)[:k]` there; reach for `heapq` in production when performance matters.
 
 ---
 
@@ -64,7 +129,35 @@ Looping `for k, v in d` without `.items()` fails — dict iteration yields keys 
 total = sum(n * n for n in nums if n % 2 == 1)
 ```
 
-No brackets → lazy iterator, like a Stream pipeline consumed by `sum` / `any` / `max`.
+No brackets → lazy iterator, like a Stream pipeline consumed by `sum` / `any` / `max` / `sorted`.
+
+### `sorted([...])` vs `sorted(x for x in ...)` — both work; omit `[]` when you can
+
+When a comprehension is only passed to a builtin that walks the iterable **once**, prefer a **generator** (no square brackets):
+
+```python
+before = {"alice": 50, "bob": 70}
+after = {"alice": 50, "bob": 65, "carol": 40}
+
+# Both return ["bob", "carol"] — same result
+sorted([n for n, s in after.items() if before.get(n, 0) != s])
+sorted(n for n, s in after.items() if before.get(n, 0) != s)   # preferred
+```
+
+| Form | Behavior |
+|------|----------|
+| `[x for x in xs if p(x)]` | **List comprehension** — builds the full list first |
+| `x for x in xs if p(x)` inside `sorted(...)` | **Generator** — yields items on demand |
+
+**Why skip `[]`?** `sorted()` will collect everything anyway. The list form allocates an intermediate list you do not need if you only use the result once.
+
+Same rule for `any(...)`, `all(...)`, `sum(...)`, `max(...)`, `min(...)`.
+
+> **Java:** like piping a `Stream` into `.sorted()` without `.collect(toList())` in between when you only need the sorted output once.
+
+**Keep `[]` when:** you need the filtered list twice, index it before sorting, or return the list itself (not only passing it to one function).
+
+You first meet this pattern in `lesson_02/practice/02_collections.py` (`score_changes`); Lesson 5 is the full treatment.
 
 ### Nested flatten
 

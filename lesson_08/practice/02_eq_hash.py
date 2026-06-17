@@ -11,126 +11,71 @@ Read:
 Fill in each TODO, then run:
     uv run python lesson_08/practice/02_eq_hash.py
 """
-
 import sys
 from pathlib import Path
-
 _p = Path(__file__).resolve().parent
-while not (_p / "_lesson_runner.py").is_file():
+while not (_p / '_lesson_runner.py').is_file():
     _p = _p.parent
 if str(_p) not in sys.path:
     sys.path.insert(0, str(_p))
-
-
 from dataclasses import dataclass
 
-
-# ---------------------------------------------------------------------------
-# Exercise 1: Point2D — value object with __eq__ and __hash__
-# Two Point2D(1, 2) must be == and have the same hash (Java contract).
-# ---------------------------------------------------------------------------
 class Point2D:
+
     def __init__(self, x: int, y: int) -> None:
-        # TODO
         pass
 
     def __eq__(self, other: object) -> bool:
-        # TODO: isinstance check + compare x, y; return NotImplemented for wrong types
         pass
 
     def __hash__(self) -> int:
-        # TODO: return hash((self.x, self.y))  — ≈ Objects.hash(x, y)
         pass
 
     def __repr__(self) -> str:
-        return f"Point2D({self.x}, {self.y})"
+        return f'Point2D({self.x}, {self.y})'
 
-
-# ---------------------------------------------------------------------------
-# Exercise 2: unique_point_count — dedupe a list using set (needs hashable Point2D)
-# unique_point_count([Point2D(1,1), Point2D(2,2), Point2D(1,1)]) → 2
-# ---------------------------------------------------------------------------
 def unique_point_count(points: list[Point2D]) -> int:
-    # TODO
     pass
 
-
-# ---------------------------------------------------------------------------
-# Exercise 3: PlayingCard — rank + suit; equal cards match; usable in a set
-# ---------------------------------------------------------------------------
 class PlayingCard:
+
     def __init__(self, rank: str, suit: str) -> None:
-        # TODO
         pass
 
     def __eq__(self, other: object) -> bool:
-        # TODO
         pass
 
     def __hash__(self) -> int:
-        # TODO: return hash((self.rank, self.suit))  — str elements are hashable
         pass
 
     def __repr__(self) -> str:
-        return f"{self.rank} of {self.suit}"
+        return f'{self.rank} of {self.suit}'
 
-
-# ---------------------------------------------------------------------------
-# Exercise 4: count_cards — how many of each card? (dict keys need hashable cards)
-# count_cards([ace, ace, king]) → {ace: 2, king: 1}  (use PlayingCard instances)
-# ---------------------------------------------------------------------------
 def count_cards(cards: list[PlayingCard]) -> dict[PlayingCard, int]:
-    # TODO: loop or collections.Counter pattern with plain dict
     pass
 
-
-# ---------------------------------------------------------------------------
-# Exercise 5: same_object — True only if a and b are the SAME object (use is, not ==)
-# ---------------------------------------------------------------------------
 def same_object(a: object, b: object) -> bool:
-    # TODO
     pass
 
-
-# ---------------------------------------------------------------------------
-# Exercise 6: MutableVec — __eq__ by value but NO __hash__ (intentionally unhashable)
-# Implement __eq__ only. Do NOT add __hash__.
-# ---------------------------------------------------------------------------
 class MutableVec:
+
     def __init__(self, x: int, y: int) -> None:
-        # TODO
         pass
 
     def __eq__(self, other: object) -> bool:
-        # TODO
         pass
 
-
-# ---------------------------------------------------------------------------
-# Exercise 7: is_hashable — return True if obj can be a set member / dict key
-# Hint: try hash(obj) in try/except TypeError
-# ---------------------------------------------------------------------------
 def is_hashable(obj: object) -> bool:
-    # TODO
     pass
 
-
-# ---------------------------------------------------------------------------
-# Exercise 8: @dataclass(frozen=True) Color — use as dict key to count colors
-# tag_count([red, blue, red]) → {red: 2, blue: 1}
-# ---------------------------------------------------------------------------
 @dataclass(frozen=True)
 class Color:
     r: int
     g: int
     b: int
 
-
 def tag_count(colors: list[Color]) -> dict[Color, int]:
-    # TODO
     pass
-
-
 # ---------------------------------------------------------------------------
 # Tests — don't edit below
 # ---------------------------------------------------------------------------

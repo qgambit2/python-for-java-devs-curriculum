@@ -19,27 +19,28 @@ if str(_p) not in sys.path:
 
 # Exercise 1: Return a sentence like "My name is Alex and my favorite number is 7"
 def introduce(name: str, favorite_number: int) -> str:
-    return f"My name is {name} and my favorite number is {favorite_number}"
+    pass
+
 
 
 # Exercise 2: Return True if the number is even (hint: % operator works like Java)
 def is_even(n: int) -> bool:
-    return n % 2 == 0
+    pass
+
 
 
 # Exercise 3: Return the sum of all numbers in the list
 def sum_list(numbers: list[int]) -> int:
-    return sum(numbers)
+    pass
+
 
 
 
 # Exercise 4: Return a dict counting how many times each word appears
 # Example: count_words(["a", "b", "a"]) -> {"a": 2, "b": 1}
 def count_words(words: list[str]) -> dict[str, int]:
-    counts = {}
-    for word in words:
-        counts[word] = counts.get(word, 0) + 1
-    return counts;
+    pass
+
 
 
 

@@ -69,7 +69,7 @@ if value is None:
 
 ## What to take into Lesson 2
 
-You need comfortable reading of `if`, assignment, and `print`. Lesson 2 introduces the four collection types that replace most of `java.util` for everyday scripts.
+You need comfortable reading of `if`, assignment, and `print`. Next read **control flow** (`lesson_01/03_control_flow.py` — if/for/while/match), then Lesson 2 collections.
 
 ---
 

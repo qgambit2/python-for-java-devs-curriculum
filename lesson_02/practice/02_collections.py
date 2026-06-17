@@ -24,14 +24,16 @@ if str(_p) not in sys.path:
 # Exercise 1: Remove duplicates, keep first-seen order
 # dedupe_ordered(["b", "a", "b", "c", "a"]) -> ["b", "a", "c"]
 def dedupe_ordered(items: list[str]) -> list[str]:
-    return list(dict.fromkeys(items))
+    pass
+
 
 
 
 # Exercise 2: Parallel lists to dict (you've done this before — make it automatic)
 # zip_to_dict(["alice", "bob"], [95, 87]) -> {"alice": 95, "bob": 87}
 def zip_to_dict(keys: list[str], values: list[int]) -> dict[str, int]:
-    return dict(zip(keys, values))
+    pass
+
 
 
 # Exercise 3: Per-key maximum of two score maps — new dict, don't mutate inputs
@@ -41,14 +43,16 @@ def merge_max(left: dict[str, int], right: dict[str, int]) -> dict[str, int]:
     pass
 
 
+
 # Exercise 4: Names whose score CHANGED between before and after (iterate after)
 # Compare with before.get(name, 0). Return names sorted alphabetically.
 # score_changes({"alice": 50, "bob": 70}, {"alice": 50, "bob": 65, "carol": 40})
 #   -> ["bob", "carol"]
 def score_changes(
-    before: dict[str, int], after: dict[str, int]
-) -> list[str]:
     pass
+
+) -> list[str]:
+    return sorted(name for name, value in after.items() if before.get(name, 0) != value)
 
 
 # Exercise 5: Keep only keys from allowlist that exist in data (preserve allowlist order)
@@ -58,6 +62,7 @@ def pick_keys(data: dict[str, int], allowlist: list[str]) -> dict[str, int]:
     pass
 
 
+
 # Exercise 6: Group words by first letter (case-insensitive); words in each group sorted
 # group_by_first_letter(["Banana", "apple", "apricot", "cherry"])
 #   -> {"a": ["apple", "apricot"], "b": ["Banana"], "c": ["cherry"]}
@@ -65,10 +70,12 @@ def group_by_first_letter(words: list[str]) -> dict[str, list[str]]:
     pass
 
 
+
 # Exercise 7: Rotate list LEFT by k (k may exceed len; 0 or full turn -> unchanged)
 # rotate_left([1, 2, 3, 4, 5], 2) -> [3, 4, 5, 1, 2]
 def rotate_left(items: list[int], k: int) -> list[int]:
     pass
+
 
 
 # Exercise 8: k rarest words — lowest frequency first; ties: alphabetical
@@ -78,10 +85,12 @@ def rare_words(words: list[str], k: int) -> list[str]:
     pass
 
 
+
 # Exercise 9: Sum each row of a matrix
 # sum_rows([[1, 2, 3], [4, 5, 6]]) -> [6, 15]
 def sum_rows(matrix: list[list[int]]) -> list[int]:
     pass
+
 
 
 # Exercise 10: Character frequency in a string (ignore spaces)
@@ -90,10 +99,12 @@ def char_counts(text: str) -> dict[str, int]:
     pass
 
 
+
 # Exercise 11: Names whose score WENT DOWN (iterate after; before.get(name, 0) > after score)
 # slipped_names({"alice": 80, "bob": 70}, {"alice": 90, "bob": 65}) -> ["bob"]
 def slipped_names(before: dict[str, int], after: dict[str, int]) -> list[str]:
     pass
+
 
 
 # Exercise 12: Overlay user onto defaults — unknown user keys ignored (configure pattern)
@@ -102,7 +113,8 @@ def slipped_names(before: dict[str, int], after: dict[str, int]) -> list[str]:
 #     {"theme": "dark", "hacker": True},
 # ) -> {"theme": "dark", "lang": "en", "notifications": True}
 def merge_defaults(
-    defaults: dict[str, object], user: dict[str, object]
+    pass
+
 ) -> dict[str, object]:
     pass
 
@@ -155,6 +167,11 @@ def _run_tests() -> None:
         group_by_first_letter(["Banana", "apple", "apricot", "cherry"]),
         {"a": ["apple", "apricot"], "b": ["Banana"], "c": ["cherry"]},
         "group_by_first_letter — case insensitive",
+    )
+    _check(
+        group_by_first_letter(["apricot", "apple", "Banana"]),
+        {"a": ["apple", "apricot"], "b": ["Banana"]},
+        "group_by_first_letter — words sorted within group",
     )
     _check(group_by_first_letter([]), {}, "group_by_first_letter — empty")
 

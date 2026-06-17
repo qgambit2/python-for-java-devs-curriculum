@@ -1,6 +1,7 @@
 01-introduction.md
 02-how-to-study.md
 03-lesson-01-syntax.md
+04-lesson-01-control-flow.md
 04-lesson-02-collections.md
 05-lesson-02-slicing.md
 06-lesson-03-strings.md
@@ -10,5 +11,6 @@
 10-lesson-07-gotchas-pythonic.md
 11-lesson-08-oop-basics.md
 12-lesson-08-dataclass-eq-sort.md
+16-lesson-16-unit-testing.md
 90-future-chapters.md
 99-appendix.md

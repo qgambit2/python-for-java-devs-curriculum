@@ -24,6 +24,22 @@ print(fruits[0])   # apple
 
 > **Java:** `List<String> fruits = new ArrayList<>(); fruits.add("date"); fruits.get(0);`
 
+### Length — use `len()`, not `.size()`
+
+Python has **no** `.size()` on lists (and no `.length()` like arrays or strings in Java). Use the built-in **`len()`**:
+
+```python
+len(fruits)   # 3 — works on list, str, dict, set, tuple, ...
+```
+
+| Java | Python |
+|------|--------|
+| `list.size()` | `len(list)` |
+| `array.length` | `len(list)` |
+| `string.length()` | `len(string)` |
+
+`len` is a **function**, not a method on the object — one API for all sized types.
+
 ### indexOf becomes index — with a trap
 
 ```python
@@ -111,17 +127,91 @@ list(dict.fromkeys(items))   # ["b", "a", "c"]
 
 For the same O(n) behavior with clearer steps, a `set` for “already seen” plus a result list is fine while you are learning (`lesson_02/practice/02_collections.py`, `dedupe_ordered`).
 
-### Spread / merge
+### Spread / merge — `**` inside `{...}`
 
-`**` inside `{...}` unpacks key-value pairs:
+`**` inside a dict literal **unpacks** (spreads) another dict's key-value pairs into the new dict. Without `**`, you are **not** merging entries.
+
+| Syntax | What it does |
+|--------|----------------|
+| `{**d}` | New dict with the same top-level entries as `d` (shallow copy) |
+| `{**a, **b}` | Merge: start with `a`, overlay `b`; **right wins** on duplicate keys |
+| `{d}` | **Not** a copy — Python treats this as a set literal; a dict is unhashable → `TypeError` |
+| `{d.copy(), **b}` | **Wrong** — same problem; `d.copy()` without `**` does not spread |
+
+**Rule of thumb:** inside `{ }`, a dict only contributes its **entries** when prefixed with `**`. Think Java `putAll`, not “put the whole map object as one value.”
+
+**Shallow copy** (all three equivalent for a plain `dict`):
+
+```python
+{**original}
+dict(original)
+original.copy()
+```
+
+**Merge** (later `**` blocks overwrite earlier keys):
 
 ```python
 defaults = {"theme": "light", "lang": "en"}
 user = {"theme": "dark"}
-{**defaults, **user}     # user wins on conflict
+{**defaults, **user}     # {"theme": "dark", "lang": "en"}
 ```
 
-> **Java:** `new HashMap<>(defaults); putAll(user);` — right-hand keys overwrite.
+> **Java:** `var out = new HashMap<>(defaults); out.putAll(user);` — right-hand keys overwrite.
+
+### In-place merge — `dict.update()`
+
+`out.update(other)` merges **into the existing dict** `out` (mutates it). It does **not** create a new dict and does **not** remove keys missing from `other`.
+
+For each key in `other`:
+
+- key already in `out` → value is **replaced**
+- key not in `out` → entry is **added**
+
+```python
+out = {"theme": "light", "lang": "en"}
+out.update({"theme": "dark", "notifications": True})
+# out → {"theme": "dark", "lang": "en", "notifications": True}
+```
+
+Returns `None` — use `out` after the call. Also accepts keyword args: `out.update(theme="dark")`.
+
+> **Java:** `out.putAll(other)` on a `HashMap`.
+
+| Style | Creates new dict? | Mutates original? |
+|-------|-------------------|---------------------|
+| `{**a, **b}` | yes | no — `a` and `b` unchanged |
+| `a.copy(); out.update(b)` | yes (via `copy`) | no — only `out` changes |
+| `a.update(b)` | no | yes — `a` is modified in place |
+
+Prefer **`{**a, **b}`** when you want a merged result without touching inputs (e.g. `merge_defaults`). Prefer **`update()`** when you are deliberately building or patching one dict over several steps.
+
+**Filtered merge** (practice `merge_defaults` — ignore unknown user keys):
+
+```python
+def merge_defaults(defaults: dict, user: dict) -> dict:
+    allowed = {k: user[k] for k in user if k in defaults}
+    return {**defaults, **allowed}
+```
+
+These two are **not** equivalent:
+
+```python
+# ✓ spreads entries from defaults, then overlays filtered user keys
+{**defaults, **{k: user[k] for k in user if k in defaults}}
+
+# ✗ tries to put the whole dict object inside { } — TypeError
+{defaults.copy(), **{k: user[k] for k in user if k in defaults}}
+```
+
+Imperative equivalent (same semantics):
+
+```python
+out = defaults.copy()
+out.update({k: user[k] for k in user if k in defaults})
+return out
+```
+
+All forms above are **shallow**: nested lists or dicts inside values are still shared. For deep trees, use `copy.deepcopy()` (later).
 
 ### Grouping with setdefault
 
@@ -239,6 +329,33 @@ Union minus overlap equals symmetric difference.
 Lists use `+` for concatenation (duplicates stay). Sets use `|` for union (deduped).
 
 > **Java:** `Sets.union`, `retainAll`, `removeAll`, `symmetricDifference`.
+
+---
+
+## Preview: generator inside `sorted()` (round-2 practice)
+
+In `lesson_02/practice/02_collections.py` you will filter dict entries and sort names. **Both forms work** — prefer the one **without** `[]`:
+
+```python
+sorted([name for name, score in after.items() if before.get(name, 0) != score])
+sorted(name for name, score in after.items() if before.get(name, 0) != score)  # preferred
+```
+
+Brackets build a list first; the bare `name for ...` is a **generator** fed straight to `sorted()` — no extra allocation. Full explanation in **Lesson 5 — Builtins, comprehensions, and functional style**.
+
+> **Java:** `Stream.filter(...).sorted()` without an intermediate `.collect(toList())`.
+
+### Preview: sort by tuple key (`rare_words` exercise)
+
+Sort by **count first**, then **word** for ties — pass a **tuple** to `key=`:
+
+```python
+sorted(word_counts.keys(), key=lambda w: (word_counts[w], w))[:k]
+```
+
+Python compares tuples left to right: lower count first; if counts match, alphabetical word order.
+
+> **Java:** `Comparator.comparingInt((String w) -> counts.get(w)).thenComparing(w -> w)` — same two-level sort. For large lists and small `k`, see **Lesson 5** § `heapq.nsmallest` (≈ `PriorityQueue` / partial top-k).
 
 ---
 

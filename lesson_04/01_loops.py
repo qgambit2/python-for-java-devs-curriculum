@@ -1,6 +1,9 @@
-"""Lesson 1e — loops (for, while, break, continue).
+"""Lesson 4a — loops (for, while, break, continue).
 
-Deeper loop patterns: 08_builtins.py (enumerate), 11_comprehensions.py (replace many loops).
+Full Java ↔ Python control flow map: lesson_01/03_control_flow.py (read that first).
+This file reinforces loops with collections you know from Lesson 2.
+
+Deeper loop patterns: lesson_05 (enumerate), comprehensions (replace many loops).
 
 Run:
     uv run python lesson_04/01_loops.py

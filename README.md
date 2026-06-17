@@ -10,8 +10,7 @@ lesson_02/
   01_collections.py
   02_slicing.py
   practice/
-    01_collections.py
-    02_collections.py
+    01_collections.py    # stubs (pass) + tests — fill in and run until checks pass
 ```
 
 ## Quick start
@@ -45,7 +44,7 @@ See `docs/java-equivalents.md` for side-by-side Java ↔ Python tables.
 uv run python lesson_02/practice/01_collections.py
 ```
 
-Fix one exercise at a time until you see checkmarks from `_check()`.
+Each practice file ships with `pass` stubs and `_check()` tests. Replace stubs one exercise at a time until you see checkmarks.
 
 ## Requirements
 

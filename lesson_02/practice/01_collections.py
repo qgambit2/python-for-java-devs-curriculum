@@ -20,17 +20,15 @@ if str(_p) not in sys.path:
 
 # Exercise 1: Flatten one level — [[1, 2], [3]] -> [1, 2, 3]
 def flatten(nested: list[list[int]]) -> list[int]:
-    return sum(nested, [])
+    pass
+
 
 
 # Exercise 2: Split items into chunks of size n (last chunk may be smaller)
 # chunk(["a", "b", "c", "d", "e"], 2) -> [["a", "b"], ["c", "d"], ["e"]]
 def chunk(items: list[str], size: int) -> list[list[str]]:
-    if (items == []):
-        return []
-    if (size >= len(items) or size == 0):
-        return [items]
-    return [items[i:i+size] for i in range(0, len(items), size)]
+    pass
+
 
 
 # Exercise 3: Rotate list right by k places (k may be larger than len)
@@ -38,11 +36,8 @@ def chunk(items: list[str], size: int) -> list[list[str]]:
 # rotate_right([1, 2, 3], 0) -> [1, 2, 3]
 # rotate_right([], 3) -> []
 def rotate_right(items: list[int], k: int) -> list[int]:
-    if (k == len(items) or k == 0 or items == []):
-        return items
-    if (k > len(items)):
-        k = k % len(items)
-    return items[-k:] + items[:-k]
+    pass
+
 
 
 # Exercise 4: Group words by their length
@@ -50,14 +45,8 @@ def rotate_right(items: list[int], k: int) -> list[int]:
 # Keys in result must be sorted ascending when converted to dict iteration order
 # (build with sorted keys, or rely on insertion order from processing sorted lengths)
 def group_by_length(words: list[str]) -> dict[int, list[str]]:
-    if (words == []):
-        return {}
-    result = {}
-    for word in words:
-        if (len(word) not in result):
-            result[len(word)] = []
-        result[len(word)].append(word)
-    return result
+    pass
+
 
 
 
@@ -66,9 +55,8 @@ def group_by_length(words: list[str]) -> dict[int, list[str]]:
 # If duplicate values exist, later keys win (like Java HashMap merge overwrite)
 # invert({"a": 1, "b": 1}) -> {1: "b"}
 def invert(mapping: dict[str, int]) -> dict[int, str]:
-    if (mapping == {}):
-        return {}
-    return {v: k for k, v in mapping.items()}
+    pass
+
 
 
 # Exercise 6: Merge two score dicts — add values for shared keys
@@ -77,8 +65,8 @@ def invert(mapping: dict[str, int]) -> dict[int, str]:
 # Use right.copy() — don't mutate the caller's dict (see 04_collections.py, 06_functions.py)
 # Loop: result[k] = result.get(k, 0) + v   OR one-liner with left.keys() | right.keys() (12_sets.py)
 def merge_scores(left: dict[str, int], right: dict[str, int]) -> dict[str, int]:
-    keys = left.keys() | right.keys()   # union of keys (3.9+)
-    return {k: left.get(k, 0) + right.get(k, 0) for k in keys}
+    pass
+
 
 
 
@@ -86,7 +74,8 @@ def merge_scores(left: dict[str, int], right: dict[str, int]) -> dict[str, int]:
 # filter_passing(["alice", "bob", "carol"], [90, 55, 88], 60)
 #   -> {"alice": 90, "carol": 88}
 def filter_passing(
-    names: list[str], scores: list[int], threshold: int
+    pass
+
 ) -> dict[str, int]:
     if not names:
         return {}
@@ -96,10 +85,8 @@ def filter_passing(
 # Exercise 8: Return top k words by frequency (highest first). Ties: alphabetical
 # top_words(["bb", "aa", "bb", "cc", "aa", "aa"], 2) -> ["aa", "bb"]
 def top_words(words: list[str], k: int) -> list[str]:
-    word_count = {}
-    for word in words:
-        word_count[word] = word_count.get(word, 0) + 1
-    return sorted(word_count.keys(),  key=lambda x: (-word_count[x], x))[:k]
+    pass
+
 
 
 
@@ -108,8 +95,8 @@ def top_words(words: list[str], k: int) -> list[str]:
 # For this exercise, all rows have equal length.
 # transpose([[1, 2, 3], [4, 5, 6]]) -> [[1, 4], [2, 5], [3, 6]]
 def transpose(matrix: list[list[int]]) -> list[list[int]]:
-    zipped = zip(*matrix, strict=False)
-    return [list(z) for z in zipped]
+    pass
+
 
 # Exercise 10: Group words that are anagrams of each other
 # Return dict keyed by the sorted letters of each word, values are sorted word lists
@@ -119,11 +106,8 @@ def transpose(matrix: list[list[int]]) -> list[list[int]]:
 #   -> {"aet": ["ate", "eat", "tea"], "ant": ["nat", "tan"], "abt": ["bat"]}
 # (key order in dict does not matter for tests — we compare as dicts)
 def anagram_groups(words: list[str]) -> dict[str, list[str]]:
-    result = {}
-    for word in words:
-        sorted_word = "".join(sorted(word));
-        result.setdefault(sorted_word, []).append(word)
-    return  {k: sorted(v) for k, v in result.items()}
+    pass
+
 
 
 # Exercise 11: Pipeline — return names whose scores improved AND final score >= 60
@@ -134,9 +118,8 @@ def anagram_groups(words: list[str]) -> dict[str, list[str]]:
 #     min_final=60,
 # ) -> ["alice"]   # only alice improved (50->80) and final >= 60
 def improved_names(
-    before: dict[str, int],
-    after: dict[str, int],
-    min_final: int,
+    pass
+
 ) -> list[str]:
     return [
         name
@@ -153,7 +136,8 @@ def improved_names(
 # {**defaults, **user} merges dicts — see 04_collections.py + faq.md § ** dict unpacking
 # Must filter: {**defaults, **{k: user[k] for k in user if k in defaults}}
 def configure(defaults: dict[str, object], user: dict[str, object]) -> dict[str, object]:
-    return {**defaults, **{k: user[k] for k in user if k in defaults}}
+    pass
+
 
 
 # ---------------------------------------------------------------------------

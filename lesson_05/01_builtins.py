@@ -53,6 +53,24 @@ print(result, copy)
 print(list(reversed(nums)))      # [5, 1, 4, 1, 3]
 
 # ---------------------------------------------------------------------------
+# heapq — top-k smallest/largest (min-heap; like PriorityQueue)
+# ---------------------------------------------------------------------------
+import heapq
+
+nums = [5, 1, 9, 2, 7, 1]
+print(heapq.nsmallest(3, nums))   # [1, 1, 2]
+print(heapq.nlargest(2, nums))    # [9, 7]
+
+word_counts = {"aa": 1, "bb": 2, "cc": 2}
+print(heapq.nsmallest(2, word_counts.keys(), key=lambda w: (word_counts[w], w)))
+# ['aa', 'bb'] — same key idea as sorted(...)[:k] in rare_words practice
+
+h = [5, 1, 9]
+heapq.heapify(h)
+heapq.heappush(h, 0)
+print(heapq.heappop(h))           # 0 — smallest (poll on min-heap)
+
+# ---------------------------------------------------------------------------
 # any, all — like stream().anyMatch() / allMatch()
 # ---------------------------------------------------------------------------
 scores = [40, 55, 90]

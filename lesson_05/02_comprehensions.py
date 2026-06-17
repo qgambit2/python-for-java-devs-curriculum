@@ -36,9 +36,16 @@ print(merged)   # {'bob': 8, 'carol': 7, 'alice': 10}
 unique_lengths = {len(word) for word in ["hi", "hey", "yo", "hello"]}
 print(unique_lengths)
 
-# Generator expression — lazy (like Stream), use with sum/any/max
+# Generator expression — lazy (like Stream), use with sum/any/max/sorted
 total = sum(n * n for n in nums if n % 2 == 1)  # sum of odd squares
 print(total)
+
+# sorted + generator — both work; omit [] when sorted is the only consumer
+before = {"alice": 50, "bob": 70}
+after = {"alice": 50, "bob": 65, "carol": 40}
+changed = sorted(name for name, score in after.items() if before.get(name, 0) != score)
+print(changed)   # ['bob', 'carol']
+# sorted([name for ...])  # same result — extra list allocation
 
 # Nested — flatten a matrix
 matrix = [[1, 2], [3, 4], [5, 6]]

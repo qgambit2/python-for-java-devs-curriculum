@@ -28,7 +28,7 @@ nums[:]      # shallow copy of the whole list
 
 > **Java:** `list.subList(1, 4)` — same exclusive end index.
 
-Dicts have **no** slice operator. Copy with `{**d}` or `d.copy()`.
+Dicts have **no** slice operator. Shallow copy with `{**d}`, `d.copy()`, or `dict(d)` — see Lesson 2 collections § spread/merge (`**` required inside `{ }` to unpack entries).
 
 ## Negative indices — count from the end
 
@@ -36,9 +36,17 @@ Dicts have **no** slice operator. Copy with `{**d}` or `d.copy()`.
 nums[-1]     # 50 — last element (scalar, not a list)
 nums[-3:]    # [30, 40, 50] — last three
 nums[:-1]    # all but the last
+nums[:-2]    # all but the last two — general: items[:-k] drops last k elements
 ```
 
-Rule: index `k` when negative means `len(nums) + k`.
+Rule: index `k` when negative means `len(nums) + k`. A **negative stop** counts from the end: `[:-k]` is everything **before** the last `k` slots.
+
+| Slice | On `[1, 2, 3, 4, 5]` |
+|-------|------------------------|
+| `[-2:]` | `[4, 5]` — last 2 |
+| `[:-2]` | `[1, 2, 3]` — all but last 2 |
+
+> **Java:** `list.subList(0, list.size() - k)` ≈ `items[:-k]`; `list.subList(list.size() - k, list.size())` ≈ `items[-k:]`.
 
 ## Step — stride and reverse
 
@@ -70,9 +78,23 @@ for i in range(0, len(items), size):
 
 > **Java:** `subList(i, min(i+size, n))` in a loop — Python's slice in a `range` step loop is the idiomatic chunk pattern.
 
+**Rotate right by k** (practice `rotate_right`):
+
+```python
+items[-k:] + items[:-k]   # last k elements first, then the rest
+```
+
+**Rotate left by k** (practice `rotate_left`):
+
+```python
+items[k:] + items[:k]     # from k to end, then the first k
+```
+
+When `k` is larger than `len(items)`, reduce with `k % len(items)` first (a full rotation changes nothing).
+
 ## Bridge to practice
 
-Slicing shows up in `rotate_right`, `chunk`, and `every_other` exercises. When you implement them, ask: can I express this as a slice instead of a manual index loop?
+Slicing shows up in `rotate_right`, `rotate_left`, `chunk`, and `every_other` exercises. When you implement them, ask: can I express this as a slice instead of a manual index loop?
 
 Next practice file:
 
