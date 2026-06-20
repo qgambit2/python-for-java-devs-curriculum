@@ -16,6 +16,16 @@ Three shifts hit Java developers early:
 2. **Types are optional at runtime.** Hints help tools; the interpreter does not enforce them.
 3. **The standard library is the playground.** Lists, dicts, and sets are built in — no `java.util` imports for the basics.
 
+## Official Python documentation
+
+Keep this bookmarked — it is the authoritative reference (like the JDK Javadoc):
+
+- **Python 3 docs (home):** [https://docs.python.org/3/](https://docs.python.org/3/)
+- **Standard library:** [https://docs.python.org/3/library/index.html](https://docs.python.org/3/library/index.html) — `collections`, `json`, `pathlib`, `asyncio`, etc.
+- **Language reference:** [https://docs.python.org/3/reference/index.html](https://docs.python.org/3/reference/index.html) — syntax, data model, execution model
+
+> **Java:** `docs.python.org` ≈ [https://docs.oracle.com/en/java/javase/](https://docs.oracle.com/en/java/javase/) — use it when this book or a lesson file mentions a module you have not seen before (`collections.OrderedDict`, `functools`, `dataclasses`, …).
+
 ## What makes Python collections different
 
 | Java habit | Python reality |
