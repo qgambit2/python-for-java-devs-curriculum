@@ -4,6 +4,7 @@
 04-lesson-01-control-flow.md
 04-lesson-02-collections.md
 05-lesson-02-slicing.md
+05b-lesson-02-stdlib-collections.md
 06-lesson-03-strings.md
 07-lesson-04-loops-truthiness-functions.md
 08-lesson-05-builtins-comprehensions.md

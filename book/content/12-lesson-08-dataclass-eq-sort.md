@@ -89,18 +89,24 @@ uv run python lesson_08/practice/03_string_formatting.py
 
 ## OrderedDict & LRU (access-order)
 
-Lesson 2 covers **insertion** order and removal (`del`, `pop`, `popitem`, `next(iter(d))`). A plain `dict` does **not** promote a key on `get` — only `OrderedDict` (or delete+reinsert) gives **access-order** like `LinkedHashMap(accessOrder=true)`:
+Lesson 2 covers **insertion** order and removal (`del`, `pop`, `popitem`, `next(iter(d))`). A plain `dict` does **not** promote a key on `get` — you need **delete+reinsert** or `OrderedDict.move_to_end` for access-order LRU (`LinkedHashMap(accessOrder=true)`).
+
+**Plain dict** (common in interviews — no `collections` import):
 
 ```python
-from collections import OrderedDict
-
-od: OrderedDict[str, int] = OrderedDict()
-od["a"], od["b"], od["c"] = 1, 2, 3
-od.move_to_end("a")              # promote to MRU (tail)
-k, v = od.popitem(last=False)    # evict LRU (front)
+val = d.pop(key)
+d[key] = val              # reinsert at tail → MRU
+d.pop(next(iter(d)))      # evict LRU (front)
 ```
 
-`lesson_08/09_ordered_dict_lru.py` walks through a minimal `LRUCache` class — the pattern behind your `lesson_02/practice/LRUCache.py` side exercise.
+**OrderedDict** (reads intent clearly):
+
+```python
+od.move_to_end(key)
+od.popitem(last=False)
+```
+
+`lesson_08/09_ordered_dict_lru.py` implements **both** `LRUCache` variants side by side. `collections` overview: `lesson_02/03_collections_stdlib.py`.
 
 ---
 

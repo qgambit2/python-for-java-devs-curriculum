@@ -168,6 +168,11 @@ Lesson: `lesson_06/04_recursion.py`
 | `OrderedDict.popitem(last=False)` | FIFO eldest — access-order LRU → `lesson_08/09_ordered_dict_lru.py` |
 | `list.removeLast()` / `removeFirst()` | `lst.pop()` / `lst.pop(0)` |
 | `list.remove(Object)` | `lst.remove(value)` — `ValueError` if missing |
+| `computeIfAbsent(k, k -> new ArrayList<>())` | `defaultdict(list)` then `d[k].append(x)` |
+| `Collections.frequency` / Multiset | `Counter(iterable)` |
+| `ArrayDeque` | `collections.deque` — `appendleft`, `popleft` |
+| `list.removeFirst()` on `ArrayDeque` | `deque.popleft()` — **not** `list.pop(0)` (O(n)) |
+| `LinkedHashMap(accessOrder=true)` | `OrderedDict.move_to_end` or plain `dict` pop+reinsert |
 | `map.keySet()` | `d.keys()` |
 | `map.values()` | `d.values()` |
 | `map.entrySet()` | `d.items()` |

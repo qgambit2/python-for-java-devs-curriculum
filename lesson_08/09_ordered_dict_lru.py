@@ -6,7 +6,7 @@ This lesson shows when a plain dict is not enough — access-order LRU caches.
 Topics:
   - Plain dict: insert order only; get does not promote to MRU
   - OrderedDict.move_to_end — like LinkedHashMap access-order
-  - Minimal LRUCache class tying dict + eviction
+  - LRUCache with OrderedDict and with plain dict (pop + reinsert)
 
 Prerequisites: lesson_02/01_collections.py §2b, lesson_08/01_class_basics.py
 
@@ -56,7 +56,7 @@ k, v = od.popitem(last=False)
 print(f"evicted {k}={v} → {list(od.keys())}")
 
 
-section("3. LRUCache — class sketch (LeetCode-style)")
+section("3. LRUCache — OrderedDict (readable intent)")
 
 class LRUCache:
     """Capacity-bounded cache — OrderedDict for O(1) get/put + eviction."""
@@ -89,5 +89,47 @@ print(lru.get("a"))         # 1 — promotes "a"
 lru.put("c", 3)             # evicts "b" (LRU)
 print(lru)                  # a=1, c=3
 
-print("\nRemoval recap → lesson_02/01_collections.py §2b")
+
+section("4. LRUCache — plain dict (pop + reinsert, equally common)")
+
+# Same O(1) average behavior — no collections import. On get/put:
+#   pop(key) then store[key] = val  →  key lands at the end (MRU).
+# Evict LRU: pop(next(iter(store)))  →  removes oldest key.
+
+
+class LRUCacheDict:
+    """LRU with a regular dict — LeetCode-style alternative to OrderedDict."""
+
+    def __init__(self, capacity: int) -> None:
+        self.capacity = capacity
+        self._store: dict[str, int] = {}
+
+    def get(self, key: str) -> int:
+        if key not in self._store:
+            return -1
+        val = self._store.pop(key)
+        self._store[key] = val          # reinsert at tail → MRU
+        return val
+
+    def put(self, key: str, value: int) -> None:
+        if key in self._store:
+            self._store.pop(key)
+        self._store[key] = value
+        if len(self._store) > self.capacity:
+            self._store.pop(next(iter(self._store)))  # evict LRU (front)
+
+    def __repr__(self) -> str:
+        return f"LRUCacheDict({self._store}, cap={self.capacity})"
+
+
+lru2 = LRUCacheDict(2)
+lru2.put("a", 1)
+lru2.put("b", 2)
+print(lru2.get("a"))
+lru2.put("c", 3)
+print(lru2)                 # same outcome as OrderedDict version
+
+
+print("\ncollections module overview → lesson_02/03_collections_stdlib.py")
+print("Removal recap → lesson_02/01_collections.py §2b")
 print("Equality/hash in dict keys → lesson_08/07_eq_and_hash.py")

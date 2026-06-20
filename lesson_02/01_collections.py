@@ -162,7 +162,8 @@ print(f"evicted {oldest_key!r} → {oldest_demo}")
 # iter and next are BUILT-INS — not dict methods (no d.next()).
 
 # Plain dict: d[k] read and d[k]=v update do NOT move k to the end.
-# True LRU on get needs delete+reinsert or collections.OrderedDict.move_to_end — lesson_08/09_ordered_dict_lru.py
+# True LRU on get: pop+reinsert (plain dict) or OrderedDict.move_to_end
+#   lesson_02/03_collections_stdlib.py · lesson_08/09_ordered_dict_lru.py
 
 
 section("3. tuple — immutable ordered sequence (≈ Pair / Map.entry)")

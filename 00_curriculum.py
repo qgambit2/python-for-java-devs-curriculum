@@ -40,6 +40,7 @@ LESSON 2 â€” Collections (list, dict, tuple, set) & slicing                    â
 ================================================================================
     lesson_02/01_collections.py
     lesson_02/02_slicing.py
+    lesson_02/03_collections_stdlib.py
     Practice: lesson_02/practice/01_collections.py, lesson_02/practice/02_collections.py
 
 

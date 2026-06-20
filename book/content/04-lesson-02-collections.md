@@ -155,7 +155,20 @@ oldest_key = next(iter(d))
 
 `iter(d)` and `next(...)` are **built-in functions**, not dict methods (≈ `map.keySet().iterator().next()`).
 
-> **LRU caveat:** a plain `dict` keeps **insertion** order. Reading `d[k]` does **not** move `k` to the end. For access-order LRU, use delete+reinsert or `collections.OrderedDict.move_to_end` — see `lesson_08/09_ordered_dict_lru.py`.
+> **LRU caveat:** a plain `dict` keeps **insertion** order. Reading `d[k]` does **not** move `k` to the end. Promote on access with `val = d.pop(k); d[k] = val`, or use `collections.OrderedDict.move_to_end` — see `lesson_02/03_collections_stdlib.py` and `lesson_08/09_ordered_dict_lru.py`.
+
+### `collections` module — stdlib extras
+
+Beyond built-in `list`/`dict`/`set`, the stdlib **`collections`** package adds containers you will see in real code:
+
+| Type | Use | Java parallel |
+|------|-----|---------------|
+| `defaultdict(factory)` | auto-create missing keys | `computeIfAbsent` |
+| `Counter` | frequency counts | Guava `Multiset` |
+| `deque` | fast both-end push/pop | `ArrayDeque` |
+| `OrderedDict` | `move_to_end`, `popitem(last=False)` | `LinkedHashMap(accessOrder=true)` |
+
+**Lesson:** `lesson_02/03_collections_stdlib.py` · **Book:** `05b-lesson-02-stdlib-collections.md`
 
 ### Spread / merge — `**` inside `{...}`
 
