@@ -224,6 +224,10 @@ print("""
 | HashSet.contains             | x in set                       | __hash__ + __eq__ |
 | HashMap.get(key)             | d[key] / key in d              | __hash__ + __eq__ |
 | LinkedHashMap iteration      | for k in d / list(d.keys())    | insertion order (3.7+); reassign key ≠ move |
+| map.remove(k)                | del d[k] / d.pop(k)            | no dict.remove() |
+| LinkedHashMap eldest         | next(iter(d)); del d[k]        | plain dict — no popitem(last=) |
+| OrderedDict FIFO evict       | od.popitem(last=False)         | OrderedDict only |
+| LinkedHashMap access-order   | OrderedDict.move_to_end        | lesson_08/09_ordered_dict_lru.py |
 | ArrayList.contains           | x in list                      | __eq__ only (O(n))|
 | HashMap value (any type)     | d[key] = mutable_obj           | none on value     |
 | TreeSet / Comparable sort    | sorted(xs) with __lt__         | __lt__ (ordering) |
@@ -232,5 +236,6 @@ print("""
 | compareTo contract           | __lt__ (+ order=True)          | sort / min / max  |
 """)
 
-print("Lesson 2: collections → lesson_02/01_collections.py")
+print("Lesson 2: collections & removal → lesson_02/01_collections.py")
+print("OrderedDict / LRU → lesson_08/09_ordered_dict_lru.py")
 print("Equality deep dive → lesson_08/07_eq_and_hash.py")

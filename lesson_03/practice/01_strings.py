@@ -25,6 +25,8 @@ def score_line(name: str, score: int) -> str:
     pass
 
 def hex_byte(n: int) -> str:
+    # f"0x{n:02X}"  — Java: String.format("0x%02X", n)
+    # 255 → 0xFF,  15 → 0x0F (pad),  0 → 0x00
     pass
 
 def join_tags(tags: list[str]) -> str:
@@ -34,6 +36,7 @@ def legacy_line(name: str, count: int) -> str:
     pass
 
 def format_template(template: str, **kwargs: object) -> str:
+    # template.format(**kwargs)  — see Lesson 4 / book § **kwargs
     pass
 
 def debug_repr(value: str) -> str:
@@ -58,8 +61,9 @@ def _run_tests() -> None:
     check_eq(greet("Alex"), "Hello, Alex!", "greet — f-string")
     check_eq(money(12.5), "$12.50", "money — .2f")
     check_eq(money(3), "$3.00", "money — pads cents")
-    check_eq(score_line("Alice", 95), "Alice          95", "score_line — align")
-    check_eq(hex_byte(255), "0xFF", "hex_byte — #04X")
+    check_eq(score_line("Alice", 95), "Alice       95", "score_line — align")
+    check_eq(hex_byte(255), "0xFF", "hex_byte — 02X")
+    check_eq(hex_byte(15), "0x0F", "hex_byte — pad 15")
     check_eq(hex_byte(0), "0x00", "hex_byte — zero")
     check_eq(join_tags(["a", "b", "c"]), "a, b, c", "join_tags")
     check_eq(legacy_line("Bob", 7), "Bob has 7 items", "legacy_line — %")

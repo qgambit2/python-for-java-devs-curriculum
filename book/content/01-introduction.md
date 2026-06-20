@@ -23,7 +23,7 @@ Three shifts hit Java developers early:
 | `ArrayList`, `HashMap` | `list`, `dict` — literals with `[]` and `{}` |
 | `LinkedHashMap` for order | `dict` keeps insertion order (since 3.7) |
 | `Pair`, `Map.entry` | `tuple` — and unpacking: `x, y = point` |
-| `HashSet` utilities | `set` with operators `\|`, `&`, `-`, `^` |
+| `HashSet` utilities | `set` with operators `|`, `&`, `-`, `^` |
 | `list.indexOf` returns -1 | `list.index` raises `ValueError` — check with `in` first |
 
 ## Preview edition

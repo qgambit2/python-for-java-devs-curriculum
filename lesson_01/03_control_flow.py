@@ -148,23 +148,22 @@ while True:
 section("6. switch / case → match / case (Python 3.10+)")
 
 print("""
-Java switch (modern, no fall-through with ->):
-    switch (status) {
-        case 200 -> result = "ok";
-        case 404 -> result = "missing";
-        case 500, 502, 503 -> result = "server error";
-        default -> result = "other";
-    }
+Java switch (-> form):
+    return switch (status) {
+        case 200 -> "ok";
+        case 404 -> "missing";
+        case 500, 502, 503 -> "server error";
+        default -> "other";
+    };
 
-Python match (3.10+) — direct equivalent:
+Python match (3.10+):
     match status:
         case 200: ...
         case 404: ...
         case 500 | 502 | 503: ...
         case _: ...          # default
 
-Key differences from OLD Java switch:
-  - Python cases do NOT fall through — no 'break' needed (like Java switch ->)
+Notes:
   - '_' is default (like default:)
   - Multiple values: case 500 | 502 | 503  (like case 500, 502, 503 in Java)
 """)
@@ -186,7 +185,13 @@ def http_label(code: int) -> str:
 
 print(f"status {status} -> {http_label(status)}")
 
-# match on strings — like switch on String:
+# String example — same match syntax as int (http_label above):
+#
+#   return switch (cmd) {
+#       case "start" -> "starting";
+#       case "stop" -> "stopping";
+#       default -> "unknown";
+#   };
 def command_label(cmd: str) -> str:
     match cmd:
         case "start":
@@ -212,7 +217,17 @@ def http_label_assign(code: int) -> str:
 
 print(f"assign inside cases: {http_label_assign(404)}")
 
-# case with guard — like case x when x > 0 (Java 21+ guarded patterns):
+# case with guard — like Java 21+ guarded patterns (when clause):
+#
+#   Java 21+ (guarded pattern — when is the guard; default is just catch-all):
+#     return switch (n) {
+#         case 0 -> "zero";
+#         case int x when x > 0 -> "positive";
+#         default -> "negative";
+#     };
+#
+#   Python:
+#     case x if x > 0:   # bind x, then test condition
 def sign_word(n: int) -> str:
     match n:
         case 0:

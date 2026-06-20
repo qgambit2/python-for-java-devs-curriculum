@@ -85,6 +85,84 @@ greet("Java dev", times=3)
 - Type hints are optional at runtime
 - Keyword args at call site: `times=3`
 
+### `*args` and `**kwargs` — same symbols, opposite jobs
+
+Python reuses `*` and `**` in two places. **Direction** tells you which job:
+
+| Location | `*…` | `**…` |
+|----------|------|-------|
+| **In `def`** (parameter list) | **Collect** extra positional args → `tuple` | **Collect** extra keyword args → `dict` |
+| **In a call** (argument list) | **Unpack** a sequence into positional args | **Unpack** a dict into keyword args |
+
+```text
+def f(**kwargs):     ← COLLECT at the door
+    g(**kwargs)      ← UNPACK when forwarding
+
+Caller keyword args  →  dict  →  callee keyword args
+```
+
+**Rule:** `def` = pack extras in; call = spread them out. Same punctuation, opposite flow.
+
+#### Java varargs (positional only)
+
+Java **`int... values`** collects **extra positional** arguments into an **array** — always the **last** parameter, no keyword bucket:
+
+```java
+static int sum(int first, int... rest) {
+    int total = first;
+    for (int v : rest) total += v;
+    return total;
+}
+sum(1, 2, 3, 4);   // rest is int[] {2, 3, 4}
+```
+
+| Python in `def` | Becomes inside function | Java parallel |
+|-----------------|-------------------------|---------------|
+| `*args` | `tuple` of extra positionals | `int... values` |
+| `**kwargs` | `dict` of extra keywords | **no equivalent** — `Map<String, Object>` by hand |
+
+```python
+def demo(a, *args, **kwargs):
+    print(a, args, kwargs)
+
+demo(1, 2, 3, name="Ann", total=9.5)
+# 1 (2, 3) {'name': 'Ann', 'total': 9.5}
+```
+
+#### Unpacking at a call site (Lesson 3 `format_template`)
+
+```python
+def format_template(template: str, **kwargs) -> str:
+    #        COLLECT ↑ in def          UNPACK ↑ in call
+    return template.format(**kwargs)
+
+format_template("Dear {name}, total=${total:.2f}", name="Ann", total=9.5)
+```
+
+Inside the function, `kwargs` is `{"name": "Ann", "total": 9.5}`.  
+`template.format(**kwargs)` is **required** — not `template.format(kwargs)`:
+
+```python
+template.format(**kwargs)   # ✓ .format(name="Ann", total=9.5)
+template.format(kwargs)     # ✗ one positional arg; {name} / {total} break
+```
+
+Positional unpack works the same way:
+
+```python
+values = (10, 20)
+"{} + {}".format(*values)   # ✓ same as .format(10, 20)
+"{} + {}".format(values)    # ✗ prints "(10, 20)" as one value, not two fields
+```
+
+| You want | Write |
+|----------|-------|
+| Collect extras in `def` | `def f(a, *args, **kwargs):` |
+| Spread sequence at call | `f(*[1, 2, 3])` |
+| Spread dict at call | `g(**{"x": 1})` or `template.format(**kwargs)` |
+
+> **Java:** varargs ≈ `*args` collect only. No `**kwargs`, no `f(*list)` spread at call — pass elements explicitly or loop.
+
 ### Do not mutate caller's collections
 
 ```python

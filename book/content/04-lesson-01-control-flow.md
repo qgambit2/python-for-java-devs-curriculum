@@ -114,14 +114,16 @@ while data is not None:
 
 **Yes — Python has a direct equivalent:** `match` / `case` (requires Python 3.10+; this curriculum uses 3.12).
 
-**Java (modern switch, no fall-through with `->`):**
+**Java:**
 
 ```java
-switch (status) {
-    case 200 -> label = "ok";
-    case 404 -> label = "missing";
-    case 500, 502, 503 -> label = "server error";
-    default -> label = "other";
+static String httpLabel(int status) {
+    return switch (status) {
+        case 200 -> "ok";
+        case 404 -> "missing";
+        case 500, 502, 503 -> "server error";
+        default -> "other";
+    };
 }
 ```
 
@@ -140,40 +142,73 @@ def http_label(code: int) -> str:
             return "other"
 ```
 
-| Java switch | Python `match` |
-|-------------|----------------|
-| `case 200:` / `case 200 ->` | `case 200:` |
-| `case 500, 502, 503` | `case 500 \| 502 \| 503` |
-| `default` | `case _:` |
-| fall-through with `:` (old style) | **no fall-through** — one case runs, then done |
-| `break` after each case (old style) | not needed |
-| switch on `String` | `match` on `str` works the same way |
-| guarded patterns (Java 21+) | `case x if x > 0:` |
+Works on **`int`** here; **`str`** below — same `case` syntax, not strings only.
 
-**`match` is a statement** (not a switch *expression* like Java's `switch (x) { case 1 -> "a"; }` as a value). Assign inside each `case`, or use `if/elif` / a dict when you need a value inline:
+### Example: matching on `str`
+
+**Java:**
+
+```java
+static String commandLabel(String cmd) {
+    return switch (cmd) {
+        case "start" -> "starting";
+        case "stop" -> "stopping";
+        default -> "unknown";
+    };
+}
+```
+
+**Python** (`lesson_01/03_control_flow.py` §6):
 
 ```python
-def label_for(code: int) -> str:
-    match code:
-        case 200:
-            return "ok"
-        case 404:
-            return "missing"
+def command_label(cmd: str) -> str:
+    match cmd:
+        case "start":
+            return "starting"
+        case "stop":
+            return "stopping"
         case _:
-            return "other"
+            return "unknown"
 ```
 
-**Guard on a case:**
+Practice: `lesson_01/practice/02_control_flow.py` — exercise `command_action` (same idea).
+
+> **Don't mix these up:** **`default`** / **`case _:`** = catch-all branch. **`when`** / **`if` after a pattern** = **guarded pattern** (extra test after binding).
+
+**Guarded pattern** — bind a value, then test an extra condition (`when` in Java, `if` in Python):
+
+**Java:**
+
+```java
+static String signWord(int n) {
+    return switch (n) {
+        case 0 -> "zero";
+        case int x when x > 0 -> "positive";   // guard: when x > 0
+        default -> "negative";                 // catch-all (not a guard)
+    };
+}
+```
+
+**Python:**
 
 ```python
-match n:
-    case 0:
-        "zero"
-    case x if x > 0:
-        "positive"
-    case _:
-        "negative"
+def sign_word(n: int) -> str:
+    match n:
+        case 0:
+            return "zero"
+        case x if x > 0:      # guard: if x > 0
+            return "positive"
+        case _:                 # catch-all (not a guard)
+            return "negative"
 ```
+
+| Piece | Java | Python |
+|-------|------|--------|
+| Guard syntax | `case int x when x > 0` | `case x if x > 0:` |
+| Guard keyword | `when` (after pattern) | `if` (after pattern) |
+| Catch-all | `default` (any Java) | `case _:` |
+
+Run: `uv run python lesson_01/03_control_flow.py` — see `sign_word` output in §6.
 
 ### Alternatives (when `match` is overkill)
 

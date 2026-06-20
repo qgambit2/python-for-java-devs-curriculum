@@ -34,6 +34,20 @@ print(fruits.index("banana"))                          # 1 — first (≈ indexO
 print("banana" in fruits)                              # True
 print(len(fruits) - 1 - fruits[::-1].index("banana"))  # 3 — last (≈ lastIndexOf)
 
+# Remove from ends & by value — Java: remove(int), remove(Object), removeLast/removeFirst (Deque)
+#
+#   lst.pop()       remove & return LAST element — ArrayDeque.removeLast()
+#   lst.pop(0)      remove & return at index 0 — removeFirst / remove(0)
+#   lst.remove(x)   remove first matching VALUE — ValueError if missing (not boolean)
+#
+# No list.remove() with no args — unlike dict.popitem().
+
+stack = [10, 20, 30]
+print(stack.pop())       # 30 — last
+print(stack.pop(0))      # 10 — first
+stack.remove(20)         # by value
+print(stack)             # []
+
 
 section("2. dict — HashMap + LinkedHashMap insertion order")
 
@@ -117,6 +131,38 @@ print({k: sorted(v) for k, v in groups.items()})
 defaults = {"theme": "light", "lang": "en", "notifications": True}
 user = {"theme": "dark"}
 print({**defaults, **user})
+
+
+section("2b. dict — removal; first & last key (insertion order)")
+
+# No dict.remove(key) — Java map.remove(k) maps to del / pop / popitem, not .remove()
+#
+#   del d[k]              remove entry — KeyError if missing (void, no return)
+#   d.pop(k)              remove & return VALUE — optional default if missing
+#   d.popitem()           remove & return (key, value) — LIFO (last inserted); no args
+#
+# Evict OLDEST on a plain dict — popitem(last=False) is OrderedDict only:
+#   k = next(iter(d)); del d[k]   — or use OrderedDict (lesson_08/09_ordered_dict_lru.py)
+#   next(iter(d))   — iter(d) yields keys; next() takes first — Java: iterator().next()
+#   iter and next are BUILT-INS — not dict methods (no d.next()).
+
+cache: dict[str, int] = {"oldest": 1, "middle": 2, "newest": 3}
+del cache["middle"]
+print(cache.pop("newest"))           # 3 — value returned
+print(cache.pop("nope", None))      # None — default, key left absent
+
+fresh = {"a": 1, "b": 2, "c": 3}
+print(fresh.popitem())                  # ('c', 3) — LIFO (last inserted)
+
+oldest_demo = {"x": 10, "y": 20}
+oldest_key = next(iter(oldest_demo))    # peek first key — Java: iterator().next()
+del oldest_demo[oldest_key]             # FIFO evict on plain dict
+print(f"evicted {oldest_key!r} → {oldest_demo}")
+
+# iter and next are BUILT-INS — not dict methods (no d.next()).
+
+# Plain dict: d[k] read and d[k]=v update do NOT move k to the end.
+# True LRU on get needs delete+reinsert or collections.OrderedDict.move_to_end — lesson_08/09_ordered_dict_lru.py
 
 
 section("3. tuple — immutable ordered sequence (≈ Pair / Map.entry)")

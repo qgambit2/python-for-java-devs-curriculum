@@ -98,6 +98,7 @@ LESSON 8 — Classes, OOP & dataclasses                                      �
     lesson_08/06_dataclass.py
     lesson_08/07_eq_and_hash.py
     lesson_08/08_collections_and_sorting.py
+    lesson_08/09_ordered_dict_lru.py
     Practice: lesson_08/practice/01_classes.py, lesson_08/practice/02_eq_hash.py,
               lesson_08/practice/03_string_formatting.py
 
@@ -155,6 +156,21 @@ LESSON 16 — Unit testing (JUnit 5 / pytest, Mockito)                       ✅
 
 
 ================================================================================
+LESSON 17 — Database access (DB-API, SQLAlchemy, Flask)                     🔶
+================================================================================
+    lesson_17/01_db_api_sqlite.py       — sqlite3 ≈ JDBC
+    lesson_17/02_schema_and_migrations.py — DDL, transactions; Alembic ≈ Flyway
+    lesson_17/03_sqlalchemy_core.py     — Engine, text(), explicit SQL
+    lesson_17/04_sqlalchemy_orm.py      — declarative models, Session ≈ JPA
+    lesson_17/05_flask_sqlalchemy.py    — Flask CRUD with SQLAlchemy (port 5002)
+    Practice: lesson_17/practice/01_db_api.py
+               lesson_17/practice/02_sqlalchemy_crud.py
+
+    Deps: sqlalchemy (uv sync) · sqlite3 is stdlib
+    Prereqs: L8 (classes), L11 (Flask), L16 (sqlite :memory: tests)
+
+
+================================================================================
 CROSS-CUTTING INDEX
 ================================================================================
     Collections          → L2    Strings (basics)     → L3
@@ -162,6 +178,7 @@ CROSS-CUTTING INDEX
     equals/hashCode      → L8:07 Sorting             → L5:01; L8:08
     File / async I/O     → L12 / L13 (planned)
     Unit testing         → L16   (JUnit 5 / pytest / Mockito)
+    Database (JDBC/JPA)  → L17   (DB-API / SQLAlchemy)
 """
 
 if __name__ == "__main__":

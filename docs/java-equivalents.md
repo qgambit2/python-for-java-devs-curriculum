@@ -51,8 +51,7 @@ Lesson: `lesson_06/01_types_and_datatypes.py`
 | `while (cond)` | `while cond:` |
 | `do { } while (cond);` | `while True:` + `break`, or body once then `while` |
 | `switch (x) { case A: }` | `match x: case A:` (3.10+); `_` = default |
-| `case 500, 502` (Java) | `case 500 \| 502 \| 503:` |
-| switch fall-through + `break` | **no fall-through** in `match` |
+| `case 500, 502` (Java) | `case 500 | 502 | 503:` |
 | switch expression | assign inside `case` blocks, or use `if/elif` / dict |
 | guarded case (Java 21+) | `case x if x > 0:` |
 | simple switch | `if/elif` or `{code: label}.get(x, default)` |
@@ -162,6 +161,13 @@ Lesson: `lesson_06/04_recursion.py`
 | transform all map values | `{k: f(v) for k, v in d.items()}` — needs `.items()` |
 | `map.put(k, v)` | `d[k] = v` |
 | `map.containsKey(k)` | `k in d` |
+| `map.remove(k)` | `del d[k]` or `d.pop(k)` — **no** `dict.remove()` |
+| `map.remove(k)` return value | `d.pop(k)` returns value; `del d[k]` returns nothing |
+| `dict.popitem()` | LIFO pair — last inserted; no `last=` kwarg on plain `dict` |
+| evict oldest plain dict entry | `k = next(iter(d)); del d[k]` |
+| `OrderedDict.popitem(last=False)` | FIFO eldest — access-order LRU → `lesson_08/09_ordered_dict_lru.py` |
+| `list.removeLast()` / `removeFirst()` | `lst.pop()` / `lst.pop(0)` |
+| `list.remove(Object)` | `lst.remove(value)` — `ValueError` if missing |
 | `map.keySet()` | `d.keys()` |
 | `map.values()` | `d.values()` |
 | `map.entrySet()` | `d.items()` |
@@ -281,8 +287,14 @@ Lesson: `lesson_03/01_strings.py` · Practice: `lesson_03/practice/01_strings.py
 | `String.format("%d", 42)` | `f"{n:d}"` | `42` | `42` |
 | `String.format("%,d", 1_000_000)` | `f"{n:,}"` | `1000000` | `1,000,000` |
 | `String.format("%#x", 255)` | `f"{n:#x}"` | `255` | `0xff` |
+| `String.format("%#x", 15)` | `f"{n:#x}"` | `15` | `0xf` |
+| `String.format("0x%02X", 255)` | `f"0x{n:02X}"` | `255` | `0xFF` |
+| `String.format("0x%02X", 15)` | `f"0x{n:02X}"` | `15` | `0x0F` |
+| `String.format("0x%02X", 0)` | `f"0x{n:02X}"` | `0` | `0x00` |
+| `Integer.toHexString(255)` | `f"{n:x}"` / `hex(n)` | `255` | `ff` |
 | `String.format("%8s", "id")` | `f"{s:>8}"` | `"id"` | `      id` |
 | `String.format("%-8s", "id")` | `f"{s:<8}"` | `"id"` | `id      ` |
+| manual pad / `StringUtils.center("id", 8)` | `f"{s:^8}"` | `"id"` | `   id   ` |
 | `String.format("%05d", 7)` | `f"{n:05d}"` | `7` | `00007` |
 | `template.formatted(...)` (Java 15+) | `template.format(name="Alice", b=99.5)` | — | `Dear Alice, $99.50` |
 | `"%s scored %d" % (name, score)` | same | Bob, 95 | `Bob scored 95` |
@@ -355,6 +367,10 @@ Lesson: `lesson_08/03_str_repr_and_formatting.py` · Practice: `lesson_08/practi
 | `public int f()` | `def f() -> int:` |
 | `void` no return | `pass` or omit return |
 | method overloading | defaults: `def f(a, b=1):` |
+| `int... values` (varargs, positional) | `def f(a, *args):` → `args` is `tuple` |
+| no varargs for keyword names | `def f(**kwargs):` → `kwargs` is `dict` |
+| `sum(1, 2, 3)` spread at call | `f(*[1, 2, 3])` unpacks sequence into positional args |
+| pass `Map` to custom helper | `g(**{"name": "Ann"})` unpacks dict into keyword args |
 | `this.field` | `self.field` |
 | `return a, b` (not idiomatic) | `return a, b` → tuple |
 
@@ -961,6 +977,35 @@ def test_create_book(client):
 | async / reactive HTTP | `httpx.AsyncClient`, `aiohttp` (Lesson 7) |
 | true multi-core CPU threads | GIL limits CPU parallelism — `multiprocessing` |
 | `ConcurrentHashMap` | `threading.Lock` + `dict` |
+
+## Database (Lesson 17)
+
+Python has **no JPA in the stdlib**. Learn in layers: **DB-API 2.0** (JDBC-like) → **SQLAlchemy** (Hibernate/JPA-like).
+
+| Java | Python | Notes |
+|------|--------|-------|
+| JDBC `Connection` | `sqlite3.connect()` / driver `connect()` | PEP 249 DB-API 2.0 |
+| `DriverManager.getConnection(url)` | `sqlalchemy.create_engine(url)` | URL like `sqlite:///app.db` |
+| `PreparedStatement` + `?` | `cursor.execute("... WHERE id = ?", (id,))` | **Always** bind params — never f-string SQL |
+| `ResultSet` / `rs.next()` | `cursor.fetchone()` / `fetchall()` | rows as tuples or dict rows |
+| `try/finally conn.close()` | `with conn:` / `with engine.connect()` | context managers |
+| `conn.setAutoCommit(false)` | `conn.commit()` / `rollback()` | explicit transactions |
+| `JdbcTemplate` (Spring) | SQLAlchemy **Core** `session.execute(text(...))` | SQL-first, less boilerplate than raw JDBC |
+| JPA `@Entity` | SQLAlchemy **ORM** `class Book(Base):` + `Mapped` columns | declarative mapping |
+| `EntityManager.persist` | `session.add(obj)`; `session.commit()` | unit of work |
+| `EntityManager.find` | `session.get(Book, id)` / `session.scalars(select(...))` | 2.0 style queries |
+| JPQL / Criteria API | SQLAlchemy `select(Book).where(...)` | composable query builder |
+| Flyway / Liquibase | **Alembic** | migration scripts |
+| HikariCP pool | SQLAlchemy `Engine` pool (built-in) | `create_engine(..., pool_size=5)` |
+| Spring Data `JpaRepository` | Flask-SQLAlchemy / custom repo layer | not one stdlib answer |
+| H2 / embedded DB in tests | `sqlite:///:memory:` | Lesson 16 Flask tests |
+| PostgreSQL driver | **psycopg** (v3) | `postgresql+psycopg://...` in URL |
+
+**Drivers (install per DB):** `sqlite3` is stdlib; Postgres → `psycopg`; MySQL → `mysqlclient` or `pymysql`.
+
+**ORM choice:** **SQLAlchemy 2.0** is the default teaching ORM (ecosystem standard). Django ORM only if you adopt Django — out of scope unless we add a Django track.
+
+Lesson: `lesson_17/` · Practice: `lesson_17/practice/01_db_api.py`, `02_sqlalchemy_crud.py`
 
 ## AWS (Lesson 8)
 

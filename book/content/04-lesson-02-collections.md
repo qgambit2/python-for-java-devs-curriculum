@@ -73,7 +73,7 @@ order = {}
 order["c"] = 3            # put — creates key without containsKey check
 ```
 
-The same `[]` syntax reads and writes. Writing always works; reading throws if the key is absent unless you use `.get()`.
+The same `[]` syntax reads and writes. Writing always works; reading raises `KeyError` on a missing key. Use `.get(key)` (returns `None`, like Java `null`) or `.get(key, default)` (like `getOrDefault`) instead.
 
 > **Java:** `map.put("c", 3)` and `map.get("c")` — but `get` returns `null`, while `d["c"]` raises `KeyError`. Python is stricter on direct reads.
 
@@ -126,6 +126,36 @@ list(dict.fromkeys(items))   # ["b", "a", "c"]
 > **Key idea:** `for k in d` and `list(d)` see keys. Need values? `d.values()`. Need pairs? `d.items()`.
 
 For the same O(n) behavior with clearer steps, a `set` for “already seen” plus a result list is fine while you are learning (`lesson_02/practice/02_collections.py`, `dedupe_ordered`).
+
+### Removal — list ends & dict entries
+
+**Lists** — remove from ends or by value:
+
+```python
+stack = [10, 20, 30]
+stack.pop()       # 30 — remove & return last (≈ ArrayDeque.removeLast)
+stack.pop(0)      # 10 — remove & return first index
+stack.remove(20)  # remove first matching value — ValueError if missing
+```
+
+**Dicts** — no `dict.remove(key)`. Java `map.remove(k)` maps to:
+
+| Python | Returns | Notes |
+|--------|---------|-------|
+| `del d[k]` | nothing | `KeyError` if missing |
+| `d.pop(k)` | **value** | optional default: `d.pop(k, None)` |
+| `d.popitem()` | `(key, value)` | LIFO — last inserted; **no** `last=` on plain `dict` |
+| Evict oldest (plain `dict`) | `k = next(iter(d)); del d[k]` | FIFO — `popitem(last=False)` is **OrderedDict** only |
+
+**First key** without removing — O(1) on CPython when you only need the key:
+
+```python
+oldest_key = next(iter(d))
+```
+
+`iter(d)` and `next(...)` are **built-in functions**, not dict methods (≈ `map.keySet().iterator().next()`).
+
+> **LRU caveat:** a plain `dict` keeps **insertion** order. Reading `d[k]` does **not** move `k` to the end. For access-order LRU, use delete+reinsert or `collections.OrderedDict.move_to_end` — see `lesson_08/09_ordered_dict_lru.py`.
 
 ### Spread / merge — `**` inside `{...}`
 

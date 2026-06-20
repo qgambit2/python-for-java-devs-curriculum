@@ -49,7 +49,7 @@ def http_status(code: int) -> str:
     pass
 
 
-# Exercise 7: Command label — match on string (Java switch on String)
+# Exercise 7: Command label — match on str (same syntax as int status codes)
 # command_action("start") -> "run", "stop" -> "halt", else -> "unknown"
 def command_action(cmd: str) -> str:
     pass

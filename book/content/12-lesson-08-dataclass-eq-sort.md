@@ -8,6 +8,7 @@ Records, `equals`/`hashCode`, and sorting custom types — the Java topics Pytho
 uv run python lesson_08/06_dataclass.py
 uv run python lesson_08/07_eq_and_hash.py
 uv run python lesson_08/08_collections_and_sorting.py
+uv run python lesson_08/09_ordered_dict_lru.py
 ```
 
 ---
@@ -86,6 +87,23 @@ uv run python lesson_08/practice/03_string_formatting.py
 
 ---
 
+## OrderedDict & LRU (access-order)
+
+Lesson 2 covers **insertion** order and removal (`del`, `pop`, `popitem`, `next(iter(d))`). A plain `dict` does **not** promote a key on `get` — only `OrderedDict` (or delete+reinsert) gives **access-order** like `LinkedHashMap(accessOrder=true)`:
+
+```python
+from collections import OrderedDict
+
+od: OrderedDict[str, int] = OrderedDict()
+od["a"], od["b"], od["c"] = 1, 2, 3
+od.move_to_end("a")              # promote to MRU (tail)
+k, v = od.popitem(last=False)    # evict LRU (front)
+```
+
+`lesson_08/09_ordered_dict_lru.py` walks through a minimal `LRUCache` class — the pattern behind your `lesson_02/practice/LRUCache.py` side exercise.
+
+---
+
 ## On GitHub
 
 Runnable examples and exercises in the public curriculum repository:
@@ -93,6 +111,7 @@ Runnable examples and exercises in the public curriculum repository:
 - **Example:** [lesson_08/06_dataclass.py](https://github.com/qgambit2/python-for-java-devs-curriculum/blob/main/lesson_08/06_dataclass.py)
 - **Example:** [lesson_08/07_eq_and_hash.py](https://github.com/qgambit2/python-for-java-devs-curriculum/blob/main/lesson_08/07_eq_and_hash.py)
 - **Example:** [lesson_08/08_collections_and_sorting.py](https://github.com/qgambit2/python-for-java-devs-curriculum/blob/main/lesson_08/08_collections_and_sorting.py)
+- **Example:** [lesson_08/09_ordered_dict_lru.py](https://github.com/qgambit2/python-for-java-devs-curriculum/blob/main/lesson_08/09_ordered_dict_lru.py)
 - **Practice:** [lesson_08/practice/02_eq_hash.py](https://github.com/qgambit2/python-for-java-devs-curriculum/blob/main/lesson_08/practice/02_eq_hash.py)
 - **Practice:** [lesson_08/practice/03_string_formatting.py](https://github.com/qgambit2/python-for-java-devs-curriculum/blob/main/lesson_08/practice/03_string_formatting.py)
 - **Repository:** [https://github.com/qgambit2/python-for-java-devs-curriculum](https://github.com/qgambit2/python-for-java-devs-curriculum)

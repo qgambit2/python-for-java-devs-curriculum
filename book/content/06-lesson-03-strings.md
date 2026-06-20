@@ -10,6 +10,35 @@ uv run python lesson_03/01_strings.py
 
 ---
 
+## Java String map
+
+| Java | Python `str` |
+|------|----------------|
+| `String.format("%s! You are %d.", name, age)` | `f"{name}! You are {age}."` |
+| `String.format("%.2f", price)` | `f"{price:.2f}"` |
+| `String.format("%8s", "id")` / `%-8s` | `f"{label:>8}"` / `f"{label:<8}"` |
+| manual pad / `StringUtils.center(s, 8)` | `f"{label:^8}"` (center — no `%` flag) |
+| `f"{c:*>8}"` fill char | no `printf` fill-char flag — pad/replace manually |
+| `String.format("%-10s%4d", name, score)` | `f"{name:<10}{score:>4}"` |
+| `String.format("%#x", 255)` / `"%05d"` | `f"{255:#x}"` / `f"{7:05d}"` |
+| `String.format("0x%02X", 255)` | `f"0x{255:02X}"` (uppercase byte — practice `hex_byte`) |
+| `"Dear %s, $%.2f".formatted(name, bal)` (15+) | `"Dear {name}, ${balance:.2f}".format(...)` |
+| `System.out.printf("%s %d", n, s)` | `"%s %d" % (name, score)` |
+| `String.join(", ", parts)` | `", ".join(parts)` |
+| `"=".repeat(5)` | `"=" * 5` |
+| `s.length()` / `charAt` / `substring` | `len(s)` / `s[0]` / `s[1:4]` |
+| `s.contains("x")` / `s.equals("hi")` | `"x" in s` / `s == "hi"` |
+| `s.trim()` / `split` / `replace` | `strip()` / `split()` / `replace()` |
+| `s.indexOf("x")` (-1 if missing) | `s.find("x")` |
+| `s.toUpperCase()` / `toLowerCase()` | `s.upper()` / `s.lower()` |
+| `obj.toString()` in concat | `f"{obj}"` |
+| `Pattern.compile` + `Matcher` | `re.compile` / `re.search` |
+| only `"..."` for String; `'a'` is `char` | `'a'` and `"a"` are both `str` |
+
+The demo file prints this table when you run `lesson_03/01_strings.py` (section 0).
+
+---
+
 ## Indexing, length, membership
 
 ```python
@@ -98,11 +127,78 @@ For large inputs, a single loop over characters is O(n); `.count` per unique cha
 
 > **Java:** `"=".repeat(5)`, `"ab".repeat(3)`, `"hi" + " " + "there"`.
 
-Prefer **`join`** over `+=` in loops — each `+=` can allocate a new string.
+A few `+` or `+=` on short literals is fine. The **antipattern** is growing a string **inside a loop** — each step allocates a new `str` and copies everything built so far. Because `str` is **immutable** (like Java `String`), nothing is updated in place.
+
+### Antipattern: `+=` in a loop (O(n²))
+
+**Why it hurts:** after `n` appends of similar-sized pieces, you copy roughly `1 + 2 + … + n` characters → **O(n²)**. Same trap as `result += p` in a Java loop without a buffer.
+
+**Python — avoid:**
+
+```python
+result = ""
+for part in parts:
+    result += part          # new str every iteration — copies the whole prefix again
+```
+
+**Python — prefer when you already have a list:**
+
+```python
+", ".join(parts)
+```
+
+**Python — prefer when you build incrementally (no `StringBuilder` in idiomatic code):**
+
+```python
+chunks: list[str] = []
+for word in words:
+    if ok(word):
+        chunks.append(transform(word))
+return "\n".join(chunks)    # one final str — O(total length)
+```
+
+**Java — same antipattern:**
+
+```java
+String result = "";
+for (String p : parts) {
+    result += p;            // BAD at scale — new String each time, O(n²)
+}
+```
+
+**Java — fix when you have a collection:**
+
+```java
+String.join(", ", parts);
+```
+
+**Java — fix when you build in a loop:**
+
+```java
+StringBuilder sb = new StringBuilder();
+for (String p : parts) {
+    sb.append(p);
+}
+String result = sb.toString();   // materialize once
+```
+
+| Situation | Python | Java |
+|-----------|--------|------|
+| List of strings ready | `", ".join(parts)` | `String.join(", ", parts)` |
+| Filtering / mapping in a loop | `list` + `join` | `StringBuilder.append` |
+| Antipattern at scale | `s += piece` in loop | `s += piece` in loop |
+
+> **Rule:** immutable strings → **collect pieces, join once** (Python) or **one `StringBuilder`** (Java). A handful of `+=` in a tiny loop is readable and fine; avoid the pattern for large `n` or hot paths.
+
+**Examples:**
 
 ```python
 ", ".join(["Python", "Java", "Go"])   # Python, Java, Go
 "".join(sorted("cba"))                # abc
+```
+
+```java
+String.join(", ", List.of("Python", "Java", "Go"));
 ```
 
 ### `sorted(string)` returns a **list** — not a `str`
@@ -129,33 +225,93 @@ Common pattern (anagram key from Lesson 2 practice):
 
 ## f-strings — default choice
 
+**Java:**
+
+```java
+String name = "Alex";
+int age = 30;
+String msg = String.format("Hello, %s! You are %d.", name, age);
+// Java 15+: "Hello, %s! You are %d.".formatted(name, age);
+```
+
+**Python:**
+
 ```python
 name, age = "Alex", 30
 print(f"Hello, {name}! You are {age}.")
-print(f"Next year: {age + 1}")
+print(f"Next year: {age + 1}")   # any expression inside {…}
 ```
 
 Any expression works inside `{...}`.
 
 ### Format specifiers — `{value:spec}`
 
-```python
-price = 12.5
-print(f"{price:.2f}")      # 12.50
-print(f"{1_000_000:,}")    # 1,000,000
-print(f"{255:#x}")         # 0xff
-print(f"{7:05d}")          # 00007
+**Java** (`String.format` / `printf` flags):
+
+```java
+String.format("%.2f", 12.5);       // 12.50
+String.format("%,d", 1_000_000);   // 1,000,000
+String.format("%05d", 7);          // 00007
+
+// Hex — watch digit count on 255 vs 15:
+String.format("%#x", 255);         // 0xff   — minimal digits, lowercase
+String.format("%#x", 15);          // 0xf    — no leading zero on the digit
+String.format("0x%02X", 255);      // 0xFF   — always ≥2 hex digits (byte style)
+String.format("0x%02X", 15);       // 0x0F   — pads with 0 when needed
+String.format("0x%02X", 0);        // 0x00
 ```
 
-> **Java:** `%.2f`, `%,d`, `%#x` in `String.format`.
+**Python** (same ideas after the colon):
+
+```python
+print(f"{price:.2f}")      # 12.50
+print(f"{1_000_000:,}")    # 1,000,000
+print(f"{7:05d}")          # 00007
+
+print(f"{255:#x}")         # 0xff
+print(f"{15:#x}")          # 0xf
+print(f"0x{255:02X}")      # 0xFF
+print(f"0x{15:02X}")       # 0x0F
+print(f"0x{0:02X}")        # 0x00
+```
+
+**Hex digit count — same value, different formats:**
+
+| `n` | `%#x` / `{n:#x}` | `0x%02X` / `f"0x{n:02X}"` | Why |
+|-----|------------------|---------------------------|-----|
+| 255 | `0xff` | `0xFF` | 255 needs 2 hex digits either way |
+| **15** | **`0xf`** | **`0x0F`** | `%#x` = minimal; `%02X` pads to 2 digits |
+| 0 | `0x0` | `0x00` | same padding difference |
+
+`#` adds the `0x` prefix but does **not** zero-pad the digits. For fixed-width bytes (`0x00`–`0xFF`), use **`0x%02X`** / **`f"0x{n:02X}"`** (practice `hex_byte`).
+
+| Goal | Java | Python |
+|------|------|--------|
+| Lowercase, minimal digits + `0x` | `String.format("%#x", n)` | `f"{n:#x}"` |
+| Uppercase byte `0x00`–`0xFF` | `String.format("0x%02X", n)` | `f"0x{n:02X}"` |
+| Digits only, no prefix | `Integer.toHexString(n)` | `f"{n:x}"` / `hex(n)` |
 
 ### Width and alignment
 
+**Java:**
+
+```java
+String.format("|%8s|", "id");    // |      id|  right-align (default for %s)
+String.format("|%-8s|", "id");   // |id      |  left-align
+// Center — no %^ flag in String.format; pad manually:
+int w = 8, pad = w - "id".length(), left = pad / 2;
+String centered = " ".repeat(left) + "id" + " ".repeat(pad - left);
+// Or: org.apache.commons.lang3.StringUtils.center("id", 8);
+```
+
+**Python:**
+
 ```python
 label = "id"
-print(f"|{label:>8}|")    # right-align
-print(f"|{label:<8}|")    # left-align
-print(f"|{label:^8}|")    # center
+print(f"|{label:>8}|")    # right-align  — Java: %8s
+print(f"|{label:<8}|")    # left-align   — Java: %-8s
+print(f"|{label:^8}|")    # center       — Java: manual / StringUtils.center
+print(f"|{'9':*>8}|")     # fill char *  — Java: no printf fill-char flag
 ```
 
 ### Debug suffix `{var=}` (3.8+)
@@ -168,6 +324,8 @@ print(f"{score=}")         # score=42
 Variable name must be a literal in the expression — for dynamic labels, build the string manually.
 
 ### `str` vs `repr` — and `!s` `!r` `!a` in f-strings
+
+Java has one conversion path in templates: `obj.toString()` / `String.valueOf(obj)`. Python splits **human** (`str`) vs **debug** (`repr`); f-strings expose both via `!s` / `!r` / `!a`.
 
 Two ways to turn a value into text:
 
@@ -232,13 +390,63 @@ Use **normal** `"..."` when you want escape sequences. Use **`r"..."`** when you
 
 ## Other formatting styles
 
-**`str.format()`** — reusable template:
+**`str.format()`** — reusable template (≈ Java `String.format` with named args, or Java 15 `formatted()`):
+
+```java
+String template = "Dear %s, balance $%.2f";
+String.format(template, "Alice", 1234.5);
+```
 
 ```python
 "Dear {name}, balance ${balance:.2f}".format(name="Alice", balance=1234.5)
 ```
 
-**Legacy `%`** — still seen in older code:
+**Practice `format_template`** — forward placeholders with `**kwargs`.  
+**Read this carefully:** `**` in the `def` and `**` in `.format(...)` look the same but do **opposite** things (Lesson 4 has the full `*args` / `**kwargs` reference).
+
+```python
+def format_template(template: str, **kwargs: object) -> str:
+    return template.format(**kwargs)   # ← ** here = UNPACK (spread dict into keyword args)
+
+format_template("Dear {name}, total=${total:.2f}", name="Ann", total=9.5)
+# "Dear Ann, total=$9.50"
+```
+
+### Same spelling `**`, two directions
+
+| Where you write `**` | What it does | In this exercise |
+|---------------------|--------------|------------------|
+| `def format_template(..., **kwargs)` | **Collect** — bundle caller’s keyword args into one `dict` | `name="Ann", total=9.5` → `kwargs == {"name": "Ann", "total": 9.5}` |
+| `template.format(**kwargs)` | **Unpack** — spread that `dict` back into keyword args | same as `template.format(name="Ann", total=9.5)` |
+
+```text
+Caller:  format_template("...", name="Ann", total=9.5)
+              │
+              ▼  **kwargs in def  (COLLECT)
+         kwargs = {"name": "Ann", "total": 9.5}
+              │
+              ▼  **kwargs in .format()  (UNPACK)
+         .format(name="Ann", total=9.5)
+```
+
+### Wrong vs right — easy to mix up
+
+```python
+kwargs = {"name": "Ann", "total": 9.5}
+
+template.format(**kwargs)   # ✓ "Dear Ann, total=$9.50"
+template.format(kwargs)     # ✗ passes ONE positional arg (the dict) — {name} / {total} not filled
+```
+
+`{name}` and `{total}` need **keyword** arguments. Without `**`, you hand `.format()` a single dict object, not `name=…` and `total=…`.
+
+> **Java:** no `**kwargs` and no keyword unpack. Closest: build `Map<String, Object>` and pass fields explicitly, or use a helper that reads the map. Java **varargs** (`int... args`) ≈ Python `*args` only (positional) — see **Lesson 4**.
+
+**Legacy `%`** — still seen in older code (≈ `printf` / `String.format` with `%s`):
+
+```java
+String.format("%s scored %d", "Bob", 95);
+```
 
 ```python
 "%s scored %d" % ("Bob", 95)
@@ -250,10 +458,29 @@ Use **normal** `"..."` when you want escape sequences. Use **`r"..."`** when you
 
 ## Literal braces
 
-Double braces escape `{` and `}` in f-strings:
+Double braces escape `{` and `}` in f-strings (same idea as `{{` / `}}` in Java `String.format`):
 
 ```python
 print(f"set literal: {{1, 2, 3}}")
+```
+
+---
+
+## Objects in f-strings
+
+**Java:** `"point=" + p` calls `p.toString()`.
+
+**Python:** `f"{p}"` uses the str path (`__str__` / `__repr__` — see Lesson 8). `@dataclass` generates a repr like a Java `record` `toString()`.
+
+```python
+@dataclass
+class Point:
+    x: int
+    y: int
+
+p = Point(3, 4)
+f"point={p}"      # point=Point(x=3, y=4)
+f"point={p!r}"    # explicit repr
 ```
 
 ---
