@@ -167,8 +167,11 @@ Beyond built-in `list`/`dict`/`set`, the stdlib **`collections`** package adds c
 | `Counter` | frequency counts | Guava `Multiset` |
 | `deque` | fast both-end push/pop | `ArrayDeque` |
 | `OrderedDict` | `move_to_end`, `popitem(last=False)` | `LinkedHashMap(accessOrder=true)` |
+| `namedtuple` | immutable record | `record` / `Pair` |
+| `ChainMap` | layered dict lookup | stacked property sources |
+| `UserDict` / `UserList` / `UserString` | safe subclassing | `AbstractMap` / `AbstractList` |
 
-**Lesson:** `lesson_02/03_collections_stdlib.py` · **Book:** `05b-lesson-02-stdlib-collections.md`
+**Lesson:** `lesson_02/03_collections_stdlib.py` (all nine types) · **Book:** `05b-lesson-02-stdlib-collections.md`
 
 ### Spread / merge — `**` inside `{...}`
 

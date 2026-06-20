@@ -169,10 +169,13 @@ Lesson: `lesson_06/04_recursion.py`
 | `list.removeLast()` / `removeFirst()` | `lst.pop()` / `lst.pop(0)` |
 | `list.remove(Object)` | `lst.remove(value)` — `ValueError` if missing |
 | `computeIfAbsent(k, k -> new ArrayList<>())` | `defaultdict(list)` then `d[k].append(x)` |
-| `Collections.frequency` / Multiset | `Counter(iterable)` |
-| `ArrayDeque` | `collections.deque` — `appendleft`, `popleft` |
+| `Collections.frequency` / Multiset | `Counter(iterable)` — `+` `-` `&` `\|` on counts |
+| `ArrayDeque` | `collections.deque` — `appendleft`, `popleft`, `rotate`, `maxlen` |
 | `list.removeFirst()` on `ArrayDeque` | `deque.popleft()` — **not** `list.pop(0)` (O(n)) |
 | `LinkedHashMap(accessOrder=true)` | `OrderedDict.move_to_end` or plain `dict` pop+reinsert |
+| Java `record` / `Pair` (immutable) | `namedtuple("Name", ["x", "y"])` — `_replace`, `_asdict` |
+| stacked config / override chain | `ChainMap(child, parent, defaults)` |
+| subclass `AbstractMap` safely | `UserDict` / `UserList` — override hooks, `.data` inside |
 | `map.keySet()` | `d.keys()` |
 | `map.values()` | `d.values()` |
 | `map.entrySet()` | `d.items()` |

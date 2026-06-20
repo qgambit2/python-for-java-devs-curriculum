@@ -1,6 +1,6 @@
-# Lesson 2 — `collections` module (stdlib)
+# Lesson 2 — `collections` module (complete tour)
 
-Built-in `list`, `dict`, `tuple`, and `set` cover most day-to-day work. The stdlib **`collections`** package adds specialized containers — roughly the extras you might reach for from Guava or `java.util` beyond the basics.
+Built-in `list`, `dict`, `tuple`, and `set` cover most day-to-day work. The stdlib **`collections`** package adds nine specialized container types — ships with Python, **no pip install**. You `import` them explicitly (unlike built-in `dict`).
 
 **Run:**
 
@@ -12,69 +12,185 @@ Prerequisites: `lesson_02/01_collections.py`.
 
 ---
 
-## `defaultdict` — `computeIfAbsent` without boilerplate
+## Overview
+
+| Type | One-line purpose |
+|------|------------------|
+| `defaultdict` | `dict` that auto-creates missing keys |
+| `Counter` | frequency / multiset counts |
+| `deque` | fast queue at **both** ends |
+| `OrderedDict` | `move_to_end`, `popitem(last=False)` |
+| `namedtuple` | immutable record with named fields |
+| `ChainMap` | lookup across a **stack** of dicts |
+| `UserDict` / `UserList` / `UserString` | safe wrappers for subclassing |
+
+> **Java:** built-ins ≈ `ArrayList` / `HashMap` / `HashSet`; `collections` ≈ `ArrayDeque`, `LinkedHashMap` patterns, Guava `Multiset`, stacked property sources.
+
+**Not in this lesson:** `collections.abc` (`Mapping`, `Sequence`, …) — abstract base classes for typing and protocols; covered in later lessons.
+
+---
+
+## `defaultdict` — `computeIfAbsent`
+
+`defaultdict(factory)` subclasses `dict`. On a missing key it calls `factory()` and **stores** the result.
 
 ```python
 from collections import defaultdict
 
 groups: defaultdict[str, list[str]] = defaultdict(list)
-groups["aet"].append("eat")   # key created with empty list — no manual check
+groups["aet"].append("eat")   # key created with [] — no if-check
+
+hits: defaultdict[str, int] = defaultdict(int)
+hits["home"] += 1             # missing → 0, then increment
 ```
 
 | Java | Python |
 |------|--------|
-| `map.computeIfAbsent(k, k -> new ArrayList<>()).add(x)` | `defaultdict(list)[k].append(x)` |
+| `computeIfAbsent(k, k -> new ArrayList<>()).add(x)` | `defaultdict(list)[k].append(x)` |
 | count with `getOrDefault` + `put` | `defaultdict(int)` then `counts[k] += 1` |
 
-The factory (`list`, `int`, `set`, or a custom callable) runs **once** when a missing key is first accessed.
+**Details:**
+
+- Factory can be `list`, `int`, `set`, or any **zero-arg callable**.
+- `.get(key, default)` does **not** trigger the factory (key stays absent).
+- `dict(dd)` converts to a plain dict when done building.
 
 ---
 
 ## `Counter` — frequency map
 
+`Counter` is a `dict` subclass: keys = elements, values = integer counts.
+
 ```python
 from collections import Counter
 
 freq = Counter(["apple", "banana", "apple"])
-freq["apple"]        # 2 — missing keys return 0
-freq.most_common(2)  # [('apple', 2), ('banana', 1)]
+freq["apple"]           # 2
+freq["missing"]         # 0 — returns 0, does NOT insert
+freq.most_common(2)     # [('apple', 2), ('banana', 1)]
+list(freq.elements())   # repeats each key by its count
 ```
 
-≈ Guava `Multiset` or `stream.collect(Collectors.groupingBy(..., counting()))`.
+**Multiset math:** `c1 + c2` (add counts), `c1 - c2` (drop zero/negative), `c1 & c2` (min), `c1 | c2` (max).
+
+≈ Guava `Multiset` or `Collectors.groupingBy(..., counting())`.
 
 ---
 
-## `deque` — double-ended queue (`ArrayDeque`)
+## `deque` — `ArrayDeque`
+
+Doubly-linked blocks — **O(1)** `append` / `pop` at **both** ends. `list.pop(0)` is **O(n)**.
 
 ```python
 from collections import deque
 
 dq = deque([10, 20, 30])
-dq.appendleft(5)    # addFirst
-dq.popleft()        # removeFirst — O(1)
+dq.appendleft(5)      # addFirst
+dq.popleft()          # removeFirst
+dq.extend([40, 50])
+dq.rotate(1)          # circular shift right
+
+window = deque(maxlen=3)   # bounded — auto-evicts oldest
 ```
 
-`list.pop(0)` is **O(n)** (elements shift). Use `deque` when you need fast pops from **both** ends. `deque(maxlen=n)` gives a bounded sliding window.
+| deque | list |
+|-------|------|
+| O(1) both-end push/pop | O(1) end only; O(n) at front |
+| O(n) random index | O(1) index |
 
 > **Java:** `ArrayDeque` — `addFirst` / `removeFirst` / `addLast` / `removeLast`.
 
 ---
 
-## `OrderedDict` — access-order preview
+## `OrderedDict` — access-order hooks
 
-Plain `dict` keeps **insertion** order; reading a key does **not** move it. `OrderedDict` adds:
+Since 3.7, plain `dict` keeps insertion order. `OrderedDict` still adds:
 
-- `move_to_end(key)` — promote to MRU (tail)
-- `popitem(last=False)` — evict LRU (front)
+- `move_to_end(key, last=True|False)` — promote or demote in order
+- `popitem(last=False)` — FIFO evict (**plain `dict.popitem()` has no `last=`**)
+- Order-sensitive `==` between `OrderedDict` instances
 
-For LRU caches you can use **either**:
+```python
+from collections import OrderedDict
 
-1. **`OrderedDict`** — `move_to_end` reads clearly
-2. **Plain `dict`** — `val = d.pop(k); d[k] = val` on access (reinsert at tail)
+od = OrderedDict(a=1, b=2, c=3)
+od.move_to_end("a")              # MRU tail
+k, v = od.popitem(last=False)    # LRU front
+```
 
-Full walkthrough: `lesson_08/09_ordered_dict_lru.py` (both implementations).
+LRU cache — two approaches in `lesson_08/09_ordered_dict_lru.py`:
+
+1. `OrderedDict` + `move_to_end`
+2. Plain `dict` + `pop` / reinsert on access
 
 > **Java:** `LinkedHashMap(accessOrder=true)`.
+
+---
+
+## `namedtuple` — lightweight record
+
+Factory for an **immutable** tuple subclass with named fields.
+
+```python
+from collections import namedtuple
+
+Point = namedtuple("Point", ["x", "y"])
+p = Point(3, 4)
+p.x, p[0]              # attribute and index
+p2 = p._replace(x=10)  # new instance — original unchanged
+p._asdict()            # field → value mapping
+```
+
+≈ Java `record Point(int x, int y)` or `Map.entry`. For mutable classes with methods → Lesson 8 `@dataclass`.
+
+---
+
+## `ChainMap` — layered dict lookup
+
+`ChainMap(m1, m2, …)` searches left-to-right; **first hit wins**. Writes/deletes only the **leftmost** map.
+
+```python
+from collections import ChainMap
+
+defaults = {"theme": "light", "lang": "en"}
+user = {"theme": "dark"}
+settings = ChainMap(user, defaults)
+
+settings["theme"]   # dark — from user
+settings["lang"]    # en — from defaults
+```
+
+`new_child()` pushes a fresh dict on the left (scope chain). ≈ stacked config / `Properties` with parent defaults.
+
+---
+
+## `UserDict` / `UserList` / `UserString`
+
+Wrappers with a `.data` attribute holding the inner `dict` / `list` / `str`. Use when **subclassing** built-ins would fight C-level method implementations.
+
+```python
+from collections import UserDict
+
+class LowerDict(UserDict):
+    def __setitem__(self, key, value):
+        super().__setitem__(key.lower(), value)
+```
+
+≈ Java `AbstractMap` / `AbstractList` — extend the wrapper, not the raw C-backed type.
+
+---
+
+## Cheat sheet
+
+| Reach for | When |
+|-----------|------|
+| `defaultdict` | grouping, nested lists/sets, auto-zero counts |
+| `Counter` | word freq, vote tallies, multiset diff |
+| `deque` | BFS queue, sliding window, undo stack at both ends |
+| `OrderedDict` | explicit LRU / FIFO eviction |
+| `namedtuple` | small frozen data bag before you need a full class |
+| `ChainMap` | config layers, scoped overrides |
+| `UserDict`/`UserList` | custom mapping/sequence behavior via inheritance |
 
 ---
 
