@@ -194,8 +194,41 @@ class LowerDict(UserDict):
 
 ---
 
+## heapq — min-heap (`PriorityQueue`)
+
+**Not** in `collections` — `import heapq`. Operates on a **list in place**; `h[0]` is always the smallest.
+
+```python
+import heapq
+
+heapq.heapify(nums)       # build heap O(n)
+heapq.heappush(h, x)      # offer — O(log n)
+heapq.heappop(h)          # poll min — O(log n)
+heapq.nsmallest(k, data)  # top-k smallest
+heapq.nlargest(k, data)   # top-k largest
+```
+
+**Max-heap:** negate values, or use `nlargest`. **Custom priority:** push `(priority, item)` tuples — compared left-to-right.
+
+> **Java:** `PriorityQueue` — default min-heap; `offer` / `poll` / `peek`.
+
+**Lesson:** `lesson_02/04_heapq.py`
+
+---
+
+## Practice
+
+```bash
+uv run python lesson_02/practice/03_collections_stdlib.py
+uv run python lesson_02/practice/04_heapq.py
+```
+
+---
+
 ## On GitHub
 
 - **Example:** [lesson_02/03_collections_stdlib.py](https://github.com/qgambit2/python-for-java-devs-curriculum/blob/main/lesson_02/03_collections_stdlib.py)
+- **Example:** [lesson_02/04_heapq.py](https://github.com/qgambit2/python-for-java-devs-curriculum/blob/main/lesson_02/04_heapq.py)
+- **Practice:** [lesson_02/practice/03_collections_stdlib.py](https://github.com/qgambit2/python-for-java-devs-curriculum/blob/main/lesson_02/practice/03_collections_stdlib.py)
 - **LRU (dict + OrderedDict):** [lesson_08/09_ordered_dict_lru.py](https://github.com/qgambit2/python-for-java-devs-curriculum/blob/main/lesson_08/09_ordered_dict_lru.py)
 - **Repository:** [https://github.com/qgambit2/python-for-java-devs-curriculum](https://github.com/qgambit2/python-for-java-devs-curriculum)
