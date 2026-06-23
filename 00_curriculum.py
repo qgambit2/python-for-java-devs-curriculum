@@ -11,13 +11,13 @@ Status: ✅ done  ·  🔶 partial  ·  📋 planned
     uv run python lesson_00/basics.py --list
     uv run python lesson_02/basics.py --list
 
-Tutor docs: .cursor/skills/python-for-java-devs/
+Tutor docs: .claude/skills/python-for-java-devs/
 
 
 ================================================================================
 LESSON 0 — Environment setup (macOS / Linux / Windows)                     ✅
 ================================================================================
-    lesson_00/01_setup_mac_linux.py   — install uv, uv sync, Cursor, how to run
+    lesson_00/01_setup_mac_linux.py   — install uv, uv sync, editor setup, how to run
     lesson_00/02_setup_windows.py   — same for Windows paths & PowerShell
     lesson_00/03_verify_environment.py — ✓ checklist before Lesson 1
 
@@ -139,8 +139,21 @@ LESSON 14 — Reading agents course code                                     �
 
 
 ================================================================================
-LESSON 15 — AWS Lambda & boto3 (optional)                                  📋
+LESSON 15 — AWS with boto3 (S3, DynamoDB, SNS/SQS, Redis, config)           ✅
 ================================================================================
+    lesson_15/01_connect_and_credentials.py — Session, client vs resource, cred chain
+    lesson_15/02_s3.py                  — buckets, objects, presigned URLs
+    lesson_15/03_dynamodb.py            — partition/sort keys, put/get/query
+    lesson_15/04_sns_sqs.py             — queues, pub/sub, SNS→SQS fan-out
+    lesson_15/05_redis.py               — ElastiCache via redis-py (not boto3)
+    lesson_15/06_secrets_and_config.py  — Secrets Manager + SSM Parameter Store
+    Practice: lesson_15/practice/01_s3_dynamodb.py
+               lesson_15/practice/02_messaging_config.py
+
+    Install: uv sync --group aws   (boto3, moto, redis, fakeredis)
+    Run:     uv run python lesson_15/basics.py --list
+    Note:    every demo runs offline — moto mocks AWS, fakeredis mocks Redis
+    Java:    boto3 ≈ AWS SDK for Java v2; cred chain ≈ DefaultCredentialsProvider
 
 
 ================================================================================
@@ -166,6 +179,7 @@ LESSON 17 — Database access (DB-API, SQLAlchemy, Flask)                     �
     lesson_17/03_sqlalchemy_core.py     — Engine, text(), explicit SQL
     lesson_17/04_sqlalchemy_orm.py      — declarative models, Session ≈ JPA
     lesson_17/05_flask_sqlalchemy.py    — Flask CRUD with SQLAlchemy (port 5002)
+    lesson_17/06_transactions.py        — commit/rollback, with conn:, SAVEPOINT
     Practice: lesson_17/practice/01_db_api.py
                lesson_17/practice/02_sqlalchemy_crud.py
 

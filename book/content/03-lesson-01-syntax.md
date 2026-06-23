@@ -71,6 +71,14 @@ if value is None:
 
 You need comfortable reading of `if`, assignment, and `print`. Next read **control flow** (`lesson_01/03_control_flow.py` — if/for/while/match), then Lesson 2 collections.
 
+> **Key idea:** Indentation is not cosmetic — it **is** the block structure. Four spaces, consistently, never tabs.
+
+## Pause and practice
+
+```bash
+uv run python lesson_01/practice/01_practice.py
+```
+
 ---
 
 ## On GitHub

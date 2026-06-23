@@ -212,6 +212,8 @@ heapq.nlargest(k, data)   # top-k largest
 
 > **Java:** `PriorityQueue` — default min-heap; `offer` / `poll` / `peek`.
 
+> **Key idea:** `heapq` is **functions over a plain list**, not a class. `h[0]` is the min; there is **no max-heap** — negate values or use `nlargest`.
+
 **Lesson:** `lesson_02/04_heapq.py`
 
 ---

@@ -1,6 +1,6 @@
 # Lesson 8 — Classes and OOP (part 1)
 
-Python classes feel like Java without access modifiers, `new`, or overloading.
+Coming from Java, three things trip you up first: there is no `new`, there are no access modifiers, and `self` is a parameter you type by hand. This chapter makes each feel normal before `@dataclass` (next chapter) hides most of the boilerplate.
 
 **Run:**
 
@@ -52,6 +52,22 @@ class Counter:
 
 Mutating `Counter.total` affects all instances; `self.count` is per instance.
 
+> **Java:** `this` is implicit; `self` is the **explicit** first parameter of every instance method — you write it in the signature, but not at the call site (`rex.bark()`, not `rex.bark(rex)`).
+
+### Encapsulation — convention, not keywords
+
+```python
+class Account:
+    def __init__(self, balance: int) -> None:
+        self.owner = "Ann"     # public
+        self._balance = balance # "internal — hands off" (convention only)
+        self.__pin = 1234       # name-mangled to _Account__pin
+```
+
+There is no `private` / `protected` / `public`. A leading `_` signals "internal"; a leading `__` triggers **name-mangling** (`__pin` becomes `_Account__pin`), which discourages accidental access but is **not** enforced privacy.
+
+> **Java:** no access modifiers — leading underscores are a naming convention, not a compiler rule. Nothing stops a caller who really wants in.
+
 ---
 
 ## Inheritance
@@ -66,7 +82,20 @@ class Dog(Animal):
         return "woof"
 ```
 
-Lookup walks the MRO (method resolution order) — like Java superclass chain. Use `super()` when extending parent behavior.
+Lookup walks the MRO (method resolution order) — like Java's superclass chain. Use `super()` to extend, not replace, parent behavior:
+
+```python
+class Animal:
+    def __init__(self, legs: int) -> None:
+        self.legs = legs
+
+class Dog(Animal):
+    def __init__(self, name: str) -> None:
+        super().__init__(legs=4)   # like Java super(...)
+        self.name = name
+```
+
+> **Java:** `super().__init__(...)` ≈ `super(...)`; `super().speak()` ≈ `super.speak()`. Unlike Java, `super()` is a callable returning a proxy, and the parent initializer is **not** called for you — you invoke `super().__init__()` explicitly.
 
 ---
 
@@ -82,6 +111,14 @@ The `__format__` method powers custom f-string formatting — see `lesson_08/03_
 > **Java:** one `toString()`; Python splits display vs debug across two methods (`__str__` and `__repr__`).
 
 > **Key idea:** No `new`, no overloading, explicit `self`. Start with plain classes; reach for `@dataclass` when data dominates behavior (next chapter).
+
+---
+
+## Pause and practice
+
+```bash
+uv run python lesson_08/practice/01_classes.py
+```
 
 ---
 

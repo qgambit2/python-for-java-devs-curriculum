@@ -143,7 +143,7 @@ stack.remove(20)  # remove first matching value — ValueError if missing
 | Python | Returns | Notes |
 |--------|---------|-------|
 | `del d[k]` | nothing | `KeyError` if missing |
-| `d.pop(k)` | **value** | optional default: `d.pop(k, None)` |
+| `d.pop(k)` | **value** | `d.pop(k, None)` for a default; **without** a default, `KeyError` if missing |
 | `d.popitem()` | `(key, value)` | LIFO — last inserted; **no** `last=` on plain `dict` |
 | Evict oldest (plain `dict`) | `k = next(iter(d)); del d[k]` | FIFO — `popitem(last=False)` is **OrderedDict** only |
 
@@ -181,8 +181,7 @@ Beyond built-in `list`/`dict`/`set`, the stdlib **`collections`** package adds c
 |--------|----------------|
 | `{**d}` | New dict with the same top-level entries as `d` (shallow copy) |
 | `{**a, **b}` | Merge: start with `a`, overlay `b`; **right wins** on duplicate keys |
-| `{d}` | **Not** a copy — Python treats this as a set literal; a dict is unhashable → `TypeError` |
-| `{d.copy(), **b}` | **Wrong** — same problem; `d.copy()` without `**` does not spread |
+| `{d}` | **Not** a copy — a bare dict inside `{ }` is read as a **set** element, and a dict is unhashable → `TypeError`. Always prefix with `**` |
 
 **Rule of thumb:** inside `{ }`, a dict only contributes its **entries** when prefixed with `**`. Think Java `putAll`, not “put the whole map object as one value.”
 
@@ -237,16 +236,6 @@ Prefer **`{**a, **b}`** when you want a merged result without touching inputs (e
 def merge_defaults(defaults: dict, user: dict) -> dict:
     allowed = {k: user[k] for k in user if k in defaults}
     return {**defaults, **allowed}
-```
-
-These two are **not** equivalent:
-
-```python
-# ✓ spreads entries from defaults, then overlays filtered user keys
-{**defaults, **{k: user[k] for k in user if k in defaults}}
-
-# ✗ tries to put the whole dict object inside { } — TypeError
-{defaults.copy(), **{k: user[k] for k in user if k in defaults}}
 ```
 
 Imperative equivalent (same semantics):

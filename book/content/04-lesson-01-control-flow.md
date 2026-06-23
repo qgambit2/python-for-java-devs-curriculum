@@ -1,5 +1,7 @@
 # Lesson 1 — Control flow (Java if / for / while / switch)
 
+Control flow is where Python feels most familiar and trips you up fastest. The keywords are the ones you know — `if`, `for`, `while`, `break` — but the *defaults* are different: Python's `for` is a for-each over any iterable (the C-style counting loop is gone), blocks are marked by indentation instead of braces, and `match` (3.10+) is a structural pattern matcher, not the integer jump table `switch` started as. Get these reflexes right early and every later lesson reads naturally; carry Java habits in unexamined and you write loops that work but read like transliterated Java.
+
 **Read early** — right after syntax and variables, before collections.
 
 ```bash
@@ -208,6 +210,8 @@ def sign_word(n: int) -> str:
 | Guard keyword | `when` (after pattern) | `if` (after pattern) |
 | Catch-all | `default` (any Java) | `case _:` |
 
+> **Java:** pattern labels with `when` guards in `switch` require **Java 21+**. On older JDKs, use an `if` inside the case or a plain `if/else` chain. Python's `match` guards arrived in **3.10**.
+
 Run: `uv run python lesson_01/03_control_flow.py` — see `sign_word` output in §6.
 
 ### Alternatives (when `match` is overkill)
@@ -232,6 +236,8 @@ label = HTTP.get(code, "other")
 
 > **Rule:** use **`match`** for real multi-way branching (especially strings and enums); use **`if/elif`** or a **dict** for two–three simple cases.
 
+> **Key idea:** Reach for `match` when you branch on values, enums, or **structure** (unpacking inside the pattern); a dict lookup or short `if/elif` is shorter for two or three plain cases.
+
 ---
 
 ## break, continue, for-else
@@ -249,6 +255,16 @@ else:
 ```
 
 > **Java:** use a `boolean found` flag.
+
+---
+
+## Pause and practice
+
+```bash
+uv run python lesson_01/practice/02_control_flow.py
+```
+
+Each exercise checks itself with a `✓` assert — rewrite the `if` / `for` / `match` blocks until every check passes.
 
 ---
 

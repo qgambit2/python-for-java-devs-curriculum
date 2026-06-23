@@ -19,7 +19,7 @@ uv run python lesson_07/03_cheat_sheet.py
 | `else if` | `elif` |
 | `true` / `false` | `True` / `False` |
 | `i++` | `i += 1` |
-| method overloading | **one** `def` — last wins; use defaults |
+| method overloading | **no overloading** — a later `def` with the same name just rebinds it; use default args or `*args` |
 
 ```python
 def greet(name: str, excited: bool = False) -> str:
@@ -39,6 +39,8 @@ def add_item(item, bucket=None):  # never bucket=[]
     bucket.append(item)
     return bucket
 ```
+
+> **Java:** Java has no analog — default values there are evaluated per call. In Python the default expression runs **once**, at `def` time, so a shared `bucket=[]` accumulates across calls. Always default to `None` and build the list inside.
 
 ---
 
@@ -73,6 +75,8 @@ except KeyError:
 
 Often cleaner than `if key in d` for one-off access — taste and context matter.
 
+> **Java:** Java culture is **LBYL** (Look Before You Leap) — you null-check and `containsKey` first, partly because exceptions are expensive and checked exceptions make `try` blocks heavy. Python's exceptions are cheap and unchecked, so reaching for the value and catching `KeyError`/`AttributeError` (EAFP) is idiomatic, not a code smell — it also avoids the time-of-check/time-of-use race that the check-then-act pattern hides.
+
 ---
 
 ## Cheat sheet mindset
@@ -85,6 +89,17 @@ Lesson 7's cheat sheet file is a **lookup**, not a second read. Use it when you 
 - `is` vs `==`
 
 > **Key idea:** Python rewards reading code aloud. If a loop feels like indexed Java, there is usually a shorter form.
+
+---
+
+## Pause and practice
+
+```bash
+uv run python lesson_07/01_java_gotchas.py
+uv run python lesson_07/02_pythonic_compactness.py
+```
+
+Run both, then convert a `range(len(...))` loop in your own code to `enumerate`, and rewrite one check-then-access (`if key in d`) as an EAFP `try`/`except KeyError` — decide which reads better in context.
 
 ---
 

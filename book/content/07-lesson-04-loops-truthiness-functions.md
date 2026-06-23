@@ -2,6 +2,8 @@
 
 Builds on **Lesson 1 control flow** (`lesson_01/03_control_flow.py`). Here: truthiness in `if`, `is` vs `==`, and `def` functions.
 
+Three things in this lesson behave unlike their Java counterparts, and each is a silent-bug source rather than a compile error. Python's `if` accepts *any* object and decides truth by emptiness, so `if items:` replaces `if (!list.isEmpty())` — but `if count:` quietly treats `0` as false. `==` compares values while `is` compares identity, and confusing them passes tests until it suddenly doesn't. And `def` has no overloading and evaluates default arguments **once** at definition time — the classic mutable-default trap. Knowing these up front saves you the debugging session each one otherwise costs.
+
 **Run:**
 
 ```bash
@@ -55,6 +57,8 @@ if scores:       # False for []
     ...
 ```
 
+> **Key idea:** Empty collections and empty strings are **falsy**, so `if items:` means "if non-empty." In Java you'd write `if (!items.isEmpty())`; in Python the bare object is enough — and never test `if items == True`.
+
 ### `is` vs `==`
 
 - `==` compares **values**
@@ -84,6 +88,8 @@ greet("Java dev", times=3)
 - No overloading — one `def` per name; use default args
 - Type hints are optional at runtime
 - Keyword args at call site: `times=3`
+
+> **Java:** No method overloading. Java picks an overload by signature at compile time; Python has **one** `def` per name and leans on default values and keyword args instead.
 
 ### `*args` and `**kwargs` — same symbols, opposite jobs
 
@@ -188,6 +194,18 @@ def add_item(item, bucket=None):   # NOT bucket=[]
 Default `[]` is created **once** at function definition time and shared across calls.
 
 > **Key idea:** Copy before mutate; `None` for optional mutable defaults.
+
+---
+
+## Pause and practice
+
+```bash
+uv run python lesson_04/01_loops.py
+uv run python lesson_04/02_truthiness.py
+uv run python lesson_04/03_functions.py
+```
+
+Run each demo, then edit it to make a change stick: rewrite an indexed loop with `enumerate`, swap an `== None` for `is None`, and convert a function with a mutable default argument to the `None` idiom — confirm the output shifts the way you expect.
 
 ---
 

@@ -38,11 +38,11 @@ Keep this bookmarked — it is the authoritative reference (like the JDK Javadoc
 
 ## Preview edition
 
-This PDF is a **preview edition** covering **Lessons 1–8** (syntax through OOP and dataclasses). Lessons 9–15 appear as a roadmap — code exists or is planned; book prose follows as those lessons land. A complete edition (all lessons) is estimated at **~80–120 pages**.
+This PDF is a **preview edition** covering **Lessons 1–8** (syntax through OOP and dataclasses), plus two capstone chapters — **16 (unit testing)** and **17 (database access)**. Lessons 9–15 appear as a roadmap — code exists or is planned; book prose follows as those lessons land. A complete edition (all lessons) is estimated at **~80–120 pages**.
 
 The runnable source of truth remains the `lesson_NN/` files in the repository — run them, change them, break them, fix them.
 
-> **Java:** Think of each lesson file as a executable tutorial — like a JShell script you run from the terminal, not a slide deck.
+> **Java:** Think of each lesson file as an executable tutorial — like a JShell script you run from the terminal, not a slide deck.
 
 ---
 

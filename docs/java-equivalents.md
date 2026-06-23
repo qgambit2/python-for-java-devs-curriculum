@@ -1015,10 +1015,32 @@ Python has **no JPA in the stdlib**. Learn in layers: **DB-API 2.0** (JDBC-like)
 
 Lesson: `lesson_17/` · Practice: `lesson_17/practice/01_db_api.py`, `02_sqlalchemy_crud.py`
 
-## AWS (Lesson 8)
+## AWS (Lesson 15)
+
+boto3 is the AWS SDK for Python; the connection model maps almost 1:1 to the AWS SDK for Java v2. Demos run offline under `moto` (Redis under `fakeredis`).
+
+| Java (AWS SDK for Java v2) | Python (boto3) |
+|-----------------------------|----------------|
+| `S3Client.builder().build()` | `boto3.client("s3")` |
+| `DynamoDbEnhancedClient` (mapper) | `boto3.resource("dynamodb")` |
+| `DefaultCredentialsProvider.create()` | default credential chain (env → profile → ECS → EC2/Lambda role) |
+| `Region.US_EAST_1` | `region_name="us-east-1"` |
+| `s3.putObject` / `getObject(...).readAllBytes()` | `s3.put_object(...)` / `get_object(...)["Body"].read()` |
+| `S3Presigner.presignGetObject` | `s3.generate_presigned_url("get_object", ...)` |
+| `QueryConditional.keyEqualTo(...)` | `table.query(KeyConditionExpression=Key("k").eq(v))` |
+| `sqs.receiveMessage` + `deleteMessage` | `sqs.receive_message(...)` + `delete_message(...)` |
+| `sns.publish` (fan-out) | `sns.publish(TopicArn=..., Message=...)` |
+| Jedis / Lettuce (ElastiCache) | `redis` (redis-py) — **not** boto3 |
+| `SecretsManagerClient.getSecretValue` | `boto3.client("secretsmanager").get_secret_value` |
+| SSM / externalized `application.yml` | `boto3.client("ssm").get_parameter(...)` |
+| LocalStack / SDK test utils | `moto` (`@mock_aws`) |
+
+**Lambda handler** (Lesson 15 also notes you connect the same way from anywhere):
 
 | Java Lambda | Python Lambda |
 |-------------|---------------|
 | `RequestHandler` | `def handler(event, context):` |
 | AWS SDK v2 | `boto3` |
 | API Gateway event POJO | `event` dict (JSON) |
+
+Lesson: `lesson_15/` · Practice: `lesson_15/practice/01_s3_dynamodb.py`, `02_messaging_config.py`

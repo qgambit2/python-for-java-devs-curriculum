@@ -109,7 +109,7 @@ Quick reference
 | List Lesson 2 files | `uv run python lesson_02/basics.py --list` |
 | Full curriculum   | `uv run python 00_curriculum.py` |
 
-Tutor docs: `.cursor/skills/python-for-java-devs/` (SKILL.md, faq.md)
+Tutor docs: `.claude/skills/python-for-java-devs/` (SKILL.md, faq.md)
 """
 
 if __name__ == "__main__":

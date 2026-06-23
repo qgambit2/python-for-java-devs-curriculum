@@ -1,4 +1,4 @@
-"""Lesson 17 index — database access (DB-API, SQLAlchemy, Flask)."""
+"""Lesson 15 index — AWS with boto3 (connect, S3, DynamoDB, SNS/SQS, Redis, config)."""
 
 import sys
 from pathlib import Path
@@ -12,12 +12,12 @@ if str(_p) not in sys.path:
 from _lesson_runner import run_lesson_index
 
 LESSONS = [
-    "01_db_api_sqlite.py",
-    "02_schema_and_migrations.py",
-    "03_sqlalchemy_core.py",
-    "04_sqlalchemy_orm.py",
-    "05_flask_sqlalchemy.py",
-    "06_transactions.py",
+    "01_connect_and_credentials.py",
+    "02_s3.py",
+    "03_dynamodb.py",
+    "04_sns_sqs.py",
+    "05_redis.py",
+    "06_secrets_and_config.py",
 ]
 
 if __name__ == "__main__":

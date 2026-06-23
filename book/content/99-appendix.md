@@ -7,7 +7,7 @@
 | `lesson_NN/` | Demos, `basics.py` index, `practice/` exercises |
 | `lesson_NN/practice/` | Exercises with asserts |
 | `00_curriculum.py` | Full roadmap |
-| `.cursor/skills/python-for-java-devs/` | Tutor FAQ and Java tables |
+| `.claude/skills/python-for-java-devs/` | Tutor FAQ and Java tables |
 | `book/content/` | This book's source markdown |
 | `book/generate_book.py` | PDF builder |
 

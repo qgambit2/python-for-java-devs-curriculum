@@ -70,7 +70,7 @@ uv run python lesson_02/practice/02_collections.py
 
 1. Ask what the Java equivalent would be.
 2. Check the **official docs:** [docs.python.org/3](https://docs.python.org/3/) — library index for stdlib modules, language reference for syntax.
-3. Read the FAQ: `.cursor/skills/python-for-java-devs/faq.md`
+3. Read the FAQ: `.claude/skills/python-for-java-devs/faq.md`
 4. Compare tables in `java-equivalents.md`
 
 > **Key idea:** If you find yourself writing Java with Python punctuation, pause. There is usually a shorter, more idiomatic form — and we will collect those as you go.

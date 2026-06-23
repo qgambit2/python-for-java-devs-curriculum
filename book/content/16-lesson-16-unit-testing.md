@@ -35,7 +35,7 @@ class ArithmeticTest {
 
     @Test
     void divideByZero() {
-        assertThrows(ZeroDivisionError.class, () -> divide(1, 0));
+        assertThrows(ArithmeticException.class, () -> divide(1, 0));
     }
 
     @Test
@@ -66,6 +66,10 @@ def test_clamp_edges():
 ```
 
 Discovery: `test_*.py` files and `test_*` functions. Run: `uv run pytest`.
+
+The first thing to notice is that pytest has no `assertEquals` family — you write a plain `assert` and pytest rewrites it behind the scenes to report both operands on failure. One keyword replaces the whole `Assertions.*` API.
+
+> **Java:** JUnit needs `assertEquals`/`assertTrue`/`assertThrows` because a bare Java `assert` is disabled at runtime unless you pass `-ea` and gives no diagnostics. pytest's assertion rewriting makes plain `assert actual == expected` print the same rich diff you got from `assertEquals` — so the method zoo disappears.
 
 ---
 
@@ -144,7 +148,9 @@ def test_alice_score(board):
     assert board.get("alice") == 10
 ```
 
-`yield` in a fixture adds teardown after the test — like `@AfterEach`.
+A fixture is a function decorated with `@pytest.fixture`; a test receives it by declaring a **parameter with the same name**. There is no `@Autowired`, no `@BeforeEach` annotation tying setup to teardown — pytest matches the parameter `board` to the fixture `board` and injects the return value. `yield` in a fixture adds teardown after the test — like `@AfterEach`.
+
+> **Java:** fixtures are dependency injection by parameter name — closer to Spring constructor injection than to JUnit's `@BeforeEach`. The test *declares what it needs* in its signature; pytest builds and wires it. Fixtures can depend on other fixtures the same way, replacing JUnit's setup-method inheritance chains.
 
 ---
 
@@ -180,6 +186,10 @@ def test_greeter():
 ```
 
 `@patch("mymodule.open")` on a test parameter replaces a name where it is imported — same rule as Mockito + Spring: patch the **lookup site**.
+
+> **Java:** `MagicMock()` is a Mockito mock that needs no interface — attribute and method access spring into existence on first use, so there is no `@Mock`/`@InjectMocks` ceremony. Set behavior with `mock.method.return_value = x` (≈ `when(...).thenReturn(...)`) and verify with `mock.method.assert_called_once()` (≈ `verify(...)`).
+
+> **Key idea:** pytest trades JUnit's annotations and assertion methods for two plain-Python mechanisms — a bare `assert` (rewritten for rich failure output) and function parameters (fixtures injected by name). Learn those two and most of the JUnit/Mockito surface area has a one-line equivalent.
 
 ---
 

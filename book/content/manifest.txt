@@ -12,6 +12,7 @@
 10-lesson-07-gotchas-pythonic.md
 11-lesson-08-oop-basics.md
 12-lesson-08-dataclass-eq-sort.md
+13-lesson-15-aws.md
 16-lesson-16-unit-testing.md
 17-lesson-17-database.md
 90-future-chapters.md

@@ -59,12 +59,15 @@ nums[::-1]    # reversed copy
 
 Slicing **never mutates** the original. `copy = nums[:]` then `copy[0] = 999` leaves `nums` unchanged.
 
+> **Key idea:** A slice always returns a **new** sequence — it never mutates the original. Reach for a slice before writing an index loop.
+
 ## Patterns you will reuse
 
 **Top n after sort:**
 
 ```python
-sorted(nums, reverse=True)[:2]
+n = 2
+sorted(nums, reverse=True)[:n]   # the n largest
 ```
 
 **Chunking:**

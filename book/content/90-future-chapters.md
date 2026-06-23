@@ -1,6 +1,6 @@
-# Roadmap — lessons 9–15
+# Roadmap — remaining lessons
 
-Lessons **1–8** and **16 (unit testing)** are in this preview edition. Lessons 9–15 exist as runnable code or plans; book chapters follow as those lessons land.
+Lessons **1–8**, **15 (AWS)**, **16 (unit testing)**, and **17 (database access)** are in this preview edition. The remaining lessons exist as runnable code or plans; book chapters follow as those lessons land.
 
 | Lesson | Topic | Code status |
 |--------|-------|-------------|
@@ -10,8 +10,9 @@ Lessons **1–8** and **16 (unit testing)** are in this preview edition. Lessons
 | 12 | File I/O and XML | planned |
 | 13 | Concurrency and asyncio | planned |
 | 14 | Agents course code | planned |
-| 15 | AWS Lambda | planned |
+| **15** | **AWS with boto3 (S3, DynamoDB, SNS/SQS, Redis, config)** | **done** — capstone after L8+ |
 | **16** | **Unit testing (JUnit 5 / pytest, Mockito)** | **done** — capstone after L8+ |
+| **17** | **Database access (DB-API, SQLAlchemy)** | **done** — capstone after L8+ |
 
 ```bash
 uv run python 00_curriculum.py

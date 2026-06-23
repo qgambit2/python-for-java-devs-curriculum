@@ -116,7 +116,7 @@ Windows path cheat sheet
 
 Same `uv run python …` commands on every OS.
 
-Tutor docs: `.cursor/skills/python-for-java-devs/`
+Tutor docs: `.claude/skills/python-for-java-devs/`
 """
 
 if __name__ == "__main__":

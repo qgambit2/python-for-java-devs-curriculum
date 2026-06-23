@@ -53,8 +53,8 @@ Fields with defaults must come **after** required fields.
 Same contract as Java: **equal objects must have equal hash codes** if used in `set` / `dict` keys.
 
 - `@dataclass` generates an `__eq__` method by default
-- `frozen=True` enables an `__hash__` method
-- If you customize `__eq__` without `__hash__`, instances become unhashable (`__hash__ = None`)
+- `frozen=True` (together with the default `eq=True`) generates an `__hash__` method; a mutable dataclass (`eq=True, frozen=False`) sets `__hash__ = None` and is **unhashable**
+- If you customize `__eq__` without `__hash__`, instances become unhashable the same way
 
 Mutable objects should not be dict keys — Python may block with `TypeError`.
 

@@ -12,6 +12,8 @@ uv run python lesson_03/01_strings.py
 
 ## Java String map
 
+Scan this as a lookup table — each row is explained in the sections below; you don't need to memorize it now.
+
 | Java | Python `str` |
 |------|----------------|
 | `String.format("%s! You are %d.", name, age)` | `f"{name}! You are {age}."` |
@@ -47,7 +49,7 @@ text[0]          # 'P'     — Java: charAt(0)
 text[-1]         # 'n'
 text[1:4]        # 'yth'   — Java: substring(1, 4)
 len(text)        # 6       — Java: length()  (function, not a method)
-"world" in s     # True    — Java: contains("world")
+"yth" in text    # True    — Java: contains("yth")
 ```
 
 Strings are **immutable** — slices and methods return new strings; the original is unchanged.
@@ -75,7 +77,7 @@ When you `print(sorted("eat"))` you see `['a', 'e', 't']` — the **single quote
 
 ```python
 "a,b,c".split(",")              # ['a', 'b', 'c']
-"  one   two  ".split()         # ['one', 'two', 'three']  — whitespace runs collapsed
+"  one   two   three ".split()  # ['one', 'two', 'three']  — whitespace runs collapsed
 " ".join(["one", "two"])        # 'one two'  — parse → transform → rejoin
 ```
 
@@ -390,7 +392,7 @@ Use **normal** `"..."` when you want escape sequences. Use **`r"..."`** when you
 
 ## Other formatting styles
 
-**`str.format()`** — reusable template (≈ Java `String.format` with named args, or Java 15 `formatted()`):
+**`str.format()`** — reusable template. Java's `String.format` is **positional only**; Python's `.format()` adds **named** placeholders (`{name}`), which Java lacks:
 
 ```java
 String template = "Dear %s, balance $%.2f";
@@ -401,46 +403,19 @@ String.format(template, "Alice", 1234.5);
 "Dear {name}, balance ${balance:.2f}".format(name="Alice", balance=1234.5)
 ```
 
-**Practice `format_template`** — forward placeholders with `**kwargs`.  
-**Read this carefully:** `**` in the `def` and `**` in `.format(...)` look the same but do **opposite** things (Lesson 4 has the full `*args` / `**kwargs` reference).
+**Forwarding placeholders** — a function can take caller values and spread them into `.format()` with `**`:
 
 ```python
 def format_template(template: str, **kwargs: object) -> str:
-    return template.format(**kwargs)   # ← ** here = UNPACK (spread dict into keyword args)
+    return template.format(**kwargs)   # ** = unpack the dict back into keyword args
 
 format_template("Dear {name}, total=${total:.2f}", name="Ann", total=9.5)
 # "Dear Ann, total=$9.50"
 ```
 
-### Same spelling `**`, two directions
+The `**` in the `def` *collects* keyword args into a dict; the `**` in `.format(**kwargs)` *unpacks* that dict back into keyword args — same punctuation, opposite directions. **Lesson 4 covers the full `*args` / `**kwargs` mechanics** (including the `format(kwargs)`-without-`**` mistake); here you just need that `.format(**kwargs)` forwards placeholders.
 
-| Where you write `**` | What it does | In this exercise |
-|---------------------|--------------|------------------|
-| `def format_template(..., **kwargs)` | **Collect** — bundle caller’s keyword args into one `dict` | `name="Ann", total=9.5` → `kwargs == {"name": "Ann", "total": 9.5}` |
-| `template.format(**kwargs)` | **Unpack** — spread that `dict` back into keyword args | same as `template.format(name="Ann", total=9.5)` |
-
-```text
-Caller:  format_template("...", name="Ann", total=9.5)
-              │
-              ▼  **kwargs in def  (COLLECT)
-         kwargs = {"name": "Ann", "total": 9.5}
-              │
-              ▼  **kwargs in .format()  (UNPACK)
-         .format(name="Ann", total=9.5)
-```
-
-### Wrong vs right — easy to mix up
-
-```python
-kwargs = {"name": "Ann", "total": 9.5}
-
-template.format(**kwargs)   # ✓ "Dear Ann, total=$9.50"
-template.format(kwargs)     # ✗ passes ONE positional arg (the dict) — {name} / {total} not filled
-```
-
-`{name}` and `{total}` need **keyword** arguments. Without `**`, you hand `.format()` a single dict object, not `name=…` and `total=…`.
-
-> **Java:** no `**kwargs` and no keyword unpack. Closest: build `Map<String, Object>` and pass fields explicitly, or use a helper that reads the map. Java **varargs** (`int... args`) ≈ Python `*args` only (positional) — see **Lesson 4**.
+> **Java:** no `**kwargs` and no keyword unpack. Closest: build `Map<String, Object>` and pass fields explicitly. Java **varargs** (`int... args`) ≈ Python `*args` only (positional) — see **Lesson 4**.
 
 **Legacy `%`** — still seen in older code (≈ `printf` / `String.format` with `%s`):
 
@@ -506,13 +481,13 @@ import re
 
 text = "Order 42: ship 7-10 days"
 
-re.search(r"\d+", text)        # first Match or None     — find()
+m = re.search(r"\d+", text)    # first Match or None     — find()
 m.group()                      # "42"                    — group()
 
 re.findall(r"\d+", text)       # ['42', '7', '10']       — all matches
 re.sub(r"\d+", "#", text)      # replaceAll
-re.fullmatch(r"\d+", "42")     # True — whole string      — matches()
-re.match(r"\d+", "42 days")    # True — at start          — lookingAt()
+re.fullmatch(r"\d+", "42")     # Match (whole string)    — matches() -> boolean
+re.match(r"\d+", "42 days")    # Match (at start)         — lookingAt() -> boolean
 ```
 
 | Java | Python `re` |
