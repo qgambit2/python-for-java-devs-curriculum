@@ -165,6 +165,37 @@ You first meet this pattern in `lesson_02/practice/02_collections.py` (`score_ch
 [x for row in matrix for x in row]
 ```
 
+### Two `for` clauses — flatten vs. cross product
+
+Multiple `for` clauses run **left-to-right, outer-to-inner** — exactly the nesting order of plain loops. The result expression sits at the far **left**, even though it runs in the innermost position. Read it as "nested loops with the body hoisted to the front":
+
+```python
+[ph + v for ph in prefixes for v in suffixes]
+```
+
+is the same as:
+
+```python
+result = []
+for ph in prefixes:          # outer = first for clause
+    for v in suffixes:       # inner = second for clause
+        result.append(ph + v)
+```
+
+When the two sequences are **independent**, this builds a **cross product** (every `ph` paired with every `v`). It is the comprehension behind building letter combinations one digit at a time:
+
+```python
+combinations = [""]
+for digit in digits:
+    combinations = [prefix + letter
+                    for prefix in combinations
+                    for letter in keypad[digit]]
+```
+
+> **Java:** there is no stream one-liner for this — it is a nested `for` loop with the `result.add(...)` body lifted to the left. (`flatMap` gets you a flatten, but the cross-product reads far more directly as two `for` clauses here.)
+
+**Ordering check:** swap the two `for` clauses and the *contents* of the result are identical — only the **order** they are produced changes. `[a + b for a in "xy" for b in "12"]` → `["x1","x2","y1","y2"]`; swapped → `["x1","y1","x2","y2"]`. Same set, different sequence. Predict the output before running it — that is the whole rule in one bite.
+
 > **Key idea:** Comprehensions for transform/filter; plain `for` for side effects and complex logic.
 
 ---

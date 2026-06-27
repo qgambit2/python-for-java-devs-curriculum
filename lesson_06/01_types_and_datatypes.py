@@ -8,6 +8,7 @@ Run:
 """
 
 from collections.abc import Mapping, Sequence
+from typing import Optional
 
 
 def section(title: str) -> None:
@@ -83,7 +84,32 @@ print(greet("Java dev", 2))
 # Java: compiler enforces types; Python: mypy/pyright optional
 
 
-section("7. ABC checks — Sequence, Mapping (optional but useful)")
+section("7. Optional / None hints — NOT Java's Optional<T> wrapper")
+
+# A value that may be missing is hinted two equivalent ways:
+def find_user(uid: int) -> Optional[str]:   # typing.Optional — needs import
+    return "Ann" if uid == 1 else None
+
+def find_user2(uid: int) -> str | None:     # modern syntax (3.10+) — no import
+    return "Ann" if uid == 1 else None
+
+# Optional[str] is EXACTLY str | None — "a str, or None". Nothing more.
+name = find_user(1)
+print(name, "/", find_user(2))
+
+# CRITICAL Java contrast: this is NOT java.util.Optional<T>.
+#   Java:   Optional<String> o = find(); o.isPresent(); o.get();  // a wrapper object
+#   Python: name is the str (or None) DIRECTLY — no box, no .get(), no unwrap.
+# It is purely a type *hint* (like Java's @Nullable), erased at runtime.
+# Check the real way you check for null — with `is None`:
+if name is not None:
+    print(name.upper())   # use it directly; it IS the str
+
+# So `Optional` only ever appears in a type hint. As a *value*, "absent" is
+# just None — never `Optional[None]` or `Optional.empty()`.
+
+
+section("8. ABC checks — Sequence, Mapping (optional but useful)")
 
 data: list[int] = [1, 2, 3]
 print(isinstance(data, Sequence))   # True — list is a Sequence

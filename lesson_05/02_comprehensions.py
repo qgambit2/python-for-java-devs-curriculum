@@ -52,5 +52,20 @@ matrix = [[1, 2], [3, 4], [5, 6]]
 flat = [x for row in matrix for x in row]
 print(flat)
 
+# Two for clauses run left-to-right = outer-to-inner; result expr is hoisted left.
+# Independent sequences -> cross product (every prefix paired with every letter).
+pairs = [a + b for a in "xy" for b in "12"]
+print(pairs)            # ['x1', 'x2', 'y1', 'y2']  (a outer, b inner)
+# Swap the clauses -> same contents, different order:
+print([a + b for b in "12" for a in "xy"])  # ['x1', 'y1', 'x2', 'y2']
+# Java: nested for loops with result.add(a + b) lifted to the front — no stream one-liner.
+
+# Build letter combinations one digit at a time (LeetCode 17 pattern)
+keypad = {"2": "abc", "3": "def"}
+combinations = [""]
+for digit in "23":
+    combinations = [prefix + letter for prefix in combinations for letter in keypad[digit]]
+print(combinations)     # ['ad', 'ae', 'af', 'bd', 'be', 'bf', 'cd', 'ce', 'cf']
+
 # When NOT to use — keep regular loops for complex logic or side effects
 # Bad: [print(x) for x in nums]   # works but weird — use a for loop

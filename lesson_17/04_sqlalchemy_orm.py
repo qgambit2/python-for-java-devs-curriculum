@@ -16,10 +16,9 @@ _p = Path(__file__).resolve().parent
 if str(_p) not in sys.path:
     sys.path.insert(0, str(_p))
 
+from _lesson17_db import Book, book_to_dict, make_engine, seed_books
 from sqlalchemy import select
 from sqlalchemy.orm import Session
-
-from _lesson17_db import Book, book_to_dict, make_engine, seed_books
 
 
 def section(title: str) -> None:

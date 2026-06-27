@@ -21,8 +21,21 @@ print(7 // 2)   # 3    — floor division (Java: 7 / 2 on ints)
 print(7 % 2)    # 1
 print(2 ** 10)  # 1024 — Java: Math.pow (returns double)
 
-q, r = divmod(7, 2)
+# GOTCHA — with negatives the Java analogy breaks. Python's // floors toward
+# -infinity; Java's int / truncates toward zero. And % follows division, so its
+# sign matches the divisor in Python (the dividend in Java).
+print(-7 // 2)  # -4   — Python floors down (Java: -7 / 2 == -3, truncates)
+print(-7 % 2)   # 1    — sign of divisor (Java: -7 % 2 == -1, sign of dividend)
+
+# divmod(a, b) returns the tuple (a // b, a % b) in ONE call — quotient + remainder.
+# Java has no equivalent: you'd compute a / b and a % b as two separate expressions.
+q, r = divmod(7, 2)   # tuple unpacking (Lesson 2 §3): q=3, r=1
 print(f"divmod(7, 2): quotient={q}, remainder={r}")
+
+# Classic use — split a number into a carry and a digit (e.g. add-two-numbers):
+carry, digit = divmod(13, 10)   # carry=1, digit=3
+print(f"divmod(13, 10): carry={carry}, digit={digit}")
+# Unpack target can even be an attribute: `carry, node.val = divmod(total, 10)`.
 
 
 section("2. math module — import math (not java.lang.Math static)")

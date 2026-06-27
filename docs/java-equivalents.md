@@ -27,6 +27,8 @@ Lesson: `lesson_01/01_syntax.py`
 | `int x = 5` | `x = 5` |
 | `String s = "hi"` | `s = "hi"` |
 | `null` | `None` |
+| `Optional<T>` (wrapper object; `.isPresent()`, `.get()`) | `T \| None` / `typing.Optional[T]` — a **type hint, not a wrapper**; the value is the `T` (or `None`) directly, checked with `is None` |
+| `@Nullable T` | `Optional[T]` / `T \| None` (this is the true parallel) |
 | `true` / `false` | `True` / `False` |
 | `instanceof` | `isinstance(x, int)` |
 | `Integer.parseInt("42")` | `int("42")` |
@@ -582,6 +584,8 @@ Hash-based lookup: **`__hash__` first** (find bucket), then **`__eq__`** (confir
 | `Comparable.compareTo()` | `__lt__` (+ `order=True` generates rich comparisons) | `sorted(xs)`, `min`/`max` without `key=` |
 | `Comparator` | `sorted(xs, key=lambda x: ...)` | compares key results, not element `<` |
 | `TreeSet` | no stdlib — `sorted(list)` or `sortedcontainers` | Python `set` is always hash-based |
+| `Collections.binarySearch(list, k)` | `bisect.bisect_left(a, k)` (list must be sorted) | bisect returns the **insertion point**, always `>= 0`; Java returns `-(ip)-1` on a miss |
+| `binarySearch` then `list.add(i, k)` | `bisect.insort(a, k)` | one call to insert keeping order; `bisect_left`/`bisect_right` pick before/after equal items |
 
 ```python
 # Java: @Override equals AND hashCode together
@@ -856,6 +860,8 @@ Runnable demos: `lesson_08/06_dataclass.py` § Exception handling.
 | `collect(toList())` | `[...]` comprehension |
 | filter + sort (one pass) | `sorted(x for x in xs if p(x))` — **no `[]`** unless you need the list twice |
 | `collect(toMap())` | `{...}` comprehension or `dict(zip(...))` |
+| `flatMap(List::stream)` (flatten) | `[x for sub in nested for x in sub]` |
+| nested `for` loops / cross product | `[a + b for a in xs for b in ys]` — two `for` clauses, outer-to-inner; **no stream one-liner** |
 
 ## Built-ins (no import)
 

@@ -2,9 +2,9 @@
 
 from __future__ import annotations
 
-from pathlib import Path
 import runpy
 import sys
+from pathlib import Path
 
 ROOT = Path(__file__).parent
 

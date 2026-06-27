@@ -13,9 +13,8 @@ _p = Path(__file__).resolve().parent
 if str(_p) not in sys.path:
     sys.path.insert(0, str(_p))
 
-from sqlalchemy import bindparam, insert, select, text, update
-
 from _lesson17_db import Book, make_engine
+from sqlalchemy import bindparam, insert, select, text, update
 
 
 def section(title: str) -> None:

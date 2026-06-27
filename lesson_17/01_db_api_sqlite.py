@@ -9,7 +9,6 @@ Practice:
 
 from __future__ import annotations
 
-import sqlite3
 import sys
 from pathlib import Path
 
@@ -17,7 +16,7 @@ _p = Path(__file__).resolve().parent
 if str(_p) not in sys.path:
     sys.path.insert(0, str(_p))
 
-from _lesson17_schema import BOOKS_DDL, connect_sqlite_memory
+from _lesson17_schema import connect_sqlite_memory
 
 
 def section(title: str) -> None:

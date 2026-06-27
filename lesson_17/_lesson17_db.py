@@ -2,10 +2,9 @@
 
 from __future__ import annotations
 
+from _lesson17_schema import DEMO_DB_PATH
 from sqlalchemy import create_engine, select
 from sqlalchemy.orm import DeclarativeBase, Mapped, Session, mapped_column
-
-from _lesson17_schema import DEMO_DB_PATH
 
 __all__ = [
     "Base",

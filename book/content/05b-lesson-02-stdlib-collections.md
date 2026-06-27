@@ -191,6 +191,8 @@ class LowerDict(UserDict):
 | `namedtuple` | small frozen data bag before you need a full class |
 | `ChainMap` | config layers, scoped overrides |
 | `UserDict`/`UserList` | custom mapping/sequence behavior via inheritance |
+| `heapq` | top-k, priority queue, repeatedly pull the smallest |
+| `bisect` | binary search / insertion point on a **sorted** list |
 
 ---
 
@@ -215,6 +217,54 @@ heapq.nlargest(k, data)   # top-k largest
 > **Key idea:** `heapq` is **functions over a plain list**, not a class. `h[0]` is the min; there is **no max-heap** — negate values or use `nlargest`.
 
 **Lesson:** `lesson_02/04_heapq.py`
+
+---
+
+## bisect — binary search on a sorted list
+
+Like `heapq`, **`bisect`** is functions over a plain list — but the list must already be **sorted**. It finds, in `O(log n)`, the index where a value belongs.
+
+```python
+import bisect
+
+a = [10, 20, 30, 40, 50]
+
+bisect.bisect_left(a, 30)    # 2 — leftmost spot for 30
+bisect.bisect_right(a, 30)   # 3 — rightmost spot (just past equal items)
+bisect.insort(a, 35)         # insert keeping order -> [10, 20, 30, 35, 40, 50]
+```
+
+> **Java:** `Collections.binarySearch(list, key)` / `Arrays.binarySearch(arr, key)`.
+
+### Two differences that bite Java developers
+
+**1. The return value means different things.** `bisect` **always** returns a non-negative *insertion point* — it never signals "found" or "not found." Java's `binarySearch` returns the **found index** when present, or a **negative encoded miss** `-(insertion point) - 1` when absent. So a Java dev's "negative means not found" reflex does not transfer:
+
+```python
+a = [10, 20, 30]
+i = bisect.bisect_left(a, 25)   # 2 — NOT -3; 25 is absent but you only get the slot
+found = i < len(a) and a[i] == 25   # you check membership yourself
+```
+
+```java
+int i = Collections.binarySearch(list, 25);   // -3  (= -(2) - 1)
+boolean found = i >= 0;                        // Java tells you directly
+int insertionPoint = i >= 0 ? i : -(i + 1);    // decode the miss
+```
+
+**2. Duplicates are explicit, not arbitrary.** `bisect_left` lands **before** equal elements, `bisect_right` **after** — so you can find the first or last occurrence deterministically. Java's `binarySearch` returns *some* matching index when duplicates exist, with **no guarantee** which one.
+
+| Goal | Python `bisect` | Java |
+|------|-----------------|------|
+| Find insertion index | `bisect_left(a, x)` / `bisect_right(a, x)` | `binarySearch` then decode `-(i+1)` on miss |
+| "Is `x` present?" | `i = bisect_left(a, x); a[i:i+1] == [x]` | `binarySearch(...) >= 0` |
+| Insert keeping order | `bisect.insort(a, x)` | `binarySearch` + `list.add(idx, x)` (no one-call form) |
+| Search by a field | `bisect_left(a, x, key=...)` (3.10+) | `binarySearch(list, key, Comparator)` |
+| Count items `< x` | `bisect_left(a, x)` | manual |
+
+> **Key idea:** `bisect` finds **where a value goes**, not **whether it is there**. The list must be sorted first; the result is always a valid index, so test `a[i] == x` yourself to confirm membership.
+
+**Lesson:** `lesson_08/08_collections_and_sorting.py` (§ bisect on a sorted list)
 
 ---
 

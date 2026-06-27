@@ -57,6 +57,31 @@ len(fruits) - 1 - fruits[::-1].index("banana")
 
 We return to `[::-1]` in the slicing chapter.
 
+### Iterating with index — `enumerate`
+
+When you need **both** the position and the value, don't loop over `range(len(...))` and index back in — use `enumerate`, which yields `(index, value)` pairs you unpack directly:
+
+```python
+fruits = ["apple", "banana", "cherry"]
+
+for i, fruit in enumerate(fruits):
+    print(i, fruit)        # 0 apple / 1 banana / 2 cherry
+
+for i, fruit in enumerate(fruits, start=1):   # 1-based numbering
+    print(i, fruit)        # 1 apple / 2 banana / 3 cherry
+```
+
+> **Java:** the C-style `for (int i = 0; i < fruits.size(); i++)` (then `fruits.get(i)`) collapses to `for i, fruit in enumerate(fruits)` — index and value together, no separate `.get(i)`.
+
+The transliterated-Java version works but reads as un-pythonic:
+
+```python
+for i in range(len(fruits)):
+    fruit = fruits[i]      # avoid — use enumerate(fruits)
+```
+
+> **Key idea:** Need the index while iterating? `enumerate(xs)`. Just the values? `for x in xs`. Pairing two lists? `zip(a, b)`. Reach for these before `range(len(...))`.
+
 ---
 
 ## Dicts — HashMap with insertion order

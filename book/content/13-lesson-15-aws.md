@@ -1,4 +1,4 @@
-# Lesson 15 — AWS with boto3 (connect, S3, DynamoDB, SNS/SQS, Redis, config)
+# Lesson 15 — AWS with boto3
 
 In Java you reach for the **AWS SDK for Java v2** — `S3Client`, `DynamoDbClient`, a `DefaultCredentialsProvider`. Python's equivalent is **boto3**, the official AWS SDK, and the mental model transfers almost one-to-one. The part that trips up newcomers is not the API — it is realizing that *connecting to AWS is the same from everywhere*. A script on your laptop, a service on EC2 or ECS, and a Lambda function all use identical boto3 code; the only thing that changes is **where the credentials come from**. This lesson covers that connection model first, then walks the services you will actually wire up: S3, DynamoDB, SNS/SQS, Redis (ElastiCache), and Secrets Manager / SSM for config.
 
@@ -44,7 +44,7 @@ s3_client = boto3.client("s3", region_name="us-east-1")      # low-level
 s3_resource = boto3.resource("s3", region_name="us-east-1")  # high-level
 ```
 
-> **Java:** `boto3.client("s3")` ≈ `S3Client.builder().build()`; `boto3.resource("dynamodb")` ≈ `DynamoDbEnhancedClient`. When in doubt use a client — it exposes every operation; reach for a resource when its object API is genuinely nicer (DynamoDB `Table`, S3 `Bucket`).
+> **Java:** the v2 `S3Client` / `DynamoDbClient` builders are the boto3 **client**; the higher-level *Enhanced* clients such as `DynamoDbEnhancedClient` are the boto3 **resource**. When in doubt use a client — it exposes every operation; reach for a resource only when its object API (a DynamoDB `Table`, an S3 `Bucket`) is genuinely cleaner.
 
 A **Session** bundles credentials and region. Most code uses the implicit default session (`boto3.client(...)`), but an explicit `Session` is how you pin a named profile or hold temporary assume-role credentials.
 
@@ -138,7 +138,7 @@ item = table.get_item(Key={"author": "Martin", "title": "Clean Code"})["Item"]
 resp = table.query(KeyConditionExpression=Key("author").eq("Martin"))
 ```
 
-> **Java:** `boto3.resource("dynamodb").Table(...)` ≈ the `DynamoDbEnhancedClient` mapper; `query(KeyConditionExpression=Key("author").eq(x))` ≈ `QueryConditional.keyEqualTo(...)`. One difference to expect: numbers round-trip as Python `Decimal`, not `int` or `float`.
+> **Java:** the `DynamoDbEnhancedClient` mapper is the closest analog to the `resource` API used here, and `QueryConditional.keyEqualTo(...)` is the key-equality `query` equivalent. One gotcha with no Java counterpart: DynamoDB numbers come back as Python `Decimal`, not `int` or `float`.
 
 > **Key idea:** design around the partition key. `query` on a key is fast and cheap; `scan` is a full-table read. This is the opposite of the "just add a WHERE clause" reflex from SQL in Lesson 17.
 
@@ -172,13 +172,14 @@ This is the important exception. On AWS you run Redis as **ElastiCache**, but yo
 ```python
 import redis
 
-r = redis.Redis(host="my-cluster.xxxx.cache.amazonaws.com", port=6379, decode_responses=True)
-r.set("user:42:name", "Alice", ex=60)     # ex=60 → 60-second TTL
+host = "my-cluster.xxxx.cache.amazonaws.com"   # ElastiCache endpoint
+r = redis.Redis(host=host, port=6379, decode_responses=True)
+r.set("user:42:name", "Alice", ex=60)          # ex=60 → 60-second TTL
 r.incr("page:views")                        # atomic counter
 r.hset("book:1", mapping={"title": "Clean Code"})
 ```
 
-> **Java:** redis-py ≈ **Jedis** or **Lettuce**, not the AWS SDK. The mental split is the same as in Java: the AWS SDK provisions ElastiCache; a Redis client library does the `GET`/`SET`/`INCR`.
+> **Java:** you would use **Jedis** or **Lettuce** here, not the AWS SDK — redis-py is their Python counterpart. The split is the same in both languages: the AWS SDK provisions ElastiCache, and a Redis client library does the `GET`/`SET`/`INCR`.
 
 > **Key idea:** the everyday use is **cache-aside** — look in Redis first, fall back to the database on a miss, then populate the cache with a TTL. It cuts read load on the DynamoDB/SQL store from Lesson 17.
 
@@ -198,12 +199,13 @@ dsn = f"postgresql://{creds['username']}:{creds['password']}@{creds['host']}/app
 
 ssm = boto3.client("ssm", region_name="us-east-1")
 flag = ssm.get_parameter(Name="/app/feature/new_checkout")["Parameter"]["Value"]
-api_key = ssm.get_parameter(Name="/app/api_key", WithDecryption=True)["Parameter"]["Value"]
+secure = ssm.get_parameter(Name="/app/api_key", WithDecryption=True)
+api_key = secure["Parameter"]["Value"]
 ```
 
 Fetch secrets **once at startup**, build your connection, and never log the password.
 
-> **Java:** Secrets Manager ≈ the `SecretsManagerClient` you already use, or a Spring `@Value` backed by the AWS config provider; SSM Parameter Store ≈ externalized `application.yml` properties. `get_parameters_by_path("/app/")` hydrates a whole config tree in one call.
+> **Java:** the `SecretsManagerClient` — or a Spring `@Value` backed by the AWS config provider — is what you already use for secrets; for plain config, SSM Parameter Store plays the role of an externalized `application.yml`. A single by-path lookup hydrates a whole config tree at once.
 
 ---
 
@@ -221,7 +223,7 @@ def test_upload():
     ...
 ```
 
-> **Java:** moto ≈ **LocalStack** or the AWS SDK test utilities — a local stand-in for AWS so unit tests need no real account. It pairs naturally with the pytest patterns from Lesson 16.
+> **Java:** **LocalStack** (or the AWS SDK test utilities) is the equivalent you know — moto is the Python stand-in that lets unit tests run with no real account. It pairs naturally with the pytest patterns from Lesson 16.
 
 ---
 

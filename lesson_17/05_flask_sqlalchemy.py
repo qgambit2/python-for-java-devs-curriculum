@@ -16,11 +16,10 @@ _p = Path(__file__).resolve().parent
 if str(_p) not in sys.path:
     sys.path.insert(0, str(_p))
 
+from _lesson17_db import DEMO_DB_PATH, Book, book_to_dict, make_engine, seed_books
 from flask import Flask, jsonify, request
 from sqlalchemy import select
 from sqlalchemy.orm import Session
-
-from _lesson17_db import DEMO_DB_PATH, Book, book_to_dict, make_engine, seed_books
 
 # File-backed sqlite so data survives between HTTP requests (unlike :memory:)
 _db_url = f"sqlite:///{DEMO_DB_PATH}"

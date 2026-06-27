@@ -44,6 +44,36 @@ def add_item(item, bucket=None):  # never bucket=[]
 
 ---
 
+## Shadowing built-ins
+
+Python's built-in functions are just **names in a scope you can rebind** — nothing reserves them. Name a variable `sum`, `list`, or `id` and you silently replace the builtin *for the rest of that scope*. No error, no warning — until you try to call the real one.
+
+```python
+sum = a + b + c          # 'sum' now refers to an int, not the builtin
+...
+total = sum(values)      # TypeError: 'int' object is not callable
+```
+
+The trap is that the failing line (`sum(values)`) looks innocent — the real mistake was an assignment far above it. The tempting offenders are exactly the short, natural names:
+
+| Looks like a great variable name | …but it's a builtin |
+|----------------------------------|---------------------|
+| `list`, `dict`, `set`, `str`, `tuple` | type constructors |
+| `sum`, `min`, `max`, `len`, `sorted` | aggregation / sizing |
+| `id`, `type`, `hash`, `input`, `next`, `filter` | everyday utilities |
+
+**The fix** when the good name really is a builtin: append a trailing underscore — `list_`, `sum_`, `id_`, `type_`. PEP 8 blesses this (`class_`, since `class` is a keyword). It signals "I meant this name and I know it collides."
+
+```python
+sum_ = a + b + c         # explicit, no shadow
+```
+
+> **Java:** there's no equivalent. Java's "builtins" hide behind type names and `java.lang` imports — you cannot name a local `String` and break `Integer.parseInt`. In Python the builtins live in an ordinary outer scope (`builtins`), and local names shadow them by the normal LEGB lookup rule. Discipline the compiler enforced for you is now a convention **you** uphold.
+
+> **Key idea:** a linter catches this automatically — `ruff` flags it as `A001`/`A003` (flake8-builtins), `pylint` as `redefined-builtin`. Turn it on so you don't have to remember.
+
+---
+
 ## Pythonic patterns (prefer these)
 
 ```python
